@@ -5,7 +5,7 @@ import Card from '@/components/Card';
 import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
 import Pagination from '@/components/Pagination';
 
-const Index = () => {
+function Index() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (page: number) => {
@@ -28,6 +28,6 @@ const Index = () => {
       <hr />
     </>
   );
-};
+}
 
 export default Index;
