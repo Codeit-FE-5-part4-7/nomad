@@ -1,5 +1,3 @@
-
-
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -12,7 +10,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    "plugin:@tanstack/eslint-plugin-query/recommended",
+    'plugin:@tanstack/eslint-plugin-query/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -23,14 +21,7 @@ module.exports = {
     'next/core-web-vitals',
     'prettier',
   ],
-  plugins: [
-    'react',
-    'react-hooks',
-    '@typescript-eslint',
-    'jsx-a11y',
-    'import',
-    'prettier',
-  ],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'jsx-a11y', 'import', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off', // Next.js doesn't require React to be in scope
