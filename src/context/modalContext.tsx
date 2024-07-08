@@ -1,4 +1,4 @@
-import { IModal, IModalContext, IModalProps } from '@/types/Modal';
+import { IModal, IModalContext, IModalProps } from '@/types/DialogsModal';
 import { createContext, useCallback, useMemo, useState } from 'react';
 
 export const ModalStateContext = createContext<IModalContext | undefined>(undefined);
