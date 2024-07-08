@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import CustomButton from '@/components/Button/CustomButton';
-import GrayButton from '@/components/Button/GrayButton';
+import CustomButton from '@/components/Button';
 import Card from '@/components/Card';
 import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
 import Pagination from '@/components/Pagination';
@@ -18,7 +17,7 @@ function Index() {
       <hr />
       <CustomButton text='로그인 하기' color='white' onClick={() => alert('로그인 하기')} />
       <hr />
-      <GrayButton text='신청 불가' onClick={() => alert('신청 불가')} />
+      <CustomButton text='신청 불가' color='black' onClick={() => alert('신청 불가')} width='w-[35rem]' height='h-[4.8rem]' disabled={true} />
       <hr />
       <Card image='/images/test123.png'>
         <MyActibitiyCardInfo title='테스트' price={10000} rating={4.31} reviewCount={2039} />
