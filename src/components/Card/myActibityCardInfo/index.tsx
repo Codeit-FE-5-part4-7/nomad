@@ -1,15 +1,25 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-interface MyActibityCardData {
+interface ActibityCardData {
+  id?: number;
+  userId?: number;
   title: string;
+  description?: string;
+  category?: string;
   price: number;
+  address?: string;
+  bannerImageUrl?: string;
   rating: number;
   reviewCount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export default function MyActibitiyCardInfo({ title, price, rating, reviewCount }: MyActibityCardData) {
+export default function MyActibitiyCardInfo({ data }: { data: ActibityCardData }) {
   const [isDropShow, setIsDropShow] = useState<boolean>(false);
+
+  const { title, price, rating, reviewCount } = data;
 
   const closeDrop = () => {
     setIsDropShow(false);
