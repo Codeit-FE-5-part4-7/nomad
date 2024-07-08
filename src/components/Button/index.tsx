@@ -4,7 +4,6 @@ import Link from 'next/link';
 interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   text: string;
   color: 'black' | 'white';
-  onClick?: () => void;
   cssName?: string;
   link?: string;
 }
@@ -18,7 +17,7 @@ function Button({ text, color, onClick, cssName, link, type, disabled, ...props 
   const borderColor = disabled ? 'bg-[#a4a1aa]' : enabledBorderColor;
   const textColor = disabled ? 'text-[#ffffff]' : enabledTextColor;
 
-  const buttonStyle = `flex justify-center items-center px-5 py-3 font-bold border ${borderColor} ${backgroundColor} ${textColor} rounded-md ${disabled ? 'cursor-not-allowed' : ''} ${cssName}`;
+  const buttonStyle = `flex justify-center items-center px-5 py-3 font-bold border ${borderColor} ${backgroundColor} ${textColor} rounded-md disabled:cursor-not-allowed ${cssName}`;
 
   return link && !disabled ? (
     <Link href={link} className={buttonStyle}>
