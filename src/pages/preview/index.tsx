@@ -17,7 +17,7 @@ function Index() {
       <hr />
       <CustomButton text='로그인 하기' color='white' />
       <hr />
-      <CustomButton text='신청 불가' color='black' disabled={true} />
+      <CustomButton text='신청 불가' color='black' disabled />
       <hr />
       <Card image='/images/test123.png'>
         <MyActibitiyCardInfo title='테스트' price={10000} rating={4.31} reviewCount={2039} />
