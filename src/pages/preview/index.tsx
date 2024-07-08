@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useModal from '@/hooks/useModal';
 import Card from '@/components/Card';
 import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
+import AcitivitiesCardList from '@/components/CardList/AcitivitiesCardList';
 import Pagination from '@/components/Pagination';
 import Button from '@/components/Button';
 
@@ -50,7 +51,7 @@ function Index() {
       <Button text='신청 불가' color='black' disabled />
       <hr />
       <Card image='/images/test123.png'>
-        <MyActibitiyCardInfo title='테스트' price={10000} rating={4.31} reviewCount={2039} />
+        <MyActibitiyCardInfo data={{ title: '테스트', price: 10000, rating: 4.31, reviewCount: 2039 }} />
       </Card>
       <hr />
       <Pagination currentPage={currentPage} totalPages={12} onPageChange={handlePageChange} />
@@ -59,6 +60,7 @@ function Index() {
       <hr />
       <Button text='confirm 모달 열기' color='white' onClick={handleOpenConfirmModal} />
       <hr />
+      <AcitivitiesCardList activities={[]} />
     </>
   );
 }
