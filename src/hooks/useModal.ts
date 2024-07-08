@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ModalStateContext } from '@/context/modalContext';
-import { IModalContext } from '@/types/Modal';
+import { IModalContext } from '@/types/DialogsModal';
 
 function useModal() {
   const contextValue = useContext(ModalStateContext);
