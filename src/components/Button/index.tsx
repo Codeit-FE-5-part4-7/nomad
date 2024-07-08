@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
+import Link from 'next/link';
 
-interface Props {
+interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   text: string;
   color: 'black' | 'white';
-  onClick: () => void;
-  width?: string;
-  height?: string;
+  onClick?: () => void;
+  cssName?: string;
   link?: string;
-  disabled?: boolean;
 }
 
-function Button({ text, color, onClick, width = 'w-full', height = 'h-full', link, disabled = false }: Props) {
+function Button({ text, color, onClick, cssName, link, type, disabled, ...props }: Props) {
   const enabledBackgroundColor = color === 'black' ? 'bg-[#112211]' : 'bg-[#ffffff]';
   const enabledBorderColor = color === 'white' ? 'border-[#000000]' : 'border-[#112211]';
   const enabledTextColor = color === 'black' ? 'text-[#ffffff]' : 'text-[#112211]';
@@ -19,22 +18,14 @@ function Button({ text, color, onClick, width = 'w-full', height = 'h-full', lin
   const borderColor = disabled ? 'bg-[#a4a1aa]' : enabledBorderColor;
   const textColor = disabled ? 'text-[#ffffff]' : enabledTextColor;
 
-  const handleClick = () => {
-    if (!disabled) {
-      onClick();
-    }
-  };
-
-  const buttonStyle = `flex justify-center items-center px-5 py-3 ${width} ${height} font-bold border ${borderColor} ${backgroundColor} ${textColor} rounded-md ${
-    disabled ? 'cursor-not-allowed' : ''
-  }`;
+  const buttonStyle = `flex justify-center items-center px-5 py-3 font-bold border ${borderColor} ${backgroundColor} ${textColor} rounded-md ${disabled ? 'cursor-not-allowed' : ''} ${cssName}`;
 
   return link && !disabled ? (
-    <a href={link} className={buttonStyle}>
+    <Link href={link} className={buttonStyle}>
       {text}
-    </a>
+    </Link>
   ) : (
-    <button type='button' onClick={handleClick} className={buttonStyle} disabled={disabled}>
+    <button type={type === 'submit' ? 'submit' : 'button'} className={buttonStyle} onClick={onClick} disabled={disabled} {...props}>
       {text}
     </button>
   );
