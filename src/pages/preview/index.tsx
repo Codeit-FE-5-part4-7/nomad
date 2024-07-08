@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import Button from '@/components/Button';
+import useModal from '@/hooks/useModal';
 import Card from '@/components/Card';
 import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
 import Pagination from '@/components/Pagination';
-import useModal from '@/hooks/useModal';
+import Button from '@/components/Button';
+
+export const getStaticProps = async () => ({
+  props: {
+    layoutType: 'removeLayout',
+  },
+});
 
 function Index() {
   const { openModal, closeModal } = useModal();
