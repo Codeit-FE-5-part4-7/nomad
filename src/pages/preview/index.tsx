@@ -5,6 +5,8 @@ import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
 import AcitivitiesCardList from '@/components/CardList/AcitivitiesCardList';
 import Pagination from '@/components/Pagination';
 import Button from '@/components/Button';
+// import { Value } from '@/components/Modal/ModalContents/dateform/DateForm';
+// import Calendar from '@/components/Calendar';
 
 export const getStaticProps = async () => ({
   props: {
@@ -42,6 +44,8 @@ function Index() {
   };
   // ------------------------------------
 
+  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
   return (
     <>
       <Button text='로그인 하기' color='black' />
@@ -61,6 +65,10 @@ function Index() {
       <Button text='confirm 모달 열기' color='white' onClick={handleOpenConfirmModal} />
       <hr />
       <AcitivitiesCardList activities={[]} />
+      <hr />
+      {/* <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate}  /> */}
+      <hr />
+      {/* <FloatingBox /> */}
     </>
   );
 }

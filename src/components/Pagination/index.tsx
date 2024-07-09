@@ -1,16 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
+import { ICON } from '@/constant/importImages';
 import PageItem from './PageItem';
-import pageLeftIcon from '../../../public/svgs/page-left.svg';
-import pageRightIcon from '../../../public/svgs/page-right.svg';
 
-interface Props {
+interface PaginationProps {
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
 }
 
-function Pagination({ totalPages, currentPage, onPageChange }: Props) {
+function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
   const handlePrevPage = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -39,12 +38,12 @@ function Pagination({ totalPages, currentPage, onPageChange }: Props) {
           type='button'
           onClick={handlePrevPage}
           disabled={currentPage === 1}
-          className={`flex justify-center items-center p-[1.7rem] gap-[1rem] w-[4rem] h-[4rem] sm:w-[5.5rem] sm:h-[5.5rem] rounded-3xl border border-[#0b3b2d] bg-transparent cursor-pointer mx-2 text-[1.6rem] ${
+          className={`flex justify-center items-center p-[1.7rem] gap-[1rem] w-[4rem] h-[4rem] md:w-[5.5rem] md:h-[5.5rem] sm:w-[4rem] sm:h-[4rem] rounded-3xl border border-[#0b3b2d] bg-transparent cursor-pointer mx-2 text-[1.6rem] ${
             currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           <div className='absolute inset-0 flex justify-center items-center'>
-            <Image src={pageLeftIcon} alt='page-left' width={20} height={20} />
+            <Image src={ICON.leftArrow.default.src} alt={ICON.leftArrow.default.alt} width={20} height={20} />
           </div>
         </button>
       </div>
@@ -63,7 +62,7 @@ function Pagination({ totalPages, currentPage, onPageChange }: Props) {
           }`}
         >
           <div className='absolute inset-0 flex justify-center items-center'>
-            <Image src={pageRightIcon} alt='page-right' width={20} height={20} />
+            <Image src={ICON.rightArrow.default.src} alt={ICON.rightArrow.default.alt} width={20} height={20} />
           </div>
         </button>
       </div>
