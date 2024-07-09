@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
 import AcitivitiesCardList from '@/components/CardList/AcitivitiesCardList';
 import Pagination from '@/components/Pagination';
+import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
 // import { Value } from '@/components/Modal/ModalContents/dateform/DateForm';
 // import Calendar from '@/components/Calendar';
@@ -59,6 +60,8 @@ function Index() {
       </Card>
       <hr />
       <Pagination currentPage={currentPage} totalPages={12} onPageChange={handlePageChange} />
+      <hr />
+      <SideNavigation />
       <hr />
       <Button text='alert 모달 열기' color='white' onClick={handleOpenAlertModal} />
       <hr />

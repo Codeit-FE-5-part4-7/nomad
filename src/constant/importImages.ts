@@ -1,10 +1,12 @@
 // 각종 아이콘, 이미지 가져오는 파일
 
 import IconAccount from '../../public/icons/Icon_account_check.svg';
+import IconAccountNoSelect from '../../public/icons/Icon_account_check_noSelect.svg';
 import IconBed from '../../public/icons/Icon_bed.svg';
 import IconBell from '../../public/icons/Icon_bell.svg';
 import IconCalendar from '../../public/icons/Icon_calendar.svg';
 import IconCalendarCheck from '../../public/icons/Icon_calendar_check.svg';
+import IconCalendarCheckNoSelect from '../../public/icons/Icon_calendar_check_noSelect.svg';
 import IconEyeOn from '../../public/icons/Icon_eye_on.svg';
 import IconEyeOff from '../../public/icons/Icon_eye_off.svg';
 import IconFacebook from '../../public/icons/Icon_facebook.svg';
@@ -14,8 +16,10 @@ import IconYoutube from '../../public/icons/Icon_youtube.svg';
 import IconStarOn from '../../public/icons/Icon_star_on.svg';
 import IconStarOff from '../../public/icons/Icon_star_off.svg';
 import IconTextBoxCheck from '../../public/icons/Icon_text-box_check.svg';
+import IconTextBoxCheckNoSelect from '../../public/icons/Icon_text-box_check_noSelect.svg';
 import IconMenu from '../../public/icons/Icon_meatball.svg';
 import IconSetting from '../../public/icons/Icon_setting.svg';
+import IconSettingNoSelect from '../../public/icons/Icon_setting_noSelect.svg';
 import IconCancel from '../../public/icons/Icon_cancel.svg';
 import IconX from '../../public/icons/Icon_X.svg';
 import IconXBold from '../../public/icons/Icon_X_bold.svg';
@@ -52,7 +56,10 @@ import ImageSteppingStone from '../../public/images/Image_stepping_stone.jpg';
 export const ICON = {
   accountCheck: {
     default: {
-      src: IconAccount,
+      src: {
+        selected: IconAccount,
+        noSelected: IconAccountNoSelect,
+      },
       alt: '계정 체크',
     },
     active: {},
@@ -80,7 +87,10 @@ export const ICON = {
   },
   calendarCheck: {
     default: {
-      src: IconCalendarCheck,
+      src: {
+        selected: IconCalendarCheck,
+        noSelected: IconCalendarCheckNoSelect,
+      },
       alt: '달력 체크',
     },
     active: {},
@@ -135,7 +145,10 @@ export const ICON = {
   },
   textBoxCheck: {
     default: {
-      src: IconTextBoxCheck,
+      src: {
+        selected: IconTextBoxCheck,
+        noSelected: IconTextBoxCheckNoSelect,
+      },
       alt: '메모장 체크',
     },
     active: {},
@@ -149,7 +162,10 @@ export const ICON = {
   },
   setting: {
     default: {
-      src: IconSetting,
+      src: {
+        selected: IconSetting,
+        noSelected: IconSettingNoSelect,
+      },
       alt: '세팅',
     },
   },
