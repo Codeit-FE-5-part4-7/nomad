@@ -6,8 +6,6 @@ import AcitivitiesCardList from '@/components/CardList/AcitivitiesCardList';
 import Pagination from '@/components/Pagination';
 import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
-import CustomCalendar from '@/components/Calendar';
-import FloatingBox from '@/components/FloatingBox';
 
 export const getStaticProps = async () => ({
   props: {
@@ -65,12 +63,6 @@ function Index() {
 
   // ------------------------------------
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
-
   return (
     <>
       <p>버튼 컴포넌트를 수정해서 기존에 있던 CustomButton이 아닌 Button을 사용하시면 됩니다.</p>
@@ -95,9 +87,6 @@ function Index() {
       <hr />
       <AcitivitiesCardList activities={[]} />
       <hr />
-      <CustomCalendar selectedDate={selectedDate} onChange={handleDateChange} />
-      <hr />
-      <FloatingBox />
     </>
   );
 }
