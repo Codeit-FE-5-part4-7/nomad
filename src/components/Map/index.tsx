@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import appKey from './appkey';
 
 declare global {
   interface Window {
@@ -11,12 +10,14 @@ interface MapProps {
   address: string;
 }
 
+// const appKey = 'f7adb5c4574cc3a1412885d9f0aff326';
+
 function Map({ address }: MapProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false&libraries=services`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=f7adb5c4574cc3a1412885d9f0aff326&autoload=false&libraries=services`;
     script.async = true;
 
     script.onload = () => {
