@@ -91,7 +91,7 @@ function ActivityDetail() {
               </p>
             </div>
             <div className='border-t-[0.2rem] border-[#dddddd] border-solid my-[4rem]' />
-            <Map address="서울 중구 청계천로 100 10F" />
+            <Map address='서울 중구 청계천로 100 10F' />
             <div className='flex gap-[0.4rem] mt-[0.8rem]'>
               <Image src={ICON.mapMarker.default.src} alt={ICON.mapMarker.default.alt} width={18} height={18} />
               <p className='text-[#112211] text-[1.4rem] max-w-[70rem] overflow-hidden whitespace-nowrap text-ellipsis'>서울 중구 청계천로 100 10F</p>
