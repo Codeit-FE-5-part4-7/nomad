@@ -6,8 +6,8 @@ import AcitivitiesCardList from '@/components/CardList/AcitivitiesCardList';
 import Pagination from '@/components/Pagination';
 import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
-// import { Value } from '@/components/Modal/ModalContents/dateform/DateForm';
-// import Calendar from '@/components/Calendar';
+import CustomCalendar from '@/components/Calendar';
+import FloatingBox from '@/components/FloatingBox';
 
 export const getStaticProps = async () => ({
   props: {
@@ -43,15 +43,26 @@ function Index() {
       },
     });
   };
+
+  const showAlert = () => {
+    alert('로그인 하기');
+  };
+
   // ------------------------------------
 
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
 
   return (
     <>
-      <Button text='로그인 하기' color='black' />
+      <p>버튼 컴포넌트를 수정해서 기존에 있던 CustomButton이 아닌 Button을 사용하시면 됩니다.</p>
+      <p className='font-bold'>스타일 예시 cssName=w-[48rem] h-[4rem] </p>
+      <Button text='로그인 하기' color='black' onClick={showAlert} />
       <hr />
-      <Button text='로그인 하기' color='white' />
+      <Button text='로그인 하기' color='white' onClick={showAlert} />
       <hr />
       <Button text='신청 불가' color='black' disabled />
       <hr />
@@ -69,9 +80,9 @@ function Index() {
       <hr />
       <AcitivitiesCardList activities={[]} />
       <hr />
-      {/* <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate}  /> */}
+      <CustomCalendar selectedDate={selectedDate} onChange={handleDateChange} />
       <hr />
-      {/* <FloatingBox /> */}
+      <FloatingBox />
     </>
   );
 }

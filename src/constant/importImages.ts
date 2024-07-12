@@ -30,7 +30,9 @@ import IconRightArrow from '../../public/icons/Icon_right-arrow_default.svg';
 import IconRightArrowActive from '../../public/icons/Icon_right-arrow_active.svg';
 import IconDownArrow from '../../public/icons/Icon_down-arrow_default.svg';
 import IconPlusTime from '../../public/icons/Icon_plus_time.svg';
+import IconPlusInput from '../../public/icons/Icon_plus_input.svg';
 import IconMinusTime from '../../public/icons/Icon_minus_time.svg';
+import IconMinusInput from '../../public/icons/Icon_minus_input.svg';
 import IconPlus from '../../public/icons/Icon_plus.svg';
 import IconLeftArrowVariant1 from '../../public/icons/Icon_left-arrow_variant1.svg';
 import IconRightArrowVariant1 from '../../public/icons/Icon_right-arrow_variant1.svg';
@@ -143,6 +145,7 @@ export const ICON = {
       alt: '별',
     },
   },
+
   textBoxCheck: {
     default: {
       src: {
@@ -246,10 +249,24 @@ export const ICON = {
     },
     active: {},
   },
+  plusInput: {
+    default: {
+      src: IconPlusInput,
+      alt: '인원 추가',
+    },
+    active: {},
+  },
   minusTime: {
     default: {
       src: IconMinusTime,
       alt: '삭제',
+    },
+    active: {},
+  },
+  minusInput: {
+    default: {
+      src: IconMinusInput,
+      alt: '인원 감소',
     },
     active: {},
   },

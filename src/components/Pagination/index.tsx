@@ -1,3 +1,4 @@
+// api 연결 후 어떻게 할건지 생각하기
 import React from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant/importImages';

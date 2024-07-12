@@ -30,4 +30,9 @@ function Button({ text, color, onClick, cssName, link, type, disabled, ...props 
   );
 }
 
+Button.defaultProps = {
+  cssName: '',
+  link: '',
+};
+
 export default Button;

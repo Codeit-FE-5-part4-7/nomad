@@ -1,15 +1,27 @@
-// 수정중
-// import { useState } from 'react';
-// import { getYear } from 'date-fns';
-// import CalendarUI from './ui';
+import React from 'react';
+import Calendar, { CalendarProps } from 'react-calendar';
+import { addDays } from 'date-fns';
+import 'react-calendar/dist/Calendar.css';
 
-// const YEARS = Array.from({ length: getYear(new Date()) + 1 - 2000 }, (_, i) => getYear(new Date()) - i);
-// const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+interface CustomCalendarProps {
+  selectedDate: Date | null;
+  onChange: (date: Date | null) => void;
+}
 
-// function Calendar() {
-//   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+function CustomCalendar({ selectedDate, onChange }: CustomCalendarProps): JSX.Element {
+  const handleDateChange: CalendarProps['onChange'] = (value) => {
+    if (Array.isArray(value)) {
+      onChange(value[0]);
+    } else {
+      onChange(value);
+    }
+  };
 
-//   return <CalendarUI selectedDate={selectedDate} setSelectedDate={setSelectedDate} years={YEARS} months={MONTHS} />;
-// }
+  return (
+    <div className='calendar-container'>
+      <Calendar onChange={handleDateChange} value={selectedDate} minDate={addDays(new Date(), 1)} locale='en-US' className='custom-calendar' />
+    </div>
+  );
+}
 
-// export default Calendar;
+export default CustomCalendar;
