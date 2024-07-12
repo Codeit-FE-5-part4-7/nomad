@@ -29,6 +29,15 @@ module.exports = {
     'no-console': 'error',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'warn',
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        some: ['nesting', 'id'],
+      },
+    ],
+    'no-console': 'error',
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
   },
   settings: {
