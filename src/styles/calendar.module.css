@@ -1,7 +1,3 @@
-abbr {
-  text-decoration: none;
-}
-
 .calendar-container {
   width: 30rem;
   background-color: #ffffff;
@@ -11,13 +7,12 @@ abbr {
   width: 100%;
   height: 100%;
   padding: 1.5rem;
-  border-color: #eeeeee; 
+  border-color: #eeeeee;
   border-radius: 0.8rem;
 }
 
 .custom-calendar .react-calendar__navigation {
   height: 3rem;
-  margin: 0;
 }
 
 .custom-calendar .react-calendar__navigation__label__labelText {
@@ -30,14 +25,9 @@ abbr {
   cursor: pointer;
 }
 
-.custom-calendar .react-calendar__navigation button:hover {
-  background-color: transparent; 
-  color: #0b3b2d; 
-}
-
+.custom-calendar .react-calendar__navigation button:hover,
 .custom-calendar .react-calendar__navigation .react-calendar__navigation__label:hover {
-  background-color: transparent; 
-  color: #0b3b2d; 
+  color: #0b3b2d;
 }
 
 .custom-calendar .react-calendar__navigation button:disabled {
@@ -55,7 +45,6 @@ abbr {
 .custom-calendar .react-calendar__month-view__weekdays .react-calendar__month-view__weekdays__weekday {
   font-size: 1.3rem;
   color: #4b4b4b;
-  overflow: visible;
 }
 
 .custom-calendar .react-calendar__month-view__days {
@@ -90,7 +79,7 @@ abbr {
 
 .custom-calendar .react-calendar__month-view__days__day {
   width: 3.5rem;
-  height: 3.2rem; 
+  height: 3.2rem;
 }
 
 .custom-calendar .react-calendar__month-view__days .react-calendar__tile:active {
@@ -111,4 +100,8 @@ abbr {
 .custom-calendar .react-calendar__month-view__days .react-calendar__tile--disabled {
   color: #cccccc;
   cursor: not-allowed;
+}
+
+.custom-calendar .react-calendar__navigation__arrow .react-calendar__navigation__prev-button {
+  display: none;
 }
