@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ type, isError, 
           {...props}
           ref={ref}
           type={type === 'password' ? inputType : type}
-          className={`w-full p-4 rounded-md border transition ${
+          className={`bg-white text-black w-full h-[58px] p-4 rounded-md border transition ${
             isError ? 'border-red-500' : 'border-gray-400 focus:border-darkgreen'
           } ${type === 'number' ? 'appearance-none' : ''} ${type === 'time' ? 'md:p-4 md:px-2' : ''}`}
           placeholder={props.placeholder}
@@ -45,7 +45,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ type, isError, 
           </button>
         )}
       </div>
-      {isError && <p className='text-red-500 text-sm pl-2'>{errorMessage}</p>}
+      {isError && <p className='text-red-500 text-[12px] pl-2'>{errorMessage}</p>}
     </>
   );
 });

@@ -95,10 +95,16 @@ html{
 }
 
 body {
+	color: rgb(var(--foreground-rgb));
+	background-color: white; /* 기본 배경 색상을 흰색으로 설정 */
+}
+
+/* body {
   color: rgb(var(--foreground-rgb));
   background:
     rgb(255,255,255);
 }
+	*/
 
 a {
   color: inherit;

@@ -86,7 +86,7 @@ export default function Header(): JSX.Element | null {
   }
 
   return (
-    <div className='flex justify-around items-center fixed top-0 w-full h-28 bg-white border-b border-gray-300 z-50'>
+    <div className='flex justify-around items-center sticky top-0 w-full h-28 bg-white border-b border-gray-300 z-50'>
       <div className='flex justify-between items-center max-w-screen-xl w-full mx-auto px-6'>
         <Link href='/'>
           <Image src={IMAGE.logo.nav.src} alt={IMAGE.logo.nav.alt} height={28} width={166} />
