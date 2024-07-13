@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import useModal from '@/hooks/useModal';
-import Card from '@/components/Card';
-import MyActibitiyCardInfo from '@/components/Card/myActibityCardInfo';
-import AcitivitiesCardList from '@/components/CardList/AcitivitiesCardList';
 import Pagination from '@/components/Pagination';
 import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
@@ -12,21 +9,6 @@ export const getStaticProps = async () => ({
     layoutType: 'removeLayout',
   },
 });
-
-const cardData = {
-  id: 0,
-  userId: 0,
-  title: 'string',
-  description: 'string',
-  category: 'string',
-  price: 11110,
-  address: 'string',
-  bannerImageUrl: 'string',
-  rating: 20,
-  reviewCount: 1110,
-  createdAt: 'string',
-  updatedAt: 'string',
-};
 
 function Index() {
   const { openModal, closeModal } = useModal();
@@ -72,10 +54,6 @@ function Index() {
       <Button text='로그인 하기' color='white' onClick={showAlert} />
       <hr />
       <Button text='신청 불가' color='black' disabled />
-      <hr />
-      <Card image='/images/test123.png'>
-        <MyActibitiyCardInfo data={cardData} />
-      </Card>
       <hr />
       <Pagination currentPage={currentPage} totalPages={12} onPageChange={handlePageChange} />
       <hr />

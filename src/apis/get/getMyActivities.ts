@@ -1,8 +1,9 @@
 import instance from '@/apis/axios';
+import { GETMyActivities } from '@/utils/types/myActivities';
 
 /* eslint-disable */
 interface GMAProps {
-  cursorId: number | null;
+  cursorId?: number;
   size?: number;
 }
 /** cursorId: 무한스크롤 할 때 다음 페이지 찾아오는 용도
@@ -10,11 +11,11 @@ interface GMAProps {
  */
 const getMyActivities = async ({ cursorId, size }: GMAProps) => {
   try {
-    const res = await instance.get(`/my-activities`, {
+    const { data } = await instance.get<GETMyActivities>(`/my-activities`, {
       params: { size, cursorId },
     });
 
-    return res.data;
+    return data;
   } catch (err) {
     console.log(err);
   }
