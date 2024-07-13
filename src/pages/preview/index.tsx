@@ -63,8 +63,6 @@ function Index() {
       <hr />
       <Button text='confirm 모달 열기' color='white' onClick={handleOpenConfirmModal} />
       <hr />
-      <AcitivitiesCardList activities={[]} />
-      <hr />
     </>
   );
 }
