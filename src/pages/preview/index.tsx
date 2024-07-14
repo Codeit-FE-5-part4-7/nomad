@@ -88,7 +88,7 @@ function Index() {
       <hr />
       <div className='container mx-auto p-[1.6rem]'>
         <h1 className='text-[2.4rem] font-bold mb-[1.6rem]'>미디어 쿼리 확인</h1>
-        <div className='bg-gray-500 sm:bg-blue-500 md:bg-green-500 lg:bg-orange-500 xl:bg-red-500 p-[1.6rem] rounded-[0.8rem]'>
+        <div className='bg-gray-500 sm:bg-blue md:bg-green lg:bg-orange xl:bg-red p-[1.6rem] rounded-[0.8rem]'>
           <p className='text-[1.6rem] text-white font-bold'>브라우저 창 크기를 조정하면 배경 색상이 변경됩니다.</p>
         </div>
       </div>
