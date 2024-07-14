@@ -4,6 +4,27 @@
 @import '../styles/calendar.module.css';
 
 :root {
+  --color-black: #1b1b1b;
+  --color-nomad-black: #333236;
+  --color-gray-500: #4b4b4b;
+  --color-gray-400: #79747e;
+  --color-gray-300: #a4a1aa;
+  --color-gray-200: #adaeb8;
+  --color-gray-100: #cbc9cf;
+  --color-gray-50: #dddddd;
+  --color-gray-25: #eeeeee;
+  --color-gray-10: #fafafa;
+  --color-green: #00ac07;
+  --color-green-dark: #0b3b2d;
+  --color-green-light: #f1effd;
+  --color-red: #ff472e;
+  --color-orange: #ff7c1d;
+  --color-orange-light: #fff4e8;
+  --color-yellow: #ffc23d;
+  --color-blue: #0085ff;
+  --color-blue-light: #2eb4ff;
+  --color-blue-lighter: #e5f3ff;
+
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
@@ -90,21 +111,15 @@ body {
   overflow-x: hidden;
 }
 
-html{
+html {
   font-size: 62.5%;
 }
 
 body {
-	color: rgb(var(--foreground-rgb));
-	background-color: white; /* 기본 배경 색상을 흰색으로 설정 */
-}
-
-/* body {
+  font-family: 'Pretendard', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background:
-    rgb(255,255,255);
+  background-color: white; /* 기본 배경 색상을 흰색으로 설정 */
 }
-	*/
 
 a {
   color: inherit;
