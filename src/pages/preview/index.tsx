@@ -3,6 +3,7 @@ import useModal from '@/hooks/useModal';
 import Pagination from '@/components/Pagination';
 import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
+import Footer from '@/components/Layout/Footer';
 
 export const getStaticProps = async () => ({
   props: {
@@ -46,26 +47,27 @@ function Index() {
   // ------------------------------------
 
   const colors = [
-    { name: 'Black', code: 'var(--color-black)' },
-    { name: 'Nomad Black', code: 'var(--color-nomad-black)' },
-    { name: 'Gray 500', code: 'var(--color-gray-500)' },
-    { name: 'Gray 400', code: 'var(--color-gray-400)' },
-    { name: 'Gray 300', code: 'var(--color-gray-300)' },
-    { name: 'Gray 200', code: 'var(--color-gray-200)' },
-    { name: 'Gray 100', code: 'var(--color-gray-100)' },
-    { name: 'Gray 50', code: 'var(--color-gray-50)' },
-    { name: 'Gray 25', code: 'var(--color-gray-25)' },
-    { name: 'Gray 10', code: 'var(--color-gray-10)' },
-    { name: 'Green', code: 'var(--color-green)' },
-    { name: 'Green Dark', code: 'var(--color-green-dark)' },
-    { name: 'Green Light', code: 'var(--color-green-light)' },
-    { name: 'Red', code: 'var(--color-red)' },
-    { name: 'Orange', code: 'var(--color-orange)' },
-    { name: 'Orange Light', code: 'var(--color-orange-light)' },
-    { name: 'Yellow', code: 'var(--color-yellow)' },
-    { name: 'Blue', code: 'var(--color-blue)' },
-    { name: 'Blue Light', code: 'var(--color-blue-light)' },
-    { name: 'Blue Lighter', code: 'var(--color-blue-lighter)' },
+    { name: 'Black', code: 'var(--color-black)', hex: '#1b1b1b' },
+    { name: 'Nomad Black', code: 'var(--color-nomad-black)', hex: '#112211' },
+    { name: 'Gray 500', code: 'var(--color-gray-500)', hex: '#4b4b4b' },
+    { name: 'Gray 400', code: 'var(--color-gray-400)', hex: '#79747e' },
+    { name: 'Gray 300', code: 'var(--color-gray-300)', hex: '#a4a1aa' },
+    { name: 'Gray 200', code: 'var(--color-gray-200)', hex: '#adaeb8' },
+    { name: 'Gray 100', code: 'var(--color-gray-100)', hex: '#cbc9cf' },
+    { name: 'Gray 50', code: 'var(--color-gray-50)', hex: '#dddddd' },
+    { name: 'Gray 25', code: 'var(--color-gray-25)', hex: '#eeeeee' },
+    { name: 'Gray 10', code: 'var(--color-gray-10)', hex: '#fafafa' },
+    { name: 'Green', code: 'var(--color-green)', hex: '#00ac07' },
+    { name: 'Green Dark', code: 'var(--color-green-dark)', hex: '#0b3b2d' },
+    { name: 'Green Light', code: 'var(--color-green-light)', hex: '#ced8d5' },
+    { name: 'Red', code: 'var(--color-red)', hex: '#ff472e' },
+    { name: 'Red Light', code: 'var(--color-red-light)', hex: '#ffe4e0' },
+    { name: 'Orange', code: 'var(--color-orange)', hex: '#ff7c1d' },
+    { name: 'Orange Light', code: 'var(--color-orange-light)', hex: '#fff4e8' },
+    { name: 'Yellow', code: 'var(--color-yellow)', hex: '#ffc23d' },
+    { name: 'Blue', code: 'var(--color-blue)', hex: '#0085ff' },
+    { name: 'Blue Light', code: 'var(--color-blue-light)', hex: '#2eb4ff' },
+    { name: 'Blue Lighter', code: 'var(--color-blue-lighter)', hex: '#e5f3ff' },
   ];
 
   return (
@@ -98,10 +100,13 @@ function Index() {
           {colors.map((color) => (
             <div key={color.name} className='flex flex-col items-center justify-center p-[1.6rem] rounded-[0.8rem]' style={{ backgroundColor: color.code }}>
               <div className='text-white text-[1.6rem] font-bold'>{color.name}</div>
+              <div className='text-white text-[1.2rem]'>{color.hex}</div>
             </div>
           ))}
         </div>
       </div>
+      <hr />
+      <Footer />
     </>
   );
 }

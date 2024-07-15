@@ -5,6 +5,7 @@ import { ICON } from '@/constant/importImages';
 import FloatingBox from '@/components/FloatingBox';
 import Pagination from '@/components/Pagination';
 import Map from '@/components/Map';
+import mockReview from './mockReview';
 
 function ActivityDetail() {
   // 내가 만든 체험인 경우에만 케밥 버튼 나타나게 로직 수정하기
@@ -24,35 +25,16 @@ function ActivityDetail() {
   // ----------------------------------------------------------
   // Pagination search parameter 추가하기
   const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 3;
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (page: React.SetStateAction<number>) => {
     setCurrentPage(page);
   };
 
-  // 목업 데이터
-  const reviews = [
-    {
-      id: 'test_kitty',
-      image: '/images/test_kitty.png',
-      name: 'test',
-      date: '2070.06.13',
-      text: '후기 후기 후기 후기 훅이 훅 훅 훅 flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test flex test flex test flext test',
-    },
-    {
-      id: 'test_kitty2',
-      image: '/images/test_kitty2.png',
-      name: 'test2',
-      date: '2080.06.13',
-      text: '짧은 댓글',
-    },
-    {
-      id: 'test_kitty3',
-      image: '/images/test_kitty3.png',
-      name: 'test3',
-      date: '2090.06.13',
-      text: '길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트 길이 테스트 길이 테스트 길이 테스트 길이 테스트 일정 이상되면 테스트 길이 테스트 길이 테스트 테스트',
-    },
-  ];
+  const startIndex = (currentPage - 1) * reviewsPerPage;
+  const endIndex = startIndex + reviewsPerPage;
+  const currentReviews = mockReview.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(mockReview.length / reviewsPerPage);
 
   return (
     <div className='mt-[14rem]'>
@@ -111,8 +93,8 @@ function ActivityDetail() {
               </div>
             </div>
 
-            {reviews.map((review, index) => (
-              <div key={review.id} className={`flex gap-[1.6rem] py-[2.4rem] ${index !== reviews.length - 1 ? 'border-b-[0.2rem] border-[#E3E6E8] border-solid' : ''}`}>
+            {currentReviews.map((review, index) => (
+              <div key={review.id} className={`flex gap-[1.6rem] py-[2.4rem] ${index !== currentReviews.length - 1 ? 'border-b-[0.2rem] border-[#E3E6E8] border-solid' : ''}`}>
                 <div className='flex-shrink-0'>
                   <Image src={review.image} alt='profile_image_test' width={45} height={45} className='rounded-full object-cover border border-[#dddddd] border-solid w-[4.5rem] h-[4.5rem]' />
                 </div>
@@ -128,7 +110,7 @@ function ActivityDetail() {
             ))}
 
             <div className='mt-[7.2rem] mb-[41rem]'>
-              <Pagination currentPage={currentPage} totalPages={12} onPageChange={handlePageChange} />
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             </div>
           </div>
           <div className='mt-[8.5rem] ml-[1.4rem]'>

@@ -5,7 +5,7 @@
 
 :root {
   --color-black: #1b1b1b;
-  --color-nomad-black: #333236;
+  --color-nomad-black: #112211;
   --color-gray-500: #4b4b4b;
   --color-gray-400: #79747e;
   --color-gray-300: #a4a1aa;
@@ -16,8 +16,9 @@
   --color-gray-10: #fafafa;
   --color-green: #00ac07;
   --color-green-dark: #0b3b2d;
-  --color-green-light: #f1effd;
+  --color-green-light: #ced8d5;
   --color-red: #ff472e;
+  --color-red-light: #ffe4e0;
   --color-orange: #ff7c1d;
   --color-orange-light: #fff4e8;
   --color-yellow: #ffc23d;

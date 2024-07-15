@@ -1,4 +1,3 @@
-// api 연결 후 어떻게 할건지 생각하기
 import React from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant/importImages';
@@ -58,7 +57,7 @@ function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) 
           type='button'
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className={`flex justify-center items-center p-[1.7rem] gap-[1rem] w-[4rem] h-[4rem] md:w-[5.5rem] md:h-[5.5rem] rounded-3xl border border-[#0b3b2d] bg-transparent cursor-pointer mx-2 text-[1.6rem] ${
+          className={`flex justify-center items-center p-[1.7rem] gap-[1rem] w-[4rem] h-[4rem] md:w-[5.5rem] md:h-[5.5rem] rounded-3xl border border-green-dark bg-transparent cursor-pointer mx-2 text-[1.6rem] ${
             currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >

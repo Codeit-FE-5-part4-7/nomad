@@ -39,6 +39,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
+    "react/button-has-type": "off",
   },
   settings: {
     react: {
