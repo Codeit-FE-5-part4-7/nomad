@@ -13,11 +13,13 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.7.0",
     "@lukemorales/query-key-factory": "^1.3.4",
     "@tanstack/react-query": "^5.49.2",
     "@tanstack/react-query-devtools": "^5.49.2",
     "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
     "date-fns": "^3.6.0",
     "classnames": "^2.5.1",
     "moment": "^2.30.1",
@@ -27,8 +29,9 @@
     "react-calendar": "^5.0.0",
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
-    "react-intersection-observer": "^9.12.0",
-    "zod": "^3.23.8"
+    "react-intersection-observer": "^9.13.0",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.50.0",

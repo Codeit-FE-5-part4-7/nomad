@@ -2,7 +2,7 @@ import Button from '@/components/Button';
 import ImageCard from '@/components/Card/ImageCard';
 import Dropdown from '@/components/Dropdown';
 import { DateInput, Input, Textarea } from '@/components/Input';
-import ImageInput from '@/components/Input/ImageInput';
+// import ImageInput from '@/components/Input/ImageInput';
 import MyLayout from '@/components/MyLayout';
 import ScheduleListItem from '@/components/ScheduleListItem';
 import { POSTActivitiesReq } from '@/utils/types/myActivities';
@@ -118,7 +118,7 @@ export default function EditActivitiy() {
                 배너 이미지
               </label>
               <div className='mt-[2.4rem] flex gap-x-[2.4rem]'>
-                <ImageInput id='banner' />
+                {/* <ImageInput id='banner' /> */}
                 {postData.bannerImageUrl && (
                   <ImageCard
                     image={postData.bannerImageUrl}
@@ -135,7 +135,7 @@ export default function EditActivitiy() {
                 소개 이미지
               </label>
               <div className='mt-[2.4rem] flex gap-x-[2.4rem] flex-wrap'>
-                <ImageInput id='introduce' />
+                {/* <ImageInput id='introduce' /> */}
                 {!!postData.subImageUrls.length && postData.subImageUrls.map((subImageUrl) => <ImageCard image={subImageUrl} key={subImageUrl} delCard={() => {}} />)}
               </div>
             </div>

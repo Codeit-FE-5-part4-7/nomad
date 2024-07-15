@@ -22,5 +22,4 @@ const getMyActivities = async ({ cursorId, size }: GMAProps) => {
 };
 
 export default getMyActivities;
-// 린트 때문에 디폴트로 한 것이지 나중에 추가되면 디폴트 제거할 예정
 /* eslint-enable */

@@ -3,7 +3,10 @@ import useModal from '@/hooks/useModal';
 import Pagination from '@/components/Pagination';
 import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
-import Footer from '@/components/Layout/Footer';
+import { filterCategories } from '@/constant/filterCategoryOptions';
+import CategoryButton from '@/components/FilterButton/CategoryButton';
+import FilterDropButton from '@/components/FilterButton/FilterDropButton';
+import { Input } from '@/components/Input';
 
 export const getStaticProps = async () => ({
   props: {
@@ -45,6 +48,11 @@ function Index() {
   };
 
   // ------------------------------------
+
+  // Example FilterButton ------------------------
+  const [selectedCategory, setSelectedCategory] = useState<string>();
+
+  // --------------------------------------
 
   const colors = [
     { name: 'Black', code: 'var(--color-black)', hex: '#1b1b1b' },
@@ -88,12 +96,20 @@ function Index() {
       <hr />
       <Button text='confirm 모달 열기' color='white' onClick={handleOpenConfirmModal} />
       <hr />
+      {filterCategories.map((category) => (
+        <CategoryButton key={category} text={category} isSelected={selectedCategory === category} onClick={() => setSelectedCategory(category)} />
+      ))}
+      <FilterDropButton text='가격' />
+      <br />
+      <Input type='email' />
+      <hr />
       <div className='container mx-auto p-[1.6rem]'>
         <h1 className='text-[2.4rem] font-bold mb-[1.6rem]'>미디어 쿼리 확인</h1>
         <div className='bg-gray-500 sm:bg-blue md:bg-green lg:bg-orange xl:bg-red p-[1.6rem] rounded-[0.8rem]'>
           <p className='text-[1.6rem] text-white font-bold'>브라우저 창 크기를 조정하면 배경 색상이 변경됩니다.</p>
         </div>
       </div>
+      <hr />
       <div className='container mx-auto mb-[1.6rem] p-[1.6rem]'>
         <h1 className='text-[2.4rem] font-bold mb-[1.6rem]'>색상 코드 확인</h1>
         <div className='grid grid-cols-3 gap-[1.6rem]'>
@@ -106,7 +122,6 @@ function Index() {
         </div>
       </div>
       <hr />
-      <Footer />
     </>
   );
 }

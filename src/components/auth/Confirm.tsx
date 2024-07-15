@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import SubmitButton from './SubmitButton';
-
+/* eslint-disable */
 interface Props {
   text: string;
   dialogRef: RefObject<HTMLDialogElement>;
@@ -30,3 +30,4 @@ export default function Confirm({ text, dialogRef, handleClickSuccessConfirm }: 
     </dialog>
   );
 }
+/* eslint-enable */

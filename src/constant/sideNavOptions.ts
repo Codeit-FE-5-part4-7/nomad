@@ -19,7 +19,7 @@ const SIDE_NAV_OPTIONS = [
     },
     iconAlt: ICON.textBoxCheck.default.alt,
     menuTitle: '예약 내역',
-    linkUrl: '/preview1',
+    linkUrl: '/my/reservation-history',
   },
   {
     id: 2,

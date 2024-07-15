@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ type, isError, 
           {...props}
           ref={ref}
           type={type === 'password' ? inputType : type}
-          className={`bg-white text-black w-full h-[58px] p-4 rounded-md border transition ${
+          className={`bg-white text-black w-full h-[58px] p-4 rounded-md border transition text-[1.6rem] ${
             isError ? 'border-red-500' : 'border-gray-400 focus:border-darkgreen'
           } ${type === 'number' ? 'appearance-none' : ''} ${type === 'time' ? 'md:p-4 md:px-2' : ''}`}
           placeholder={props.placeholder}
