@@ -5,10 +5,8 @@ module.exports = {
     extend: {
       colors: {
         'var-modal-bg': 'rgba(0, 0, 0, 0.8)',
-<<<<<<< HEAD
-=======
         'footer-bg': '#112211',
->>>>>>> ea47896494344a4437b00438a8ebe0c4e9d77d42
+
         black: 'var(--color-black)',
         'nomad-black': 'var(--color-nomad-black)',
         gray: {
