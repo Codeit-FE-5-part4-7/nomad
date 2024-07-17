@@ -33,3 +33,20 @@ export interface POSTActivitiesReq {
   bannerImageUrl: string;
   subImageUrls: string[];
 }
+
+export interface PATCHActivityReq {
+  title: string;
+  category: string;
+  description: string;
+  address: string;
+  price: number;
+  bannerImageUrl: string;
+  subImageIdsToRemove: number[];
+  subImageUrlsToAdd: string[];
+  scheduleIdsToRemove: number[];
+  schedulesToAdd: {
+    date: string;
+    startTime: string;
+    endTime: string;
+  }[];
+}

@@ -50,7 +50,7 @@ function ActivityDetail() {
               <p className='text-nomad-black text-[1.4rem] max-w-[70rem] overflow-hidden whitespace-nowrap text-ellipsis'>서울 중구 청계천로 100 10F</p>
             </div>
             <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem]' />
-            <ReviewList />
+            <ReviewList reviews={[]} averageRating={0} reviewCount={0} />
           </div>
           <div className='ml-[1.4rem]'>
             <FloatingBox />

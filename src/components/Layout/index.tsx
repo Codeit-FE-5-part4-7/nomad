@@ -9,7 +9,7 @@ export default function Layout({ children }: Children) {
   return (
     <>
       <Header />
-      <div className='pt-[7rem]'>{children}</div>
+      <div>{children}</div>
       <Footer />
     </>
   );

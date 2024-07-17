@@ -12,11 +12,11 @@ interface ActivitiesListProps {
 
 export default function ActivitiesList({ category = '전체', activities, search, searchTotalCount }: ActivitiesListProps) {
   return (
-    <div className='flex flex-col items-start gap-8 w-full'>
+    <div className='flex flex-col items-start gap-[2rem] w-full'>
       {search && searchTotalCount ? (
         <>
           <SearchActivitiesHeader search={search} searchTotalCount={searchTotalCount} />
-          <ul className='grid grid-cols-4 gap-12'>
+          <ul className='grid grid-cols-4 gap-[3rem]'>
             {activities?.map((activity, index) => (
               <li key={`${activity.id}-${activity.userId}-${index}`}>
                 <CardResource activitiesData={activity} banner={false} />

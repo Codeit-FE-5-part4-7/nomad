@@ -7,7 +7,9 @@ import { filterCategories } from '@/constant/filterCategoryOptions';
 import CategoryButton from '@/components/FilterButton/CategoryButton';
 import FilterDropButton from '@/components/FilterButton/FilterDropButton';
 import { Input } from '@/components/Input';
+import Dropdown from '@/components/Dropdown';
 
+/* eslint-disable */
 export const getStaticProps = async () => ({
   props: {
     layoutType: 'removeLayout',
@@ -78,6 +80,20 @@ function Index() {
     { name: 'Blue Lighter', code: 'var(--color-blue-lighter)', hex: '#e5f3ff' },
   ];
 
+  // Dropdown --------------------------------------------------
+  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+
+  const handleSelectedId = (id: number) => {
+    setSelectedCategoryId(id);
+  };
+
+  const dropdownLists = [
+    { id: 1, category: 'Category 1', title: 'Option 1' },
+    { id: 2, category: 'Category 2', title: 'Option 2' },
+    { id: 3, category: 'Category 3', title: 'Option 3' },
+  ];
+  //----------------------------------------------------------------
+
   return (
     <>
       <p>버튼 컴포넌트를 수정해서 기존에 있던 CustomButton이 아닌 Button을 사용하시면 됩니다.</p>
@@ -122,8 +138,14 @@ function Index() {
         </div>
       </div>
       <hr />
+      <div className='p-4'>
+        <h1 className='text-xl font-bold mb-4 text-black'>Dropdown Example</h1>
+        <Dropdown name='exampleDropdown' lists={dropdownLists} onSelectedId={handleSelectedId} selectedCategoryId={selectedCategoryId} />
+        {selectedCategoryId && <p className='mt-4'>Selected Category ID: {selectedCategoryId}</p>}
+      </div>
     </>
   );
 }
 
 export default Index;
+/* eslint-enable */

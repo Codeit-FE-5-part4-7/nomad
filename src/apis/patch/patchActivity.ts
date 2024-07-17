@@ -22,7 +22,7 @@ const patchActivity = async (activityId: string | string[] | undefined, data: un
 
     return res;
   } catch (error) {
-    return console.log(error); // eslint-disable-line no-console
+    return error;
   }
 };
 

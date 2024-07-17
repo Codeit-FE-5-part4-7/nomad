@@ -25,7 +25,7 @@ export const auth = {
   },
   tokensUpdate: async (refreshToken: string) => {
     const response = await axios.post(
-      'https://sp-globalnomad-api.vercel.app/2-5/auth/tokens',
+      'https://sp-globalnomad-api.vercel.app/5-7/auth/tokens',
       {},
       {
         headers: {
