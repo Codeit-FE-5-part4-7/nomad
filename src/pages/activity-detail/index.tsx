@@ -8,7 +8,7 @@ import ReviewList from '@/components/ReviewList';
 
 function ActivityDetail() {
   return (
-    <div className='mt-0 px-[18rem]'>
+    <div className='mt-[7rem] px-[18rem]'>
       <div className='flex flex-col gap-[0.25rem]'>
         <p className='text-[1.4rem] text-nomad-black'>문화·예술</p>
         <div>

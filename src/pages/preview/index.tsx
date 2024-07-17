@@ -138,6 +138,7 @@ function Index() {
         </div>
       </div>
       <hr />
+
       <div className='p-4'>
         <h1 className='text-xl font-bold mb-4 text-black'>Dropdown Example</h1>
         <Dropdown name='exampleDropdown' lists={dropdownLists} onSelectedId={handleSelectedId} selectedCategoryId={selectedCategoryId} />
