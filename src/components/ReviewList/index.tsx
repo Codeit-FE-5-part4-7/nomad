@@ -26,15 +26,17 @@ function ReviewList({ reviews, averageRating, reviewCount }: ReviewListProps) {
   const getRating = (rating: number): string => {
     if (rating >= 4 && rating <= 5) {
       return '매우 만족';
-    } else if (rating >= 3 && rating < 4) {
-      return '만족';
-    } else if (rating >= 2 && rating < 3) {
-      return '보통';
-    } else if (rating >= 1 && rating < 2) {
-      return '약간 만족';
-    } else {
-      return '텅 ~';
     }
+    if (rating >= 3 && rating < 4) {
+      return '만족';
+    }
+    if (rating >= 2 && rating < 3) {
+      return '보통';
+    }
+    if (rating >= 1 && rating < 2) {
+      return '약간 만족';
+    }
+    return '텅 ~';
   };
 
   return (
@@ -56,7 +58,13 @@ function ReviewList({ reviews, averageRating, reviewCount }: ReviewListProps) {
       {currentReviews.map((review, index) => (
         <div key={review.id} className={`flex gap-[1.6rem] py-[2.4rem] ${index !== currentReviews.length - 1 ? 'border-b-[0.2rem] border-gray-50 border-solid' : ''}`}>
           <div className='flex-shrink-0'>
-            <Image src={review.user.profileImageUrl} alt={`${review.user.nickname}의 프로필 이미지`} width={45} height={45} className='rounded-full object-cover border border-gray-50 border-solid w-[4.5rem] h-[4.5rem]' />
+            <Image
+              src={review.user.profileImageUrl}
+              alt={`${review.user.nickname}의 프로필 이미지`}
+              width={45}
+              height={45}
+              className='rounded-full object-cover border border-gray-50 border-solid w-[4.5rem] h-[4.5rem]'
+            />
           </div>
           <div>
             <div className='flex mb-[0.8rem]'>
@@ -74,6 +82,6 @@ function ReviewList({ reviews, averageRating, reviewCount }: ReviewListProps) {
       </div>
     </>
   );
-};
+}
 
 export default ReviewList;
