@@ -36,7 +36,7 @@ function ReviewList({ reviews, averageRating, reviewCount }: ReviewListProps) {
     if (rating >= 1 && rating < 2) {
       return '약간 만족';
     }
-    return '텅 ~';
+    return '후기 없음';
   };
 
   return (

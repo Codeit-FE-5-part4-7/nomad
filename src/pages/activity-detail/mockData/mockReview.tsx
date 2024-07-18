@@ -1,4 +1,6 @@
-const mockReview = {
+import { ReviewsData } from '@/types/ActivityDetail';
+
+const mockReview: ReviewsData = {
   averageRating: 4.5,
   totalCount: 4,
   reviews: [

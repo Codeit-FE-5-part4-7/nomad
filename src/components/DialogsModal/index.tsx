@@ -7,7 +7,7 @@ function Modal() {
 
   return (
     modalData.isOpen && (
-      <div className='fixed top-0 right-0 bottom-0 left-0 bg-var-modal-bg'>
+      <div className='fixed top-0 right-0 bottom-0 left-0 bg-var-modal-bg z-[998]'>
         {modalData.modalType === 'alert' && <AlertModal modalData={modalData} closeFunction={closeModal} />}
         {modalData.modalType === 'confirm' && <ConfirmModal modalData={modalData} closeFunction={closeModal} />}
       </div>
