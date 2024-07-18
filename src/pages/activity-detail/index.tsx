@@ -5,60 +5,18 @@ import ReservationCard from '@/components/FloatingCard';
 import Map from '@/components/Map';
 import ReviewList from '@/components/ReviewList';
 import { ICON } from '@/constant/importImages';
-import { Activity } from '@/types/ActivityDetail';
 import mockReview from './mockData/mockReview';
 import mockSchedules from './mockData/mockSchedules';
+import mockActivityData from './mockData/mockActivityData';
 // import Router from 'next/router';
 // import getActivity from '@/apis/get/getActivity';
 // import getReviews from '@/apis/get/getReviews';
 // import { getAbledResrvationList } from '@/apis/get/getAvailableReservations';
 // router로 id 가져오기
 
-const activityData: Activity = {
-  id: 7,
-  userId: 21,
-  title: '함께 배우면 즐거운 스트릿댄스',
-  description: '둠칫 둠칫 두둠칫',
-  category: '투어',
-  price: 12345,
-  address: '서울특별시 강남구 테헤란로 427',
-  bannerImageUrl: '/images/banner_main.png',
-  rating: 4.74,
-  reviewCount: 5,
-  createdAt: '2023-12-31T21:28:50.589Z',
-  updatedAt: '2023-12-31T21:28:50.589Z',
-  subImages: [
-    {
-      id: 1,
-      imageUrl: '/images/test_kitty.png',
-    },
-    {
-      id: 2,
-      imageUrl: '/images/test_kitty2.png',
-    },
-    {
-      id: 3,
-      imageUrl: '/images/test_kitty3.png',
-    },
-  ],
-  schedules: [
-    {
-      id: 1,
-      date: '2023-12-01',
-      startTime: '12:00',
-      endTime: '13:00',
-    },
-    {
-      id: 2,
-      date: '2023-12-05',
-      startTime: '12:00',
-      endTime: '13:00',
-    },
-  ],
-};
-
 function ActivityDetailPage() {
-  const activity = activityData;
+  // const activity = activityData;
+  const activity = mockActivityData;
 
   return (
     <div className='mt-[7rem] px-[18rem]'>
