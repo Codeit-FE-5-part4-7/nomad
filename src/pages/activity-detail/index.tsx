@@ -25,15 +25,15 @@ function ActivityDetail() {
     subImageUrls: [
       {
         id: 1,
-        imageUrl: '/images/banner_sub.png',
+        imageUrl: '/images/test_kitty.png',
       },
       {
         id: 2,
-        imageUrl: '/images/banner_sub.png',
+        imageUrl: '/images/test_kitty2.png',
       },
       {
         id: 3,
-        imageUrl: '/images/banner_sub.png',
+        imageUrl: '/images/test_kitty3.png',
       },
     ],
     schedules: [
