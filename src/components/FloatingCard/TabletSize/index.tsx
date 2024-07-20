@@ -6,7 +6,6 @@ import Button from '@/components/Button';
 import CustomPopup from '@/components/CustomPopup';
 import useModal from '@/hooks/useModal';
 /* eslint-disable */
-
 interface TabletCardProps {
   schedules: Schedule[];
   price: number;
@@ -19,6 +18,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
   const [participants, setParticipants] = useState(1);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const { openModal } = useModal();
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -41,8 +41,14 @@ function TabletCard({ schedules, price }: TabletCardProps) {
     setIsPopupOpen(false);
   };
 
+  const handlePopupClose = (newTimeText: string | null) => {
+    if (newTimeText !== null) {
+      setSelectedTimeText(newTimeText);
+    }
+    handleClosePopup();
+  };
+
   const handleOpenAlertModal = () => {
-    const { openModal } = useModal();
     openModal({
       modalType: 'alert',
       content: '예약이 완료되었습니다.',
@@ -50,12 +56,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
     });
   };
 
-  const handlePopupClose = (newTimeText: string | null) => {
-    if (newTimeText !== null) {
-      setSelectedTimeText(newTimeText);
-    }
-    handleClosePopup();
-  };
+  const isButtonDisabled = selectedTime === null || selectedDate === null;
 
   const totalCost = price * participants;
 
@@ -88,7 +89,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
           </div>
 
           <div className='flex justify-center'>
-            <Button text='예약하기' color='black' cssName='w-[33.6rem] h-[4.6rem] text-[1.6rem] text-bold' onClick={handleOpenAlertModal} disabled={!selectedDate || !selectedTime} />
+            <Button text='예약하기' color='black' cssName='w-[33.6rem] h-[4.6rem] text-[1.6rem] text-bold' onClick={handleOpenAlertModal} disabled={isButtonDisabled} />
           </div>
           <div className='border border-solid border-gray-100 mt-[1.6rem]' />
           <div className='flex justify-between my-[1.8rem]'>
@@ -97,12 +98,12 @@ function TabletCard({ schedules, price }: TabletCardProps) {
           </div>
         </div>
       </div>
-      {isPopupOpen && (
+      {isPopupOpen && cardRef.current && (
         <div
           style={{
             position: 'absolute',
-            top: cardRef.current ? cardRef.current.getBoundingClientRect().bottom + window.scrollY : 0,
-            left: cardRef.current ? cardRef.current.getBoundingClientRect().left + window.scrollX : 0,
+            top: cardRef.current.getBoundingClientRect().bottom + window.scrollY,
+            left: cardRef.current.getBoundingClientRect().left + window.scrollX,
             zIndex: 1000,
           }}
         >

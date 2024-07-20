@@ -38,12 +38,10 @@ function CustomPopup({ schedules, selectedDate, selectedTime, onClose, onDateCha
 
   return (
     <div className='fixed inset-0 flex items-center justify-center z-[1000]'>
-      {/* Background Overlay */}
       <div className='fixed inset-0 bg-transparent bg-opacity-40 z-[-1]' />
-
-      {/* Popup Content */}
-      <div className='relative bg-white rounded-lg shadow-lg p-4 max-w-full max-h-full md:max-w-[48rem] md:max-h-[60rem]'>
-        <button type='button' onClick={handleClose} className='absolute top-4 right-4 p-2' aria-label='Close'>
+      {/* 모바일일때 반응형 수정하기 */}
+      <div className='relative bg-white rounded-lg shadow-lg p-4 w-full w-full h-full max-h-full md:max-w-[48rem] md:max-h-[60rem]'>
+        <button type='button' onClick={handleClose} className='absolute top-4 right-4 p-2'>
           <Image src={ICON.close.default.src} alt={ICON.close.default.alt} width={20} height={20} />
         </button>
         <ReservationContent schedules={schedules} selectedDate={currentDate} selectedTime={selectedTime} onDateChange={handleDateChange} onTimeChange={onTimeChange} />

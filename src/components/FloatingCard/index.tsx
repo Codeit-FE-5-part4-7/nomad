@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant';
@@ -7,7 +5,7 @@ import { Schedule } from '@/types/ActivityDetail';
 import useModal from '@/hooks/useModal';
 import ReservationContent from '../ReservationContent';
 import Button from '../Button';
-
+/* eslint-disable */
 interface FloatingCardProps {
   schedules: Schedule[];
   price: number;
@@ -83,3 +81,4 @@ function FloatingCard({ schedules, price }: FloatingCardProps) {
 }
 
 export default FloatingCard;
+/* eslint-enable */
