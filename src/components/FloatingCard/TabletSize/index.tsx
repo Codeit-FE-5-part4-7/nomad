@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant';
-import { Schedule } from '@/types/ActivityDetail';
+import { Schedule } from '@/utils/types/schedule';
 import Button from '@/components/Button';
 import CustomPopup from '@/components/CustomPopup';
 import useModal from '@/hooks/useModal';
