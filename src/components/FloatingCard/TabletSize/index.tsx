@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import { Schedule } from '@/types/ActivityDetail';
-// import { format } from 'date-fns';
 import Button from '@/components/Button';
 import CustomPopup from '@/components/CustomPopup';
 import useModal from '@/hooks/useModal';
@@ -20,8 +19,6 @@ function TabletCard({ schedules, price }: TabletCardProps) {
   const [participants, setParticipants] = useState(1);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [popupPosition, setPopupPosition] = useState<{ top: number; left: number } | null>(null);
-  const { openModal } = useModal();
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -37,13 +34,6 @@ function TabletCard({ schedules, price }: TabletCardProps) {
   };
 
   const handleOpenPopup = () => {
-    if (cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      setPopupPosition({
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-      });
-    }
     setIsPopupOpen(true);
   };
 
@@ -52,6 +42,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
   };
 
   const handleOpenAlertModal = () => {
+    const { openModal } = useModal();
     openModal({
       modalType: 'alert',
       content: '예약이 완료되었습니다.',
@@ -59,7 +50,6 @@ function TabletCard({ schedules, price }: TabletCardProps) {
     });
   };
 
-  // 팝업이 닫힐 때 텍스트 업데이트
   const handlePopupClose = (newTimeText: string | null) => {
     if (newTimeText !== null) {
       setSelectedTimeText(newTimeText);
@@ -107,12 +97,12 @@ function TabletCard({ schedules, price }: TabletCardProps) {
           </div>
         </div>
       </div>
-      {isPopupOpen && popupPosition && (
+      {isPopupOpen && (
         <div
           style={{
             position: 'absolute',
-            top: popupPosition.top,
-            left: popupPosition.left,
+            top: cardRef.current ? cardRef.current.getBoundingClientRect().bottom + window.scrollY : 0,
+            left: cardRef.current ? cardRef.current.getBoundingClientRect().left + window.scrollX : 0,
             zIndex: 1000,
           }}
         >
