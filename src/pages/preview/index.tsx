@@ -8,6 +8,8 @@ import CategoryButton from '@/components/FilterButton/CategoryButton';
 import FilterDropButton from '@/components/FilterButton/FilterDropButton';
 import { Input } from '@/components/Input';
 import Dropdown from '@/components/Dropdown';
+import TabletCard from '@/components/FloatingCard/TabletSize';
+import MobileCard from '@/components/FloatingCard/MobileSize';
 
 /* eslint-disable */
 export const getStaticProps = async () => ({
@@ -138,12 +140,15 @@ function Index() {
         </div>
       </div>
       <hr />
-
       <div className='p-4'>
         <h1 className='text-xl font-bold mb-4 text-black'>Dropdown Example</h1>
         <Dropdown name='exampleDropdown' lists={dropdownLists} onSelectedId={handleSelectedId} selectedCategoryId={selectedCategoryId} />
         {selectedCategoryId && <p className='mt-4'>Selected Category ID: {selectedCategoryId}</p>}
       </div>
+      <hr />
+      <TabletCard schedules={[]} price={0} />
+      <hr />
+      <MobileCard schedules={[]} price={0} />
     </>
   );
 }

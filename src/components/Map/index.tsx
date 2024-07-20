@@ -64,7 +64,7 @@ function Map({ address }: MapProps) {
   }, [address]);
 
   return (
-    <div className='relative flex items-center justify-center bg-white border-transparent border-[0.2rem] rounded-[0.8rem] w-[79rem] h-[47.6rem]'>
+    <div className='relative flex items-center justify-center bg-white border-transparent border-[0.2rem] rounded-[0.8rem] w-[79rem] h-[47.6rem] md:w-full md:h-[27.6rem] sm:w-full sm:h-[45rem]'>
       <div id='map' className='w-full h-full' />
       {loading && <p className='absolute text-nomad-black text-[2rem]'>카카오 지도 API 연결 중...</p>}
     </div>

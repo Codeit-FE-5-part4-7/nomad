@@ -39,7 +39,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
-    "react/button-has-type": "off",
+    'react/button-has-type': 'off',
   },
   settings: {
     react: {
@@ -49,4 +49,13 @@ module.exports = {
       typescript: {},
     },
   },
+  overrides: [
+    {
+      files: ['src/components/FloatingCard/MobileSize/index.tsx'],
+      rules: {
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-noninteractive-element-interactions': 'off',
+      },
+    },
+  ],
 };

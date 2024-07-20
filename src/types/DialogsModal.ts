@@ -22,4 +22,5 @@ export interface IModalContext {
   modalData: IModal;
   openModal: ({ modalType, content, btnName, callBackFnc }: IModalProps) => void;
   closeModal: () => void;
+  isModalOpen: boolean;
 }

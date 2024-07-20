@@ -68,7 +68,7 @@ function ReviewList({ reviews, averageRating, reviewCount }: ReviewListProps) {
           </div>
           <div>
             <div className='flex mb-[0.8rem]'>
-              <p className='text-[1.6rem] font-bold max-w-[50rem] overflow-hidden whitespace-nowrap text-ellipsis'>{review.user.nickname}</p>
+              <p className='text-[1.6rem] font-bold max-w-[16rem] overflow-hidden whitespace-nowrap text-ellipsis'>{review.user.nickname}</p>
               <p className='mx-[0.8rem] text-[1.4rem]'>|</p>
               <p className='text-[1.6rem] text-gray-300'>{new Date(review.createdAt).toLocaleDateString()}</p>
             </div>

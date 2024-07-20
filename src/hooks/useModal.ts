@@ -5,12 +5,13 @@ import { IModalContext } from '@/types/DialogsModal';
 function useModal() {
   const contextValue = useContext(ModalStateContext);
 
-  const { modalData, openModal, closeModal } = contextValue as IModalContext;
+  const { modalData, openModal, closeModal, isModalOpen } = contextValue as IModalContext;
 
   return {
     modalData,
     openModal,
     closeModal,
+    isModalOpen,
   };
 }
 
