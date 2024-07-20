@@ -50,13 +50,13 @@ function MobileCard({ price, schedules }: MobileCardProps) {
 
   return (
     <>
-      <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-[37.5rem] bg-white border border-gray-200 rounded-lg shadow-md flex flex-row items-center justify-between p-4 z-50'>
+      <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full bg-white border border-gray-200 rounded-lg shadow-md flex flex-row items-center justify-between p-4 z-50'>
         <div className='flex flex-col gap-[0.8rem]'>
           <div className='flex flex-row items-center'>
             <p className='text-[2rem] font-bold text-nomad-black'>₩ {price.toLocaleString()} /</p>
-            <p className='text-[1.8rem] text-nomad-black ml-1'>명</p>
+            <p className='text-[1.8rem] text-dark-green ml-1'>명</p>
           </div>
-          <p className='text-[1.4rem] text-nomad-black cursor-pointer underline' onClick={handleOpenPopup}>
+          <p className='text-[1.4rem] text-dark-green cursor-pointer underline' onClick={handleOpenPopup}>
             {selectedTimeText}
           </p>
         </div>

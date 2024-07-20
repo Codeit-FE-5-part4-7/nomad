@@ -11,7 +11,6 @@ import mockReview from './mockData/mockReview';
 import mockSchedules from './mockData/mockSchedules';
 import mockActivityData from './mockData/mockActivityData';
 /* eslint-disable */
-
 function ActivityDetail() {
   const activity = mockActivityData;
   const [isTablet, setIsTablet] = useState(false);
@@ -73,7 +72,7 @@ function ActivityDetail() {
             <ReviewList reviews={mockReview.reviews} averageRating={mockReview.averageRating} reviewCount={mockReview.totalCount} />
           </div>
 
-          <div className={`w-full ${isMobile ? 'fixed bottom-0 left-1/2 transform -translate-x-1/2' : 'md:w-[30%]'} mt-[1.6rem] md:mt-0`}>
+          <div className='w-full md:w-[30%] mt-[1.6rem] md:mt-0'>
             {isMobile ? (
               <MobileCard schedules={mockSchedules} price={activity.price} />
             ) : isTablet ? (
