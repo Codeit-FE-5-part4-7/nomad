@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Schedule } from '@/types/ActivityDetail';
 import { format } from 'date-fns';
 import { ICON } from '@/constant';
+import { Schedule } from '@/utils/types/schedule';
 import Button from '../Button';
 import ReservationContent from '../ReservationContent';
+/* eslint-disable */
 
 interface CustomPopupProps {
   schedules: Schedule[];
@@ -40,7 +41,7 @@ function CustomPopup({ schedules, selectedDate, selectedTime, onClose, onDateCha
     <div className='fixed inset-0 flex items-center justify-center z-[1000]'>
       <div className='fixed inset-0 bg-transparent bg-opacity-40 z-[-1]' />
       {/* 모바일일때 반응형 수정하기 */}
-      <div className='relative bg-white rounded-lg shadow-lg p-4 w-full w-full h-full max-h-full md:max-w-[48rem] md:max-h-[60rem]'>
+      <div className='relative bg-white rounded-lg shadow-lg p-4 w-full h-full max-h-full md:max-w-[48rem] md:max-h-[60rem]'>
         <button type='button' onClick={handleClose} className='absolute top-4 right-4 p-2'>
           <Image src={ICON.close.default.src} alt={ICON.close.default.alt} width={20} height={20} />
         </button>
@@ -54,3 +55,5 @@ function CustomPopup({ schedules, selectedDate, selectedTime, onClose, onDateCha
 }
 
 export default CustomPopup;
+
+/* eslint-enable */

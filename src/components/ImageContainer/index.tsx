@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+// 모바일 일때 슬라이더로 전환
 
 interface ImageContainerProps {
   mainImageUrl: string;
@@ -7,7 +8,7 @@ interface ImageContainerProps {
 }
 
 function ImageContainer({ mainImageUrl, gridImages }: ImageContainerProps) {
-  const defaultImage = '/images/logo_big.png'; // default image 임의 등록
+  const defaultImage = '/images/logo_big.png';
   const fillGridImages = gridImages && Array.isArray(gridImages) ? [...gridImages] : [];
 
   for (let i = fillGridImages.length; i < 4; i += 1) {

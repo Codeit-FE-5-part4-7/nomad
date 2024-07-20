@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/Button';
-import { Schedule } from '@/types/ActivityDetail';
 import useModal from '@/hooks/useModal';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import CustomPopup from '@/components/CustomPopup';
+import { Schedule } from '@/utils/types/schedule';
 
 interface MobileCardProps {
   price: number;

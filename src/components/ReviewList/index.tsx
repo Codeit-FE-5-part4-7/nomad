@@ -18,7 +18,6 @@ function ReviewList({ reviews, averageRating, totalCount }: ReviewListProps) {
     setCurrentPage(page);
   };
 
-  // mockReview로 최신 정렬 확인
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   const startIndex = (currentPage - 1) * reviewsPerPage;
