@@ -66,7 +66,7 @@ export default forwardRef<HTMLInputElement, DropdownProps>(({ name, labelText, l
   return (
     <div className='relative flex flex-col justify-center items-start w-full text-black leading-[1.6rem]'>
       <button
-        className={`relative w-full p-3.5 bg-white border border-black rounded cursor-pointer flex justify-between items-center ${isToggle ? 'rotate-arrow' : ''}`}
+        className={`relative w-full px-[1.6rem] h-[5.6rem] bg-white border border-black rounded cursor-pointer flex justify-between items-center ${isToggle ? 'rotate-arrow' : ''}`}
         type='button'
         onClick={handleToggleClick}
         ref={dropdownRef}
@@ -82,16 +82,19 @@ export default forwardRef<HTMLInputElement, DropdownProps>(({ name, labelText, l
           height={48}
         />
       </button>
-      <ul className={`z-10 absolute top-[5rem] w-full bg-white rounded shadow-md ${isToggle ? 'opacity-100 visible' : 'opacity-0 invisible'} transition-opacity`}>
+      <ul
+        className={`z-10 flex flex-col absolute p-[0.8rem] top-[5rem] gap-y-[0.2rem] w-full bg-white rounded-[0.6rem] shadow-md ${isToggle ? 'opacity-100 visible' : 'opacity-0 invisible'} transition-opacity`}
+        style={inputHeight ? { top: inputHeight, marginTop: '0.8rem' } : {}}
+      >
         {list.map((listItem) => (
-          <li key={`key-${listItem.id}`} className='h-[4.5rem]'>
+          <li key={`key-${listItem.id}`} className='h-[4rem]' style={{ height: itemHeight }}>
             <button
               type='button'
-              className={`w-full p-2 flex items-center gap-2 rounded hover:bg-gray-700 hover:text-white ${listItem.id === selectedList ? 'bg-gray-700 text-white' : ''}`}
+              className={`w-full h-[4rem] p-[0.8rem] flex items-center gap-x-[0.8rem] rounded hover:bg-gray-700 hover:text-white ${listItem.id === selectedList ? 'bg-gray-700 text-white' : ''}`}
               onClick={() => handleSelectedClick(listItem.id)}
               style={{ height: itemHeight }} // 리스트 항목 높이 적용
             >
-              {listItem.id === selectedList && <Image src={check.default.src} alt={check.default.alt} width={20} height={20} />}
+              <div className='w-[2rem]'>{listItem.id === selectedList && <Image src={check.default.src} alt={check.default.alt} width={20} height={20} />}</div>
               <span>{labelText ? listItem.title : listItem.category}</span>
             </button>
           </li>

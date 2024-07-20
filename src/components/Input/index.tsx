@@ -11,12 +11,12 @@ interface InputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
   type: 'text' | 'password' | 'email' | 'number' | 'time';
   isError?: boolean;
   errorMessage?: string;
-  height?: number;
+  cssName?: string;
 }
 
 /**
  * Input component with customizable types and error handling.
- * 
+ *
  * @param {Object} props - The properties for the Input component.
  * @param {'text' | 'password' | 'email' | 'number' | 'time'} props.type - The type of input.
  * @param {boolean} [props.isError] - Flag indicating if there is an error.
@@ -24,7 +24,7 @@ interface InputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
  * @returns {JSX.Element} The rendered Input component.
  */
 // eslint-disable-next-line react/display-name
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ type, isError, errorMessage, height, ...props }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ type, isError, errorMessage, cssName, ...props }, ref) => {
   const { isToggle, handleToggleClick } = useToggleButton();
   const { src, alt, inputType } = isToggle ? USER_PASSWORD_SHOW.on : USER_PASSWORD_SHOW.off;
 
@@ -35,7 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ type, isError, 
           {...props}
           ref={ref}
           type={type === 'password' ? inputType : type}
-          className={`bg-white text-black w-full ${height ? `h-[${height}rem]` : 'h-[5.8rem]'} p-4 rounded-md border transition text-[1.6rem] ${
+          className={`${cssName} bg-white text-black w-full p-4 rounded-md border transition text-[1.6rem]  ${
             isError ? 'border-red-500' : 'border-gray-400 focus:border-darkgreen'
           } ${type === 'number' ? 'appearance-none' : ''} ${type === 'time' ? 'md:p-4 md:px-2' : ''}`}
           placeholder={props.placeholder}
@@ -56,18 +56,19 @@ const { calendar } = ICON;
 interface DateInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   onPostDataValue: (value: string) => void;
   name: string;
+  cssName?: string; //사용자 지정 스타일 적용
 }
 
 /**
  * DateInput component with a calendar picker.
- * 
+ *
  * @param {Object} props - The properties for the DateInput component.
  * @param {string} props.name - The name attribute for the input element.
  * @param {(value: string) => void} props.onPostDataValue - Callback function to handle the selected date value.
  * @returns {JSX.Element} The rendered DateInput component.
  */
 // eslint-disable-next-line react/display-name
-export const DateInput = forwardRef<HTMLInputElement, DateInputProps>(({ name, onPostDataValue, ...props }, ref) => {
+export const DateInput = forwardRef<HTMLInputElement, DateInputProps>(({ name, onPostDataValue, cssName, ...props }, ref) => {
   const [calenderValue, onChangeCalender] = useState<Value>();
 
   const { isToggle, handleToggleClick } = useToggleButton();
@@ -94,10 +95,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>(({ name, o
 
   return (
     <div className='relative w-full'>
-      <button className='inline-flex items-center w-full relative z-10 p-3.5 bg-white border border-gray-400 rounded-md' type='button' onClick={handleToggleClick}>
+      <button className={`${cssName} inline-flex items-center w-full relative z-10 px-[1.6rem] py-[0.8rem] bg-white border border-gray-400 rounded-md`} type='button' onClick={handleToggleClick}>
         <input
           {...props}
-          className='w-full text-base font-normal text-black bg-white border-none focus:outline-none'
+          className='w-full text-[1.6rem] font-normal text-black bg-white border-none focus:outline-none'
           name={name}
           type='text'
           value={selectedDate || ''}
@@ -126,7 +127,7 @@ interface TextareaProps extends DetailedHTMLProps<TextareaHTMLAttributes<HTMLTex
 
 /**
  * Textarea component with error handling.
- * 
+ *
  * @param {Object} props - The properties for the Textarea component.
  * @param {boolean} [props.isError] - Flag indicating if there is an error.
  * @param {string} [props.errorMessage] - Error message to display.
@@ -139,7 +140,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({ isErro
       <textarea
         {...props}
         ref={ref}
-        className={`w-full h-[34.6rem] p-4 border rounded-md resize-none transition ${isError ? 'border-red-500' : 'border-gray-400'} focus:border-darkgreen placeholder-gray-600`}
+        className={`w-full h-[34.6rem] p-[1.6rem] border rounded-md resize-none transition ${isError ? 'border-red-500' : 'border-gray-400'} focus:border-darkgreen placeholder-gray-600`}
       />
     </div>
     {isError && <p className='pl-2 text-sm text-red-500'>{errorMessage}</p>}

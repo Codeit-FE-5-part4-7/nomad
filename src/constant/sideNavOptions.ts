@@ -9,7 +9,7 @@ const SIDE_NAV_OPTIONS = [
     },
     iconAlt: ICON.accountCheck.default.alt,
     menuTitle: '내 정보',
-    linkUrl: '/preview',
+    linkUrl: '/my/profile',
   },
   {
     id: 1,

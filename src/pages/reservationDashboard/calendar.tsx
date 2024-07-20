@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* 캘린더 제작중, PR을 위해 임시로 린트 에러 막아놓았음 */
@@ -6,14 +7,53 @@ import React, { useState } from 'react';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import 'dayjs/locale/ko';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/16/solid';
+import BookedBox from '@/components/BookedBox';
+import getReservationDashBoard from '@/apis/get/getReservationDashBoard';
+import { useQuery } from '@tanstack/react-query';
 
 dayjs.extend(isoWeek);
 dayjs.locale('ko');
 
-function calendar2() {
-  // PR을 위해 임시로 막음
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+type Status = '예약' | '완료' | '승인';
+type Reservation = {
+  date: string;
+  status: Status;
+};
+type ReservationData = {
+  date: string;
+  reservations: {
+    completed: number;
+    confirmed: number;
+    pending: number;
+  };
+};
+
+interface ActivityType {
+  id: number;
+  title: string;
+  category: string;
+}
+interface ActivityDropDownProps {
+  items: ActivityType[];
+  selectedActivityId: number | null;
+}
+
+function calendar2({ selectedActivityId }: ActivityDropDownProps) {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
+  const year = currentMonth.format('YYYY');
+  const month = currentMonth.format('MM');
+
+  const { data } = useQuery({
+    queryKey: ['reservations', selectedActivityId, year, month],
+    queryFn: () => {
+      if (selectedActivityId) {
+        return getReservationDashBoard(selectedActivityId, year, month);
+      }
+      // selectedActivityId가 없을 경우 기본값 또는 빈 데이터를 반환하거나, 필요에 따라 처리
+      return Promise.resolve([]);
+    },
+    enabled: !!selectedActivityId, // selectedActivityId가 존재할 때만 쿼리 실행
+  });
 
   // startOf('month') 메서드는 currentMonth를 해당 월의 첫째 날로 설정,
   // startOf('week') 메서드는 그 날이 속한 주의 첫째 날로 설정.
@@ -39,9 +79,22 @@ function calendar2() {
     setCurrentMonth(currentMonth.add(1, 'month'));
   };
 
+  const getReservationsForDay = (date: string) => {
+    if (!data) return [];
+    const dayData = data.find((d: ReservationData) => d.date === date);
+    if (!dayData) return [];
+
+    const reservations: Reservation[] = [];
+    if (dayData.reservations.completed > 0) reservations.push({ date, status: '완료' });
+    if (dayData.reservations.confirmed > 0) reservations.push({ date, status: '승인' });
+    if (dayData.reservations.pending > 0) reservations.push({ date, status: '예약' });
+
+    return reservations;
+  };
+
   return (
     <div className='text-[#000] my-[1.6rem]'>
-      <div className='flex flex-row items-center justify-between'>
+      <div className='flex flex-row items-center mb-[2.3rem] justify-between'>
         <button className='flex flex-row w-[2.4rem] h-[2.4rem]' type='button' onClick={prevMonth}>
           <ChevronDoubleLeftIcon />
         </button>
@@ -50,14 +103,27 @@ function calendar2() {
           <ChevronDoubleRightIcon />
         </button>
       </div>
-      <div className='grid grid-cols-7'>
-        {days.map((day, index) => (
-          <button type='button' key={index} className={`p-[1rem] border ${day.isSame(currentMonth, 'month') ? '' : 'bg-gray-100'} ${day.isSame(dayjs(), 'day') ? 'boder border-blue-500' : ''} `}>
-            <div className='text-left '>
-              <span className='inline-block w-1/7 h-[5.4rem]'>{day.date()}</span>
-            </div>
-          </button>
+      <div className='grid grid-cols-7 '>
+        {['일', '월', '화', '수', '목', '금', '토'].map((dayOfweek) => (
+          <div key={dayOfweek} className='flex justify-center items-center h-[3rem] font-bold border-[0.1rem] border-[#e8e8e8]'>
+            {dayOfweek}
+          </div>
         ))}
+        {days.map((day) => {
+          const reservationsForDay = getReservationsForDay(day.format('YYYY-MM-DD'));
+          return (
+            <button
+              type='button'
+              key={day.format('YYYY-MM-DD')}
+              className={`flex w-1/7 h-[8.4rem] p-[0.3rem] border-[#e8e8e8] border flex-col ${day.isSame(currentMonth, 'month') ? '' : 'bg-gray-50'} ${day.isSame(dayjs(), 'day') ? 'border-blue border-[0.2rem]' : ''}  hover:border-blue hover:border-[0.3rem]`}
+            >
+              <div className='text-left w-[100%]'>
+                <span className=''>{day.date()}</span>
+              </div>
+              <BookedBox reservations={reservationsForDay} />
+            </button>
+          );
+        })}
       </div>
     </div>
   );

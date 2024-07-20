@@ -36,7 +36,7 @@ export default function Skeleton({ type }: { type: Props }) {
       return (
         <div className='grid grid-cols-3 gap-x-6 sm:grid-cols-9'>
           {[...Array(popularItem)].map((_, idx) => (
-            <div key={idx} className='relative bg-gray-300 rounded-[2.4rem] w-[38.4rem] h-[38.4rem] sm:w-[18.6rem] sm:h-[18.6rem]'>
+            <div key={idx} className='relative bg-gray-300 rounded-[2.4rem] sm:w-[38.4rem] sm:h-[38.4rem] w-[18.6rem] h-[18.6rem]'>
               <div className='absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 rounded-[2.4rem] animate-pulse' />
             </div>
           ))}

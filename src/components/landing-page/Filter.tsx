@@ -96,13 +96,14 @@ export default function Filter({ type, filterState, setFilterState }: FilterProp
   return (
     <div className='relative w-fit min-w-[13rem]'>
       <button
-        className={`flex items-end justify-between w-full h-[5.3rem] py-[1.6rem] px-[2rem] flex-shrink-0 rounded-[1.5rem] border border-darkgreen bg-white text-[1.8rem] font-medium text-[#0b3b2d]
-          hover:bg-gray-200 transition-all duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        className={`flex justify-between items-end w-full h-[5.3rem] px-[2rem] py-[1.6rem] flex-shrink-0 rounded-[1.5rem] border border-[#0b3b2d] bg-white whitespace-nowrap text-[1.8rem] font-medium text-[#0b3b2d] hover:bg-[#eee] `}
         onClick={isOpenToggle}
         ref={ref}
       >
         <span>{FilterType[type].text}</span>
-        <Image src={ICON.filter.default.src} alt={ICON.filter.default.alt} height={22} width={22} />
+        <div className={`${isOpen ? 'rotate-180' : ''}`}>
+          <Image src={ICON.filter.default.src} alt={ICON.filter.default.alt} height={22} width={22} />
+        </div>
       </button>
       {isOpen && <DropdownMenu dropdownMenuList={FilterType[type].list} />}
     </div>

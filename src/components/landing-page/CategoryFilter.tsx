@@ -57,9 +57,9 @@ export default function CategoryFilter() {
 
   return (
     <div className='flex justify-between items-center w-full min-w-0'>
-      <div className='relative flex items-center min-w-0'>
+      <div className='flex items-center relative min-w-0'>
         <div className='overflow-hidden'>
-          <ul className='flex gap-6 sm:gap-4 md:gap-2' ref={categoryRef}>
+          <ul className='flex items-center gap-[2.4rem] md:gap-[1.6rem] sm:gap-[0.8rem]' ref={categoryRef}>
             {categoryList.map((category, index) => (
               <li key={`${category}-${index}`} className='flex-shrink-0'>
                 <Category category={category} isActive={categoryState === category} onClick={handleCategoryClick} />
@@ -68,15 +68,18 @@ export default function CategoryFilter() {
           </ul>
         </div>
         {categoryXState !== 0 && (
-          <div className='absolute left-0 w-20 h-14 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-200'>
-            <button onClick={() => handleButtonClick(-1)} className='rotate-180'>
+          <div
+            className='hidden absolute sm:w-[8rem] h-[5.5rem] w-[4rem] md:flex md:max-w-[900px] md:items-end sm:hidden'
+            style={{ left: 0, transform: 'rotate(180deg)', background: 'linear-gradient(to left, #fafafa 0%, transparent 100%)' }}
+          >
+            <button onClick={() => handleButtonClick(-1)} className='flex items-center'>
               <Image src={ICON.rightArrow.default.src} alt={ICON.rightArrow.default.alt} height={32} width={32} />
             </button>
           </div>
         )}
         {categoryXState < translateSize && (
-          <div className='absolute right-0 w-20 h-14 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-200'>
-            <button onClick={() => handleButtonClick(1)}>
+          <div className='hidden absolute w-[8rem] h-[5.5rem] sm:w-[4rem] md:flex md:max-w-[900px] md:items-end sm:hidden' style={{ right: 0 }}>
+            <button onClick={() => handleButtonClick(1)} className='flex items-center'>
               <Image src={ICON.rightArrow.default.src} alt={ICON.rightArrow.default.alt} height={32} width={32} />
             </button>
           </div>
