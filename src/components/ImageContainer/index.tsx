@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-// 슬라이더 왜 안되지
 
 interface ImageContainerProps {
   mainImageUrl: string;
@@ -18,53 +14,17 @@ function ImageContainer({ mainImageUrl, gridImages }: ImageContainerProps) {
     fillGridImages.push({ id: i, imageUrl: defaultImage });
   }
 
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <div className='slick-arrow slick-next'>Next</div>,
-    prevArrow: <div className='slick-arrow slick-prev'>Prev</div>,
-  };
-
   return (
-    <div className='flex w-[120rem] h-[50rem] gap-[0.8rem] mt-[4rem] mb-[8rem]'>
+    <div className='flex max-w-[119rem] h-[53.4rem] md:w-full md:h-[31rem] sm:w-full sm:h-[30rem] gap-[0.8rem] mt-[4rem] mb-[8rem]'>
       <div className='relative w-1/2 h-full'>
         <Image src={mainImageUrl} alt='mainImage' fill style={{ objectFit: 'cover' }} className='rounded-l-[0.8rem]' />
       </div>
       <div className='w-1/2 grid grid-cols-2 grid-rows-2 gap-[0.8em] rounded-r-[0.8rem] overflow-hidden'>
-        {isMobile ? (
-          <Slider {...settings}>
-            {fillGridImages.map((image) => (
-              <div key={image.id} className='relative w-full h-full overflow-hidden'>
-                <Image src={image.imageUrl} alt={`gridImage ${image.id}`} fill style={{ objectFit: 'cover' }} />
-              </div>
-            ))}
-          </Slider>
-        ) : (
-          fillGridImages.map((image) => (
-            <div key={image.id} className='relative w-full h-full overflow-hidden'>
-              <Image src={image.imageUrl} alt={`gridImage ${image.id}`} fill style={{ objectFit: 'cover' }} />
-            </div>
-          ))
-        )}
+        {fillGridImages.map((image) => (
+          <div key={image.id} className='relative w-full h-full overflow-hidden'>
+            <Image src={image.imageUrl} alt={`gridImage ${image.id}`} fill style={{ objectFit: 'cover' }} />
+          </div>
+        ))}
       </div>
     </div>
   );

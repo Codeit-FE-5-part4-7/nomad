@@ -37,7 +37,7 @@ function ActivityDetail() {
       <div className='flex flex-col gap-[0.25rem]'>
         <p className='text-[1.4rem] text-nomad-black'>{activity.category}</p>
         <div className='flex items-center justify-between'>
-          <h1 className='text-[3.2rem] text-nomad-black font-bold'>{activity.title}</h1>
+          <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{activity.title}</h1>
         </div>
 
         <div className='flex gap-[1.2rem]'>
@@ -49,7 +49,7 @@ function ActivityDetail() {
 
           <div className='flex gap-[0.2rem]'>
             <Image src={ICON.mapMarker.default.src} alt={ICON.mapMarker.default.alt} width={18} height={18} />
-            <p className='text-[1.4rem] text-nomad-black'>{activity.address}</p>
+            <p className='text-[1.4rem] text-nomad-black overflow-hidden whitespace-nowrap text-ellipsis'>{activity.address}</p>
           </div>
         </div>
 
@@ -62,12 +62,14 @@ function ActivityDetail() {
               <p className='text-nomad-black font-bold text-[2rem] pt-[4rem]'>체험 설명</p>
               <p className='text-nomad-black text-[1.6rem]'>{activity.description}</p>
             </div>
-            <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem]' />
+            <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem] sm:my-[2.4rem]' />
             <Map address={activity.address} />
+
             <div className='flex gap-[0.4rem] mt-[0.8rem]'>
               <Image src={ICON.mapMarker.default.src} alt={ICON.mapMarker.default.alt} width={18} height={18} />
               <p className='text-nomad-black text-[1.4rem] max-w-[70rem] overflow-hidden whitespace-nowrap text-ellipsis'>{activity.address}</p>
             </div>
+            <div />
             <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem]' />
             <ReviewList reviews={mockReview.reviews} averageRating={mockReview.averageRating} reviewCount={mockReview.totalCount} />
           </div>
