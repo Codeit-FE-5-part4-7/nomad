@@ -1,5 +1,5 @@
 import React from 'react';
-import { Schedule } from '@/types/ActivityDetail';
+import { Schedule } from '@/utils/types/schedule';
 import { format } from 'date-fns';
 import CustomCalendar from '../Calendar';
 import Button from '../Button';
