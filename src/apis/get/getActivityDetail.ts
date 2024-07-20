@@ -30,6 +30,7 @@ export interface GetDetailsForActivityResponse {
   reviewCount: number;
   createdAt: string;
   updatedAt: string;
+  // creatorId: number; // 사용자가 만든 체험인지 확인하는 기능 수정중
 }
 
 export interface GetReviewsForActivityParams {

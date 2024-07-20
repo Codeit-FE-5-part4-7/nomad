@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getDetailsForActivity, getReviewsForActivity, GetDetailsForActivityResponse, GetReviewsForActivityResponse } from '@/apis/get/getActivityDetail';
+import { ICON } from '@/constant/importImages';
 import ImageContainer from '@/components/ImageContainer';
-import Image from 'next/image';
 import Map from '@/components/Map';
 import ReviewList from '@/components/ReviewList';
 import FloatingCard from '@/components/FloatingCard';
 import TabletCard from '@/components/FloatingCard/TabletSize';
 import MobileCard from '@/components/FloatingCard/MobileSize';
-import { ICON } from '@/constant/importImages';
+import MeatBall from '@/components/Button/MeatBall';
+// import { Activity } from '@/utils/types/myActivities';
+
 /* eslint-disable */
+// const useAuth = () => {
+//   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
+//   return { userId: userId ? parseInt(userId, 10) : null };
+// };
 
 export interface ActivityDetailsProps {
   id: number;
@@ -18,9 +25,22 @@ export interface ActivityDetailsProps {
 
 function ActivityDetail({ id }: ActivityDetailsProps) {
   const router = useRouter();
+  // const { userId } = useAuth();
 
+  // console.log('User ID:', userId); // null로 뜸
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  const delActivity = (activityId: number) => {
+    fetch(`/my-activities/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then(() => {
+        // 삭제 후 로직 추가
+      })
+      .catch((error) => console.error('Failed to delete activity:', error));
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -79,12 +99,22 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
     return <div>No data available</div>;
   }
 
+  // 사용자가 만든 체험인지 확인하는 기능 수정중
+  // const isUserActivity = activityData.creatorId === userId;
+
   return (
     <div className='mt-[7rem] px-[1.6rem] sm:px-[2.4rem] md:px-[3.2rem] lg:px-[18rem]'>
       <div className='flex flex-col gap-[0.25rem]'>
         <p className='text-[1.4rem] text-nomad-black'>{activityData?.category}</p>
         <div className='flex items-center justify-between'>
           <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{activityData?.title}</h1>
+          <div className='flex items-center'>
+            {/* {isUserActivity && ( */}
+            <div className='flex items-center'>
+              <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => delActivity(id)} />
+            </div>
+            {/* )} */}
+          </div>
         </div>
 
         <div className='flex gap-[1.2rem]'>
