@@ -99,7 +99,7 @@ export default function Banner() {
   return (
     <>
       <div className='relative flex items-center w-full'>
-        <div className='relative w-full overflow-hidden'>
+        <div className='relative w-full'>
           <button
             onClick={() => handleSwipeClick(-1)}
             className='absolute left-4 top-1/2 z-10 hidden transform -translate-y-1/2 rounded-lg opacity-60 hover:opacity-100 focus:outline-none focus:ring sm:block'
@@ -114,15 +114,28 @@ export default function Banner() {
           </button>
           <ul className='flex transition-transform duration-500 ease-in-out' ref={bannerRef}>
             {bannerList?.map((banner, index) => (
-              <li className='relative flex-none w-full h-[24rem] sm:h-[55rem] px-8 overflow-hidden transition-border duration-300' key={`${banner.title}-${index}`}>
+              <li className='relative flex-none w-full h-[24rem] md:h-[55rem] px-8 overflow-hidden transition-border duration-300' key={`${banner.title}-${index}`}>
                 <Image src={banner.imageSrc} alt='배너 이미지' layout='fill' objectFit='cover' priority className='absolute min-w-full min-h-full' />
                 <div
-                  className='absolute flex flex-col justify-center gap-8 text-white 
-				left-[-25%] z-10 w-[50rem] sm:left-8 sm:w-[44rem] 
-				sm:gap-4 sm:bottom-8 sm:justify-start sm:items-start md:w-[18.4rem] md:left-6'
+                  className='absolute lg:left-[35.8rem] md:left-[5.2rem] left-[2.4rem] md:top-[14.4rem] top-[7.4rem]
+				  flex flex-col justify-start items-start lg:gap-[2rem] gap-[0.8rem] text-white 
+				   z-10 '
                 >
-                  <span className='lg:text-[6.8rem] md:text-[3.8rem] font-bold sm:text-[2.4rem]'>{banner.title}</span>
-                  <span className='text-[2rem] font-bold sm:text-[2.4rem] md:text-[1.4rem]'>{banner.text}</span>
+                  <div
+                    className='lg:w-[60rem] md:w-[50rem] w-[20rem] 
+				  lg:text-[6.8rem] md:text-[5.4rem] text-[2.4rem] 
+				  lg:leading-[8.1rem] md:leading-[6.4rem] leading-[2.9rem] 
+				  font-bold'
+                  >
+                    {banner.title}
+                  </div>
+                  <div
+                    className='lg:text-[2.4rem] md:text-[2rem] text-[1.4rem]
+				   lg:leading-[2.9rem] leading-[2.6rem]
+				  font-bold '
+                  >
+                    {banner.text}
+                  </div>
                 </div>
               </li>
             ))}

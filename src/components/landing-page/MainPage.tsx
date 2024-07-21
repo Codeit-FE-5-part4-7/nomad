@@ -63,57 +63,61 @@ export default function MainPage() {
 
   if (!isGetPopularActivitiesSuccess || !isGetActivitiesSuccess)
     return (
-      <MainLayout>
+      <>
         <Banner />
-        <div className='relative bottom-[4rem]'>
-          <Search keyword={keyword} onSubmit={onSearchResult} onChange={handleValueChange} />
-        </div>
-        <div className='flex flex-col items-center gap-[4rem]'>
-          <Skeleton type='title' />
-          <Skeleton type='popular' />
-          <CategoryFilter />
-          <Skeleton type='all' />
-        </div>
-      </MainLayout>
+        <MainLayout>
+          <div className='relative bottom-[4rem]'>
+            <Search keyword={keyword} onSubmit={onSearchResult} onChange={handleValueChange} />
+          </div>
+          <div className='flex flex-col items-center gap-[4rem]'>
+            <Skeleton type='title' />
+            <Skeleton type='popular' />
+            <CategoryFilter />
+            <Skeleton type='all' />
+          </div>
+        </MainLayout>
+      </>
     );
 
   return (
-    <MainLayout>
+    <>
       <Banner />
-      <div className='relative bottom-[6rem]'>
-        <Search keyword={keyword} onSubmit={onSearchResult} onChange={handleValueChange} />
-      </div>
-      {searchKeyword ? (
-        <>
-          {isGetSearchResultDataSuccess && searchResultData.totalCount > 0 ? (
-            <>
-              <div className='flex flex-col items-center gap-[4rem]'>
-                <ActivitiesList activities={searchResultData.activities} search={searchKeyword} searchTotalCount={searchResultData.totalCount} />
+      <MainLayout>
+        <div className='relative bottom-[6rem]'>
+          <Search keyword={keyword} onSubmit={onSearchResult} onChange={handleValueChange} />
+        </div>
+        {searchKeyword ? (
+          <>
+            {isGetSearchResultDataSuccess && searchResultData.totalCount > 0 ? (
+              <>
+                <div className='flex flex-col items-center gap-[4rem]'>
+                  <ActivitiesList activities={searchResultData.activities} search={searchKeyword} searchTotalCount={searchResultData.totalCount} />
+                </div>
+                <div className='mt-[7rem]'>
+                  <Pagination data={searchResultData} currentPage={currentPage} setCurrentPage={setCurrentPage} PAGE_LIMIT={currentSize} />
+                </div>
+              </>
+            ) : (
+              <div className='flex flex-col items-center mt-[10rem] gap-[2rem]'>
+                <Image src={IMAGE.noData.default.src} alt={IMAGE.noData.default.alt} height={177} width={130} />
+                <span className='text-2xl font-medium text-gray-700'>검색 결과가 없습니다.</span>
               </div>
-              <div className='mt-[7rem]'>
-                <Pagination data={searchResultData} currentPage={currentPage} setCurrentPage={setCurrentPage} PAGE_LIMIT={currentSize} />
-              </div>
-            </>
-          ) : (
-            <div className='flex flex-col items-center mt-[10rem] gap-[2rem]'>
-              <Image src={IMAGE.noData.default.src} alt={IMAGE.noData.default.alt} height={177} width={130} />
-              <span className='text-2xl font-medium text-gray-700'>검색 결과가 없습니다.</span>
+            )}
+          </>
+        ) : (
+          <>
+            <div className='flex flex-col items-center gap-[4rem]'>
+              <PopularActivities popularActivities={popularActivitiesData.activities} />
+              <CategoryFilter />
+              <ActivitiesList category={mainCategory} activities={activitiesData?.activities} />
             </div>
-          )}
-        </>
-      ) : (
-        <>
-          <div className='flex flex-col items-center gap-[4rem]'>
-            <PopularActivities popularActivities={popularActivitiesData.activities} />
-            <CategoryFilter />
-            <ActivitiesList category={mainCategory} activities={activitiesData?.activities} />
-          </div>
-          <div className='mt-[7rem]'>
-            <Pagination data={activitiesData} currentPage={currentPage} setCurrentPage={setCurrentPage} PAGE_LIMIT={currentSize} />
-          </div>
-        </>
-      )}
-    </MainLayout>
+            <div className='mt-[7rem]'>
+              <Pagination data={activitiesData} currentPage={currentPage} setCurrentPage={setCurrentPage} PAGE_LIMIT={currentSize} />
+            </div>
+          </>
+        )}
+      </MainLayout>
+    </>
   );
 }
 /* eslint-enable */

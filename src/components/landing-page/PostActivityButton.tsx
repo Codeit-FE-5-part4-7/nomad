@@ -24,11 +24,11 @@ export default function PostActivityButton() {
   return (
     <>
       <button
-        className='bg-[#0b3b2d] text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 ease-in-out md:text-base md:py-2'
+        className='md:w-[9.65rem] w-[8.9rem] md:h-[5.1rem] h-[3.9rem] bg-[#0b3b2d] text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 ease-in-out md:py-2'
         type='button'
         onClick={handlePostActivityButtonClick}
       >
-        체험 등록
+        <span className='md:text-[1.6rem] text-[1.4rem]'>체험 등록</span>
       </button>
       <Question dialogRef={questionRef} text='로그인 하시겠습니까?' onClick={handleDirectSignin} buttonText='예' />
     </>

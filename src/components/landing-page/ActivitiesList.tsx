@@ -30,8 +30,9 @@ export default function ActivitiesList({ category = '전체', activities, search
             {category || '전체 체험'}
             <PostActivityButton />
           </h2>
-          <ul className='grid grid-cols-4 gap-x-6 gap-y-12 md:grid-cols-3 md:gap-x-6 md:gap-y-8 
-		  sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8'>
+          <ul className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 
+		  lg:gap-x-6 lg:gap-y-12 md:gap-x-6 md:gap-y-8 
+		   gap-x-4 gap-y-8'>
             {activities?.map((activity, index) => (
               <li key={`${activity.id}-${activity.userId}-${index}`}>
                 <CardResource activitiesData={activity} banner={false} />

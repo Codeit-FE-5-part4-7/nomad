@@ -59,7 +59,7 @@ export default function CategoryFilter() {
     <div className='flex justify-between items-center w-full min-w-0'>
       <div className='flex items-center relative min-w-0'>
         <div className='overflow-hidden'>
-          <ul className='flex items-center gap-[2.4rem] md:gap-[1.6rem] sm:gap-[0.8rem]' ref={categoryRef}>
+          <ul className='flex gap-[2.4rem] md:gap-[1.6rem] sm:gap-[0.8rem]' ref={categoryRef}>
             {categoryList.map((category, index) => (
               <li key={`${category}-${index}`} className='flex-shrink-0'>
                 <Category category={category} isActive={categoryState === category} onClick={handleCategoryClick} />
@@ -68,18 +68,15 @@ export default function CategoryFilter() {
           </ul>
         </div>
         {categoryXState !== 0 && (
-          <div
-            className='hidden absolute sm:w-[8rem] h-[5.5rem] w-[4rem] md:flex md:max-w-[900px] md:items-end sm:hidden'
-            style={{ left: 0, transform: 'rotate(180deg)', background: 'linear-gradient(to left, #fafafa 0%, transparent 100%)' }}
-          >
-            <button onClick={() => handleButtonClick(-1)} className='flex items-center'>
+          <div className='absolute w-[8rem] h-[5.5rem] left-0 rotate-180 md:flex md:justify-end md:items-center md:bg-gradient-to-l md:from-[#f5f5f5]'>
+            <button onClick={() => handleButtonClick(-1)} className='hidden md:flex'>
               <Image src={ICON.rightArrow.default.src} alt={ICON.rightArrow.default.alt} height={32} width={32} />
             </button>
           </div>
         )}
-        {categoryXState < translateSize && (
-          <div className='hidden absolute w-[8rem] h-[5.5rem] sm:w-[4rem] md:flex md:max-w-[900px] md:items-end sm:hidden' style={{ right: 0 }}>
-            <button onClick={() => handleButtonClick(1)} className='flex items-center'>
+        {(categoryXState < translateSize) && (
+          <div className='absolute w-[8rem] h-[5.5rem] right-0 md:flex md:justify-end md:items-center md:bg-gradient-to-l md:from-[#f5f5f5]'>
+            <button onClick={() => handleButtonClick(1)} className='hidden md:flex'>
               <Image src={ICON.rightArrow.default.src} alt={ICON.rightArrow.default.alt} height={32} width={32} />
             </button>
           </div>

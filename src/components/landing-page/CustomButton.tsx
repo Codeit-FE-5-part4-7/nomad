@@ -15,7 +15,7 @@ function LandingPageButton({ size, variant = 'primary', type = 'button', text = 
   const sizeClasses = {
     xl: 'w-32 py-4',
     lg: 'w-full py-3.5',
-    md: 'w-36 py-4',
+    md: 'w-[13.6rem] py-4',
     sm: 'w-28 py-2.5',
   };
 

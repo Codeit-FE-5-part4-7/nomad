@@ -42,6 +42,8 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const year = currentMonth.format('YYYY');
   const month = currentMonth.format('MM');
+  // const [isCalendarClick, setIsCalendarClick] = useState(false);
+  // const [selectedDate, setSeletedDate] = useState<string | null>();
 
   const { data } = useQuery({
     queryKey: ['reservations', selectedActivityId, year, month],
@@ -92,6 +94,11 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
     return reservations;
   };
 
+  // const handleCalendarClick = (day: string) => {
+  //   setIsCalendarClick(!isCalendarClick);
+  //   setSeletedDate(day);
+  // };
+
   return (
     <div className='text-[#000] my-[1.6rem]'>
       <div className='flex flex-row items-center mb-[2.3rem] justify-between'>
@@ -116,15 +123,17 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
               type='button'
               key={day.format('YYYY-MM-DD')}
               className={`flex w-1/7 h-[8.4rem] p-[0.3rem] border-[#e8e8e8] border flex-col ${day.isSame(currentMonth, 'month') ? '' : 'bg-gray-50'} ${day.isSame(dayjs(), 'day') ? 'border-blue border-[0.2rem]' : ''}  hover:border-blue hover:border-[0.3rem]`}
+              // onClick={() => handleCalendarClick(day.format('YYYY-MM-DD'))}
             >
               <div className='text-left w-[100%]'>
                 <span className=''>{day.date()}</span>
               </div>
-              <BookedBox reservations={reservationsForDay} />
+              <BookedBox reservations={reservationsForDay} resData={data} />
             </button>
           );
         })}
       </div>
+      {/* {isCalendarClick && selectedDate && <ReservationInfo data={selectedDate} activityId={selectedActivityId} />} */}
     </div>
   );
 }

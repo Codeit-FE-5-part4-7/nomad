@@ -8,6 +8,7 @@ import CategoryButton from '@/components/FilterButton/CategoryButton';
 import FilterDropButton from '@/components/FilterButton/FilterDropButton';
 import { Input } from '@/components/Input';
 import Dropdown from '@/components/Dropdown';
+import ReservationInfo from '@/components/Modal/ModalContents/reservation-info/ReservationInfo';
 
 /* eslint-disable */
 export const getStaticProps = async () => ({
@@ -94,6 +95,19 @@ function Index() {
   ];
   //----------------------------------------------------------------
 
+  // ReservationInfo -----------------------------------------------
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+  //----------------------------------------------------------------
+
   return (
     <>
       <p>버튼 컴포넌트를 수정해서 기존에 있던 CustomButton이 아닌 Button을 사용하시면 됩니다.</p>
@@ -144,6 +158,18 @@ function Index() {
         {selectedCategoryId && <p className='mt-4'>Selected Category ID: {selectedCategoryId}</p>}
       </div>
       <hr />
+      <div className='app-container'>
+        <h1>My Reservations</h1>
+        <Button text='ReservationInfo 열기' color='white' onClick={handleModalOpen} />
+        {isModalOpen && (
+          <div className='modal'>
+            <div className='modal-content'>
+              <button onClick={handleModalClose}>Close</button>
+              <ReservationInfo date='2024-03-20' activityId={178} onClickCloseModal={handleModalClose} />
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }

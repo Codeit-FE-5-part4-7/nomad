@@ -56,7 +56,6 @@ export default function Search({ keyword, onSubmit, onChange }: Props) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     onSubmit();
   };
 
@@ -66,38 +65,45 @@ export default function Search({ keyword, onSubmit, onChange }: Props) {
       setTitle(data?.activities[0].title);
     }
 
-    const title = setInterval(() => {
+    const titleInterval = setInterval(() => {
       if (count < data?.activities.length) {
         setTitle(data?.activities[count++].title);
       }
     }, 3000);
 
-    return () => clearInterval(title);
+    return () => clearInterval(titleInterval);
   }, [data]);
 
   if (isLoading) return <Skeleton type='search' />;
 
   return (
-    <div className='p-8 box-shadow-md rounded-lg bg-white'>
-      <p className='text-2xl font-bold text-[#333236] mb-8 leading-[2.6rem] md:text-[1.6rem] md:mb-4'>무엇을 체험하고 싶으신가요?</p>
-      <div className='flex relative'>
-        <form onSubmit={handleSubmit} className={`flex items-center w-full gap-3 ${isKeyword ? 'active' : ''}`} onFocus={handleSearchFocus}>
+    <div className='p-8 md:p-6 shadow-lg rounded-lg bg-white'>
+      <p className='text-2xl font-bold text-[#333236] mb-8 md:text-lg md:mb-6 leading-10'>무엇을 체험하고 싶으신가요?</p>
+      <div className='flex flex-col relative'>
+        <form onSubmit={handleSubmit} className={`flex items-center justify-center w-full gap-3 relative ${isKeyword ? 'active' : ''}`} onFocus={handleSearchFocus}>
           <input
-            className="text-[1.6rem] font-normal text-black relative w-full p-4 pr-12 border border-gray-500 rounded-md leading-[2.6rem] bg-white bg-no-repeat bg-[url('/icons/Icon_bed.svg')] bg-left-3.5 bg-[center] focus:outline-none md:text-[1.4rem] md:bg-[url('/icons/Icon_bed.svg')] md:bg-left-3.5"
+            className="text-lg font-normal text-[#1b1b1b] w-full p-6 pl-[4.8rem] border border-[#79747e] rounded-md bg-white bg-no-repeat bg-[url('/icons/Icon_bed.svg')] bg-[1.2rem_1.6rem] md:text-base md:bg-[url('/icons/Icon_bed.svg')] md:bg-[1.2rem_1.2rem]"
             type='search'
             onChange={handleValueChange}
             value={keyword}
-            style={{
-              backgroundPosition: '1.2rem 1.6rem',
-            }}
+            style={{ backgroundImage: "url('/icons/Icon_bed.svg')" }}
           />
-          <div className='h-14 md:w-24 md:h-12'>
+          <div className='flex items-center justify-center w-[13.6rem]'>
             <LandingPageButton type='submit' size='md' text='검색하기' />
           </div>
+          {isKeyword && (
+            <span className='text-lg font-normal text-[#a4a1aa] absolute left-14 bg-white px-2 transform -translate-y-8 transition-transform duration-300 md:text-base md:transform-none md:top-[-1rem]'>
+              내가 원하는 체험은
+            </span>
+          )}
         </form>
-        <div className='absolute left-44 top-1/2 transform -translate-y-1/2 md:hidden'>
-          <ul>{!keyword && !isFocus && <li className='text-[1.6rem] font-normal text-gray-400 h-[2.5rem] overflow-hidden'>{title}</li>}</ul>
-        </div>
+        {!isKeyword && !isFocus && (
+          <div className='absolute left-[17.5rem] top-1/2 transform -translate-y-1/2 h-10 overflow-hidden md:hidden'>
+            <ul>
+              <li className='text-lg font-normal text-[#adaeb8] leading-10'>{title}</li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
