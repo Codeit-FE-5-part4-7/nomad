@@ -16,17 +16,7 @@ interface MobileCardProps {
 
 function MobileCard({ price, schedules }: MobileCardProps) {
   // const { openModal } = useModal();
-  const {
-    selectedDate,
-    selectedTime,
-    participants,
-    handleDateChange,
-    handleParticipantsChange,
-    handleTimeChange,
-    handleReservation,
-    isButtonDisabled,
-    totalCost
-  } = useReservation(schedules, price);
+  const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
   const [isParticipantsPopupOpen, setIsParticipantsPopupOpen] = useState(false);
   const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');

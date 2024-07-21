@@ -14,17 +14,7 @@ interface FloatingCardProps {
 }
 
 function FloatingCard({ schedules, price }: FloatingCardProps) {
-  const {
-    selectedDate,
-    selectedTime,
-    participants,
-    handleDateChange,
-    handleParticipantsChange,
-    handleTimeChange,
-    handleReservation,
-    isButtonDisabled,
-    totalCost
-  } = useReservation(schedules, price);
+  const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
   return (
     <div className='w-full max-w-[38.4rem] h-auto bg-white border-[0.2rem] border-gray-50 shadow-lg rounded-[0.8rem] p-[1rem] mx-auto'>

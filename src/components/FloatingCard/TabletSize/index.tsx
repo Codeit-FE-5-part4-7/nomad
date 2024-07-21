@@ -15,17 +15,7 @@ interface TabletCardProps {
 
 function TabletCard({ schedules, price }: TabletCardProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const {
-    selectedDate,
-    selectedTime,
-    participants,
-    handleDateChange,
-    handleParticipantsChange,
-    handleTimeChange,
-    handleReservation,
-    isButtonDisabled,
-    totalCost
-  } = useReservation(schedules, price);
+  const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
   const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');
   const { isPopupOpen, openPopup, closePopup, popupStyles, setPopupPosition } = usePopup(false);
