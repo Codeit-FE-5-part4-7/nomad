@@ -59,7 +59,9 @@ function ReviewList({ reviews, averageRating, totalCount }: ReviewListProps) {
       </div>
 
       {totalCount === 0 ? (
-        <p className='text-nomad-black text-[1.6rem]'>등록된 후기가 없습니다.</p>
+        <div className='mb-[20rem]'>
+          <p className='text-nomad-black text-[1.6rem]'>등록된 후기가 없습니다.</p>
+        </div>
       ) : (
         <>
           {currentReviews.map((review, index) => (
