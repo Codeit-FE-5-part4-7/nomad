@@ -49,15 +49,4 @@ module.exports = {
       typescript: {},
     },
   },
-  // 린트 에러 피하려 추가 
-  // 수정 이후에 삭제 예정
-  overrides: [
-    {
-      files: ['src/components/FloatingCard/MobileSize/index.tsx'],
-      rules: {
-        'jsx-a11y/click-events-have-key-events': 'off',
-        'jsx-a11y/no-noninteractive-element-interactions': 'off',
-      },
-    },
-  ],
-};
+ };
