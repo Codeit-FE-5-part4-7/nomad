@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 // 모바일 일때 슬라이더로 전환
+// 이미지 클릭 시 크게 보이게
 
 interface ImageContainerProps {
   mainImageUrl: string;

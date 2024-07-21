@@ -11,7 +11,7 @@ import FloatingCard from '@/components/FloatingCard';
 import TabletCard from '@/components/FloatingCard/TabletSize';
 import MobileCard from '@/components/FloatingCard/MobileSize';
 import MeatBall from '@/components/Button/MeatBall';
-// import { Activity } from '@/utils/types/myActivities';
+import deleteActivity from '@/apis/delete/deleteActivity';
 
 /* eslint-disable */
 // const useAuth = () => {
@@ -31,15 +31,19 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  const delActivity = (activityId: number) => {
-    fetch(`/my-activities/${id}`, {
-      method: 'DELETE',
-    })
-      .then((response) => response.json())
-      .then(() => {
-        // 삭제 후 로직 추가
-      })
-      .catch((error) => console.error('Failed to delete activity:', error));
+  // 삭제하기 눌렀을때 진짜 삭제하시겠습니까? 모달 뜨게 하기
+  const delActivity = async (activityId: number) => {
+    try {
+      const response = await deleteActivity(activityId);
+      if (response) {
+        router.push('/');
+      } else {
+        alert(response);
+      }
+    } catch (error) {
+      console.error('활동 삭제 실패:', error);
+      alert('활동 삭제 실패. 나중에 다시 시도해주세요.');
+    }
   };
 
   useEffect(() => {
@@ -86,17 +90,17 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
   }
 
   if (activityError) {
-    console.error('Error fetching activity data:', activityError);
-    return <div>Error fetching activity data</div>;
+    console.error('활동 데이터 로딩 실패:', activityError);
+    return <div>활동 데이터 로딩 실패</div>;
   }
 
   if (reviewsError) {
-    console.error('Error fetching reviews data:', reviewsError);
-    return <div>Error fetching reviews data</div>;
+    console.error('리뷰 데이터 로딩 실패:', reviewsError);
+    return <div>리뷰 데이터 로딩 실패</div>;
   }
 
   if (!activityData || !reviewsData) {
-    return <div>No data available</div>;
+    return <div>데이터가 없습니다</div>;
   }
 
   // 사용자가 만든 체험인지 확인하는 기능 수정중
