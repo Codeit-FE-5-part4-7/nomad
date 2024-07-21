@@ -5,6 +5,7 @@ import { Schedule } from '@/utils/types/schedule';
 import Button from '@/components/Button';
 import CustomPopup from '@/components/CustomPopup';
 import useReservation from '@/hooks/useReservation';
+import usePopup from '@/hooks/usePopup';
 
 /* eslint-disable */
 interface TabletCardProps {
@@ -27,17 +28,18 @@ function TabletCard({ schedules, price }: TabletCardProps) {
   } = useReservation(schedules, price);
 
   const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { isPopupOpen, openPopup, closePopup, popupStyles, setPopupPosition } = usePopup(false);
 
   const handlePopupOpen = () => {
-    setIsPopupOpen(true);
+    openPopup();
+    setPopupPosition(cardRef.current);
   };
 
   const handlePopupClose = (newTimeText: string | null) => {
     if (newTimeText !== null) {
       setSelectedTimeText(newTimeText);
     }
-    setIsPopupOpen(false);
+    closePopup();
   };
 
   return (
@@ -79,14 +81,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
         </div>
       </div>
       {isPopupOpen && cardRef.current && (
-        <div
-          style={{
-            position: 'absolute',
-            top: cardRef.current.getBoundingClientRect().bottom + window.scrollY,
-            left: cardRef.current.getBoundingClientRect().left + window.scrollX,
-            zIndex: 1000,
-          }}
-        >
+        <div style={popupStyles}>
           <CustomPopup
             schedules={schedules}
             selectedDate={selectedDate}

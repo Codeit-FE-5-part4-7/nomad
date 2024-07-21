@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/Button';
-import useModal from '@/hooks/useModal';
+// import useModal from '@/hooks/useModal';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import CustomPopup from '@/components/CustomPopup';
 import { Schedule } from '@/utils/types/schedule';
 import useReservation from '@/hooks/useReservation';
+import usePopup from '@/hooks/usePopup';
 
 /* eslint-disable */
 interface MobileCardProps {
@@ -14,13 +15,24 @@ interface MobileCardProps {
 }
 
 function MobileCard({ price, schedules }: MobileCardProps) {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // const { openModal } = useModal();
+  const {
+    selectedDate,
+    selectedTime,
+    participants,
+    handleDateChange,
+    handleParticipantsChange,
+    handleTimeChange,
+    handleReservation,
+    isButtonDisabled,
+    totalCost
+  } = useReservation(schedules, price);
+
   const [isParticipantsPopupOpen, setIsParticipantsPopupOpen] = useState(false);
   const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');
   const [participantsText, setParticipantsText] = useState<string>('1명');
-  const { openModal } = useModal();
 
-  const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
+  const { isPopupOpen, openPopup, closePopup, popupStyles, setPopupPosition } = usePopup(true);
 
   useEffect(() => {
     if (participants === 1) {
@@ -38,16 +50,16 @@ function MobileCard({ price, schedules }: MobileCardProps) {
     }
   }, [selectedDate, selectedTime]);
 
-  const handleOpenPopup = () => setIsPopupOpen(true);
-  const handleClosePopup = () => setIsPopupOpen(false);
-  const handleOpenParticipantsPopup = () => setIsParticipantsPopupOpen(true);
-  const handleCloseParticipantsPopup = () => setIsParticipantsPopupOpen(false);
+  const handleOpenPopup = () => {
+    openPopup();
+    setPopupPosition(null); // 모바일에서는 위치 설정이 필요 없음
+  };
 
   const handlePopupClose = (newTimeText: string | null) => {
     if (newTimeText !== null) {
       setSelectedTimeText(newTimeText);
     }
-    handleClosePopup();
+    closePopup();
   };
 
   return (
@@ -56,7 +68,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
         <div className='flex flex-col gap-[0.8rem]'>
           <div className='flex flex-row items-center'>
             <p className='text-[2rem] font-bold text-nomad-black'>₩ {price.toLocaleString()} /</p>
-            <p className='text-[1.8rem] text-dark-green cursor-pointer underline ml-1' onClick={handleOpenParticipantsPopup}>
+            <p className='text-[1.8rem] text-dark-green cursor-pointer underline ml-1' onClick={() => setIsParticipantsPopupOpen(true)}>
               {participantsText}
             </p>
           </div>
@@ -74,7 +86,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
         <div className='fixed inset-0 flex items-center justify-center z-[1000]'>
           <div className='fixed inset-0 bg-black bg-opacity-50 z-[-1]' />
           <div className='relative bg-white rounded-lg shadow-lg p-4 w-full h-full max-w-[90%] max-h-[90%] md:max-w-[48rem] md:max-h-[60rem]'>
-            <button type='button' onClick={handleClosePopup} className='absolute top-4 right-4 p-2'>
+            <button type='button' onClick={closePopup} className='absolute top-4 right-4 p-2'>
               <Image src={ICON.close.default.src} alt={ICON.close.default.alt} width={20} height={20} />
             </button>
             <CustomPopup
@@ -95,7 +107,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
         <div className='fixed inset-0 flex items-center justify-center z-[1000]'>
           <div className='fixed inset-0 bg-black bg-opacity-50 z-[-1]' />
           <div className='relative bg-white rounded-lg shadow-lg p-4 w-full h-full md:max-w-[48rem] md:max-h-[60rem] flex flex-col'>
-            <button type='button' onClick={handleCloseParticipantsPopup} className='absolute top-4 right-4 p-2'>
+            <button type='button' onClick={() => setIsParticipantsPopupOpen(false)} className='absolute top-4 right-4 p-2'>
               <Image src={ICON.close.default.src} alt={ICON.close.default.alt} width={20} height={20} />
             </button>
 
@@ -115,7 +127,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
               </div>
             </div>
             <div className='flex justify-center mt-[6.4rem] mb-[3.2rem]'>
-              <Button text='확인' color='black' cssName='w-full max-w-[43.2rem] h-[5.6rem] text-[1.6rem] font-bold' onClick={handleCloseParticipantsPopup} />
+              <Button text='확인' color='black' cssName='w-full max-w-[43.2rem] h-[5.6rem] text-[1.6rem] font-bold' onClick={() => setIsParticipantsPopupOpen(false)} />
             </div>
           </div>
         </div>
