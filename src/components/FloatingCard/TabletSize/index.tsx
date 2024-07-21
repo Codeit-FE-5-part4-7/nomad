@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import { Schedule } from '@/utils/types/schedule';
 import Button from '@/components/Button';
 import CustomPopup from '@/components/CustomPopup';
-import useModal from '@/hooks/useModal';
+import useReservation from '@/hooks/useReservation';
+
 /* eslint-disable */
 interface TabletCardProps {
   schedules: Schedule[];
@@ -12,53 +13,32 @@ interface TabletCardProps {
 }
 
 function TabletCard({ schedules, price }: TabletCardProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<number | null>(null);
-  const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');
-  const [participants, setParticipants] = useState(1);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const { openModal } = useModal();
+  const {
+    selectedDate,
+    selectedTime,
+    participants,
+    handleDateChange,
+    handleParticipantsChange,
+    handleTimeChange,
+    handleReservation,
+    isButtonDisabled,
+    totalCost
+  } = useReservation(schedules, price);
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setSelectedTime(null);
-  };
+  const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const handleParticipantsChange = (delta: number) => {
-    setParticipants((prev) => Math.max(1, prev + delta));
-  };
-
-  const handleTimeChange = (id: number) => {
-    setSelectedTime((prev) => (prev === id ? null : id));
-  };
-
-  const handleOpenPopup = () => {
+  const handlePopupOpen = () => {
     setIsPopupOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
   };
 
   const handlePopupClose = (newTimeText: string | null) => {
     if (newTimeText !== null) {
       setSelectedTimeText(newTimeText);
     }
-    handleClosePopup();
+    setIsPopupOpen(false);
   };
-
-  const handleOpenAlertModal = () => {
-    openModal({
-      modalType: 'alert',
-      content: '예약이 완료되었습니다.',
-      btnName: ['확인'],
-    });
-  };
-
-  const isButtonDisabled = selectedTime === null || selectedDate === null;
-
-  const totalCost = price * participants;
 
   return (
     <div ref={cardRef} className='relative z-10'>
@@ -70,7 +50,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
           </div>
           <div className='border border-solid border-gray-50 mt-[1.6rem]' />
           <p className='my-[1.6rem] font-bold text-nomad-black text-[2rem]'>날짜</p>
-          <p className='text-[1.6rem] text-nomad-black cursor-pointer underline font-semibold' onClick={handleOpenPopup}>
+          <p className='text-[1.6rem] text-nomad-black cursor-pointer underline font-semibold' onClick={handlePopupOpen}>
             {selectedTimeText}
           </p>
 
@@ -89,7 +69,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
           </div>
 
           <div className='flex justify-center'>
-            <Button text='예약하기' color='black' cssName='w-[33.6rem] h-[4.6rem] text-[1.6rem] text-bold' onClick={handleOpenAlertModal} disabled={isButtonDisabled} />
+            <Button text='예약하기' color='black' cssName='w-[33.6rem] h-[4.6rem] text-[1.6rem] text-bold' onClick={handleReservation} disabled={isButtonDisabled} />
           </div>
           <div className='border border-solid border-gray-100 mt-[1.6rem]' />
           <div className='flex justify-between my-[1.8rem]'>
@@ -123,4 +103,5 @@ function TabletCard({ schedules, price }: TabletCardProps) {
 }
 
 export default TabletCard;
+
 /* eslint-enable */

@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { ICON } from '@/constant';
 import CustomPopup from '@/components/CustomPopup';
 import { Schedule } from '@/utils/types/schedule';
+import useReservation from '@/hooks/useReservation';
 
+/* eslint-disable */
 interface MobileCardProps {
   price: number;
   schedules: Schedule[];
@@ -14,12 +16,11 @@ interface MobileCardProps {
 function MobileCard({ price, schedules }: MobileCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isParticipantsPopupOpen, setIsParticipantsPopupOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<number | null>(null);
   const [selectedTimeText, setSelectedTimeText] = useState<string>('날짜 선택하기');
-  const [participants, setParticipants] = useState(1);
   const [participantsText, setParticipantsText] = useState<string>('1명');
   const { openModal } = useModal();
+
+  const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
   useEffect(() => {
     if (participants === 1) {
@@ -29,31 +30,18 @@ function MobileCard({ price, schedules }: MobileCardProps) {
     }
   }, [participants]);
 
+  useEffect(() => {
+    if (selectedDate && selectedTime) {
+      setSelectedTimeText(`시간 ${selectedTime}`);
+    } else {
+      setSelectedTimeText('날짜 선택하기');
+    }
+  }, [selectedDate, selectedTime]);
+
   const handleOpenPopup = () => setIsPopupOpen(true);
   const handleClosePopup = () => setIsPopupOpen(false);
   const handleOpenParticipantsPopup = () => setIsParticipantsPopupOpen(true);
   const handleCloseParticipantsPopup = () => setIsParticipantsPopupOpen(false);
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setSelectedTime(null);
-  };
-
-  const handleTimeChange = (id: number) => {
-    setSelectedTime((prev) => (prev === id ? null : id));
-  };
-
-  const handleParticipantsChange = (delta: number) => {
-    setParticipants((prev) => Math.max(1, prev + delta));
-  };
-
-  const handleOpenAlertModal = () => {
-    openModal({
-      modalType: 'alert',
-      content: '예약이 완료되었습니다.',
-      btnName: ['확인'],
-    });
-  };
 
   const handlePopupClose = (newTimeText: string | null) => {
     if (newTimeText !== null) {
@@ -61,8 +49,6 @@ function MobileCard({ price, schedules }: MobileCardProps) {
     }
     handleClosePopup();
   };
-
-  const isButtonDisabled = selectedTime === null || selectedDate === null;
 
   return (
     <>
@@ -79,7 +65,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
           </p>
         </div>
         <div className='flex flex-col items-center'>
-          <Button text='예약하기' color='black' cssName='w-[10.6rem] h-[4.8rem] text-[1.6rem] font-bold' onClick={handleOpenAlertModal} disabled={isButtonDisabled} />
+          <Button text='예약하기' color='black' cssName='w-[10.6rem] h-[4.8rem] text-[1.6rem] font-bold' onClick={handleReservation} disabled={isButtonDisabled} />
         </div>
       </div>
 
@@ -139,3 +125,5 @@ function MobileCard({ price, schedules }: MobileCardProps) {
 }
 
 export default MobileCard;
+
+/* eslint-enable */

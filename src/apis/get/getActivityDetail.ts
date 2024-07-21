@@ -58,6 +58,28 @@ export interface GetReviewsForActivityResponse {
   ];
 }
 
+export interface PostActivityReservParams {
+  scheduleId: number;
+  headCount: number;
+}
+
+export interface PostActivityReservResponse {
+  id: number;
+  teamId: string;
+  userId: number;
+  activityId: number;
+  scheduleId: number;
+  status: 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
+  reviewSubmitted: boolean;
+  totalPrice: number;
+  headCount: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export const getDetailsForActivity = async (params: GetDetailsForActivityParams): Promise<GetDetailsForActivityResponse> => {
   const { id } = params;
   const response = await instance.get(`/activities/${id}`);
@@ -68,6 +90,14 @@ export const getReviewsForActivity = async (params: GetReviewsForActivityParams)
   const { id, page = 1, size = 3 } = params;
   const response = await instance.get(`/activities/${id}/reviews`, {
     params: { page, size },
+  });
+  return response.data;
+};
+
+export const PostActivityReserv = async (activityId: number, params: PostActivityReservParams): Promise<PostActivityReservResponse> => {
+  const response = await instance.post(`/activities/${activityId}/reservations`, {
+    scheduleId: params.scheduleId,
+    headCount: params.headCount,
   });
   return response.data;
 };

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import { Schedule } from '@/utils/types/schedule';
-import useModal from '@/hooks/useModal';
+// import useModal from '@/hooks/useModal';
+import useReservation from '@/hooks/useReservation';
 import ReservationContent from '../ReservationContent';
 import Button from '../Button';
+
 /* eslint-disable */
 interface FloatingCardProps {
   schedules: Schedule[];
@@ -12,35 +14,17 @@ interface FloatingCardProps {
 }
 
 function FloatingCard({ schedules, price }: FloatingCardProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<number | null>(null);
-  const [participants, setParticipants] = useState(1);
-  const { openModal } = useModal();
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setSelectedTime(null);
-  };
-
-  const handleParticipantsChange = (delta: number) => {
-    setParticipants((prev) => Math.max(1, prev + delta));
-  };
-
-  const handleTimeChange = (id: number) => {
-    setSelectedTime((prev) => (prev === id ? null : id));
-  };
-
-  const handleOpenAlertModal = () => {
-    openModal({
-      modalType: 'alert',
-      content: '예약이 완료되었습니다.',
-      btnName: ['확인'],
-    });
-  };
-
-  const isButtonDisabled = selectedTime === null || selectedDate === null;
-
-  const totalCost = price * participants;
+  const {
+    selectedDate,
+    selectedTime,
+    participants,
+    handleDateChange,
+    handleParticipantsChange,
+    handleTimeChange,
+    handleReservation,
+    isButtonDisabled,
+    totalCost
+  } = useReservation(schedules, price);
 
   return (
     <div className='w-full max-w-[38.4rem] h-auto bg-white border-[0.2rem] border-gray-50 shadow-lg rounded-[0.8rem] p-[1rem] mx-auto'>
@@ -68,7 +52,7 @@ function FloatingCard({ schedules, price }: FloatingCardProps) {
         </div>
 
         <div className='flex justify-center'>
-          <Button text='예약하기' color='black' cssName='w-[33.6rem] h-[4.6rem] text-[1.6rem] text-bold' onClick={handleOpenAlertModal} disabled={isButtonDisabled} />
+          <Button text='예약하기' color='black' cssName='w-[33.6rem] h-[4.6rem] text-[1.6rem] text-bold' onClick={handleReservation} disabled={isButtonDisabled} />
         </div>
         <div className='border border-solid border-gray-100 mt-[1.6rem]' />
         <div className='flex justify-between my-[1.8rem]'>
@@ -81,4 +65,5 @@ function FloatingCard({ schedules, price }: FloatingCardProps) {
 }
 
 export default FloatingCard;
+
 /* eslint-enable */
