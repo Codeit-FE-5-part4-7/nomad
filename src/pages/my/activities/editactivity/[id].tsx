@@ -144,8 +144,8 @@ export default function PostActivitiy() {
     const scheduleForInit = { ...schedule, id: -1 };
     setInitData((prev) => ({ ...prev, schedules: [...prev.schedules, scheduleForInit] }));
     setPatchData((prev) => ({ ...prev, schedulesToAdd: [...prev.schedulesToAdd, schedule] }));
-    setSchedule(() => ({
-      date: '',
+    setSchedule((prev) => ({
+      ...prev,
       startTime: '',
       endTime: '',
     }));

@@ -5,9 +5,9 @@ import ImageCard from '@/components/Card/ImageCard';
 import Dropdown from '@/components/Dropdown';
 import { DateInput, Input, Textarea } from '@/components/Input';
 import ImageInput from '@/components/Input/ImageInput';
+import TimeInput from '@/components/Input/TimeInput';
 import MyLayout from '@/components/MyLayout';
 import ScheduleListItem from '@/components/ScheduleListItem';
-import ModalContextProvider from '@/context/modalContext';
 import useModal from '@/hooks/useModal';
 import { POSTActivitiesReq } from '@/utils/types/myActivities';
 import Image from 'next/image';
@@ -120,6 +120,11 @@ export default function PostActivitiy() {
 
   const addSchedule = () => {
     setPostData((prev) => ({ ...prev, schedules: [...prev.schedules, schedule] }));
+    setSchedule((prev) => ({
+      ...prev,
+      startTime: '',
+      endTime: '',
+    }));
   };
 
   const delSchedule = (targetSchedule: { date: string; startTime: string; endTime: string }) => {
@@ -164,134 +169,130 @@ export default function PostActivitiy() {
   };
 
   return (
-    <ModalContextProvider>
-      <MyLayout>
-        <main className='bg-[#fafafa] mb-[27rem] max-lg:mb-[40rem] max-md:mb-[13.6rem] text-[1.6rem]'>
-          <form onSubmit={handleSubmit}>
-            <div className='flex justify-between mb-[2.4rem] '>
-              <h2 className='text-[3.2rem] text-[#000] leading-[3.8rem] font-bold'>내 체험 등록</h2>
-              <Button type='submit' color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='등록하기' />
+    <MyLayout>
+      <main className='bg-[#fafafa] mb-[27rem] max-lg:mb-[40rem] max-md:mb-[13.6rem] text-[1.6rem]'>
+        <form onSubmit={handleSubmit}>
+          <div className='flex justify-between mb-[2.4rem] '>
+            <h2 className='text-[3.2rem] text-[#000] leading-[3.8rem] font-bold'>내 체험 등록</h2>
+            <Button type='submit' color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='등록하기' />
+          </div>
+          <div className='flex flex-col gap-y-[2.4rem]'>
+            {/* ------제목------ */}
+            <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} cssName={INPUT_STYLE} onKeyDown={noEnter} onKeyUp={noEnter} />
+            {/* ------카테고리------ */}
+            <Dropdown
+              lists={categories}
+              name='카테고리'
+              placeholder='카테고리'
+              id='category'
+              inputHeight='5.6rem'
+              onSelectedId={(id) => {
+                const selected = categories.filter((category) => category.id === id);
+                setPostData((prev) => ({ ...prev, category: selected[0].category }));
+              }}
+            />
+            {/* ------설명------ */}
+            <Textarea placeholder='설명' onBlur={(e) => onBlurSetData(e, 'description')} />
+            {/* ------가격------ */}
+            <div className='flex flex-col gap-y-[1.6rem]'>
+              <label htmlFor='price' className={LABEL_STYLE}>
+                가격
+              </label>
+              <Input placeholder='가격' type='text' id='price' onBlur={(e) => onBlurSetData(e, 'price')} cssName={INPUT_STYLE} onKeyDown={numberOnly} onKeyUp={numberOnly} />
             </div>
+            {/* -----주소----- */}
+            <div className='flex flex-col gap-y-[1.6rem]'>
+              <label htmlFor='address' className={LABEL_STYLE}>
+                주소
+              </label>
+              <Input type='text' placeholder='주소를 입력해주세요' id='address' value={postData.address} ref={addressRef} readOnly onClick={openAddress} cssName={INPUT_STYLE} />
+            </div>
+            {/* ------예약 가능한 시간대------ */}
             <div className='flex flex-col gap-y-[2.4rem]'>
-              {/* ------제목------ */}
-              <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} cssName={INPUT_STYLE} onKeyDown={noEnter} onKeyUp={noEnter} />
-              {/* ------카테고리------ */}
-              <Dropdown
-                lists={categories}
-                name='카테고리'
-                placeholder='카테고리'
-                id='category'
-                inputHeight='5.6rem'
-                onSelectedId={(id) => {
-                  const selected = categories.filter((category) => category.id === id);
-                  setPostData((prev) => ({ ...prev, category: selected[0].category }));
-                }}
-              />
-              {/* ------설명------ */}
-              <Textarea placeholder='설명' onBlur={(e) => onBlurSetData(e, 'description')} />
-              {/* ------가격------ */}
-              <div className='flex flex-col gap-y-[1.6rem]'>
-                <label htmlFor='price' className={LABEL_STYLE}>
-                  가격
-                </label>
-                <Input placeholder='가격' type='text' id='price' onBlur={(e) => onBlurSetData(e, 'price')} cssName={INPUT_STYLE} onKeyDown={numberOnly} onKeyUp={numberOnly} />
-              </div>
-              {/* -----주소----- */}
-              <div className='flex flex-col gap-y-[1.6rem]'>
-                <label htmlFor='address' className={LABEL_STYLE}>
-                  주소
-                </label>
-                <Input type='text' placeholder='주소를 입력해주세요' id='address' value={postData.address} ref={addressRef} readOnly onClick={openAddress} cssName={INPUT_STYLE} />
-              </div>
-              {/* ------예약 가능한 시간대------ */}
-              <div className='flex flex-col gap-y-[2.4rem]'>
-                <span className={`${LABEL_STYLE} max-md:hidden`}>예약 가능한 시간대</span>
-                <div className='flex flex-col gap-y-[2.1rem] max-lg:gap-y-[1.6rem]'>
-                  <div className='flex pb-[2.1rem] border-b border-[#DDD] max-lg:pb-[1.6rem]'>
-                    <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] flex-grow`}>
-                      <label htmlFor='date' className={DATE_LABEL_STYLE}>
-                        날짜
-                      </label>
-                      <DateInput
-                        name='날짜'
-                        id='date'
-                        value={schedule.date}
-                        cssName='h-[5.6rem] px-[1.6rem] max-md:h-[4.4rem]'
-                        onPostDataValue={(date) => {
-                          setSchedule((prev) => ({ ...prev, date }));
-                        }}
-                      />
-                    </div>
-                    <div className={`${DATE_INPUT_LABEL_STYLE}`}>
-                      <label htmlFor='startTime' className={DATE_LABEL_STYLE}>
-                        시작 시간
-                      </label>
-                      <Input
-                        type='time'
-                        id='startTime'
-                        value={schedule.startTime}
-                        cssName='h-[5.6rem] px-[1.6rem] max-md:h-[4.4rem]'
-                        onChange={(e) => {
-                          setSchedule((prev) => ({ ...prev, startTime: e.target.value }));
-                        }}
-                      />
-                    </div>
-                    <span className='flex flex-col-reverse text-[2rem] leading-[2.6rem] text-[#1b1b1b] font-bold max-lg:hidden mx-[1.2rem] py-[1.5rem]'>~</span>
-                    <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem]`}>
-                      <label htmlFor='endTime' className={DATE_LABEL_STYLE}>
-                        종료 시간
-                      </label>
-                      <Input
-                        type='time'
-                        id='endTime'
-                        value={schedule.endTime}
-                        cssName='h-[5.6rem] px-[1.6rem] max-md:h-[4.4rem]'
-                        onChange={(e) => {
-                          setSchedule((prev) => ({ ...prev, endTime: e.target.value }));
-                        }}
-                      />
-                    </div>
-                    <div className='flex flex-col-reverse'>
-                      <button
-                        type='button'
-                        className='relative w-[5.6rem] h-[5.6rem] max-md:w-[4.4rem] max-md:h-[4.4rem] disabled:'
-                        onClick={addSchedule}
-                        disabled={!schedule.date || !schedule.endTime || !schedule.startTime}
-                      >
-                        <Image src='/icons/Icon_plus_time.svg' fill alt='시간대 추가' />
-                      </button>
-                    </div>
+              <span className={`${LABEL_STYLE} max-md:hidden`}>예약 가능한 시간대</span>
+              <div className='flex flex-col gap-y-[2.1rem] max-lg:gap-y-[1.6rem]'>
+                <div className='flex pb-[2.1rem] border-b border-[#DDD] max-lg:pb-[1.6rem]'>
+                  <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] flex-grow`}>
+                    <label htmlFor='date' className={DATE_LABEL_STYLE}>
+                      날짜
+                    </label>
+                    <DateInput
+                      name='날짜'
+                      id='date'
+                      value={schedule.date}
+                      cssName='h-[5.6rem] px-[1.6rem] max-md:h-[4.4rem]'
+                      onPostDataValue={(date) => {
+                        setSchedule((prev) => ({ ...prev, date }));
+                      }}
+                    />
                   </div>
-                  {postData.schedules.map((scheduleItem) => (
-                    <ScheduleListItem schedule={scheduleItem} delSchedule={delSchedule} key={scheduleItem.date + scheduleItem.startTime + scheduleItem.endTime} />
-                  ))}
+                  <div className={`${DATE_INPUT_LABEL_STYLE}`}>
+                    <label htmlFor='startTime' className={DATE_LABEL_STYLE}>
+                      시작 시간
+                    </label>
+                    <TimeInput
+                      id='startTime'
+                      value={schedule.startTime}
+                      cssName='h-[5.6rem] max-md:h-[4.4rem] max-md:text-[1.4rem]'
+                      onChange={(e) => {
+                        setSchedule((prev) => ({ ...prev, startTime: e.target.value }));
+                      }}
+                    />
+                  </div>
+                  <span className='flex flex-col-reverse text-[2rem] leading-[2.6rem] text-[#1b1b1b] font-bold max-lg:hidden mx-[1.2rem] py-[1.5rem]'>~</span>
+                  <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem]`}>
+                    <label htmlFor='endTime' className={DATE_LABEL_STYLE}>
+                      종료 시간
+                    </label>
+                    <TimeInput
+                      id='endTime'
+                      value={schedule.endTime}
+                      cssName='h-[5.6rem] max-md:h-[4.4rem] max-md:text-[1.4rem]'
+                      onChange={(e) => {
+                        setSchedule((prev) => ({ ...prev, endTime: e.target.value }));
+                      }}
+                    />
+                  </div>
+                  <div className='flex flex-col-reverse'>
+                    <button
+                      type='button'
+                      className='relative w-[5.6rem] h-[5.6rem] max-md:w-[4.4rem] max-md:h-[4.4rem] disabled:'
+                      onClick={addSchedule}
+                      disabled={!schedule.date || !schedule.endTime || !schedule.startTime}
+                    >
+                      <Image src='/icons/Icon_plus_time.svg' fill alt='시간대 추가' />
+                    </button>
+                  </div>
                 </div>
+                {postData.schedules.map((scheduleItem) => (
+                  <ScheduleListItem schedule={scheduleItem} delSchedule={delSchedule} key={scheduleItem.date + scheduleItem.startTime + scheduleItem.endTime} />
+                ))}
               </div>
-              {/* -----배너 이미지------*/}
-              <div>
-                <label htmlFor='banner' className={`${LABEL_STYLE}`}>
-                  배너 이미지
-                </label>
-                <div className='mt-[2.4rem] flex gap-x-[2.4rem] max-lg:gap-x-[1.6rem] max-md:gap-x-[0.8rem]'>
-                  <ImageInput id='banner' uploadImage={uploadBannerImage} imgInputRef={bannerImgRef} />
-                  {postData.bannerImageUrl && <ImageCard image={postData.bannerImageUrl} delCard={delBannerImage} />}
-                </div>
-              </div>
-              {/* -----소개 이미지------*/}
-              <div>
-                <label htmlFor='introduce' className={`${LABEL_STYLE}`}>
-                  소개 이미지
-                </label>
-                <div className='mt-[2.4rem] flex gap-[2.4rem] flex-wrap max-lg:gap-[1.6rem] max-md:gap-[0.8rem]'>
-                  <ImageInput id='introduce' uploadImage={uploadSubImage} imgInputRef={subImgRef} />
-                  {!!postData.subImageUrls.length && postData.subImageUrls.map((subImageUrl) => <ImageCard image={subImageUrl} key={subImageUrl} delCard={() => delSubImage(subImageUrl)} />)}
-                </div>
-              </div>
-              <span className='pl-[0.8rem] text-gray-500 text-[1.8rem] leading-[1.6rem]'>*이미지는 최대 4개까지 등록 가능합니다.</span>
             </div>
-          </form>
-        </main>
-      </MyLayout>
-    </ModalContextProvider>
+            {/* -----배너 이미지------*/}
+            <div>
+              <label htmlFor='banner' className={`${LABEL_STYLE}`}>
+                배너 이미지
+              </label>
+              <div className='mt-[2.4rem] flex gap-x-[2.4rem] max-lg:gap-x-[1.6rem] max-md:gap-x-[0.8rem]'>
+                <ImageInput id='banner' uploadImage={uploadBannerImage} imgInputRef={bannerImgRef} />
+                {postData.bannerImageUrl && <ImageCard image={postData.bannerImageUrl} delCard={delBannerImage} />}
+              </div>
+            </div>
+            {/* -----소개 이미지------*/}
+            <div>
+              <label htmlFor='introduce' className={`${LABEL_STYLE}`}>
+                소개 이미지
+              </label>
+              <div className='mt-[2.4rem] flex gap-[2.4rem] flex-wrap max-lg:gap-[1.6rem] max-md:gap-[0.8rem]'>
+                <ImageInput id='introduce' uploadImage={uploadSubImage} imgInputRef={subImgRef} />
+                {!!postData.subImageUrls.length && postData.subImageUrls.map((subImageUrl) => <ImageCard image={subImageUrl} key={subImageUrl} delCard={() => delSubImage(subImageUrl)} />)}
+              </div>
+            </div>
+            <span className='pl-[0.8rem] text-gray-500 text-[1.8rem] leading-[1.6rem]'>*이미지는 최대 4개까지 등록 가능합니다.</span>
+          </div>
+        </form>
+      </main>
+    </MyLayout>
   );
 }

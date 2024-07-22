@@ -1,0 +1,38 @@
+.customTime::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+.delTime::-webkit-datetime-edit-text {
+  -webkit-appearance: none;
+  display: none;
+}
+.delTime::-webkit-datetime-edit-month-field {
+  -webkit-appearance: none;
+  display: none;
+}
+.delTime::-webkit-datetime-edit-day-field {
+  -webkit-appearance: none;
+  display: none;
+}
+.delTime::-webkit-datetime-edit-year-field {
+  -webkit-appearance: none;
+  display: none;
+}
+.delTime::-webkit-datetime-edit-ampm-field {
+  -webkit-appearance: none;
+  display: none;
+}
+.delTime::-webkit-datetime-edit-hour-field {
+  -webkit-appearance: none;
+  display: none;
+}
+.delTime::-webkit-datetime-edit-minute-field {
+  -webkit-appearance: none;
+  display: none;
+}

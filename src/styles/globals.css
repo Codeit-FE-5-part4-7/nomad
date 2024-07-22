@@ -4,6 +4,7 @@
 @import '../styles/calendar.module.css';
 @import '../styles/slider.module.css';
 
+
 :root {
   --color-black: #1b1b1b;
   --color-nomad-black: #112211;
