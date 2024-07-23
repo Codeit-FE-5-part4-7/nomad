@@ -12,7 +12,7 @@ import useModal from '@/hooks/useModal';
 import { POSTActivitiesReq } from '@/utils/types/myActivities';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { FocusEvent, FormEvent, KeyboardEvent, useRef, useState } from 'react';
+import { FocusEvent, KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 // 문화 예술 | 식음료 | 스포츠 | 투어 | 관광 | 웰빙
@@ -60,8 +60,9 @@ export default function PostActivitiy() {
   const DATE_INPUT_LABEL_STYLE = 'flex flex-col gap-y-[1rem] max-md:gap-y-[0.8rem]';
   const LABEL_STYLE = 'text-[#1b1b1b] text-[2.4rem] font-bold leading-[2.6rem] max-md:text-[2rem]';
   const INPUT_STYLE = 'h-[5.6rem] leading-[2.6rem] py-[0.8rem] px-[1.6rem]';
+  const TIME_INPUT_STYLE = 'h-[5.6rem] w-[14rem] max-lg:w-[10.4rem] max-md:w-[7.9rem] max-md:h-[4.4rem] max-md:text-[1.4rem]';
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const res = await postActivity(postData);
     if (!res) return;
@@ -98,12 +99,6 @@ export default function PostActivitiy() {
     setPostData((prev) => ({ ...prev, [dataName]: value }));
   };
 
-  const noEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
-
   const numberOnly = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key.match(/[^0-9]/g)) {
       e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
@@ -118,7 +113,31 @@ export default function PostActivitiy() {
     });
   };
 
+  const timeToNum = (time: string) => {
+    const nextTime = time.replace(':', '');
+    return Number(nextTime);
+  };
+
   const addSchedule = () => {
+    if (timeToNum(schedule.startTime) >= timeToNum(schedule.endTime)) {
+      openModal({
+        modalType: 'alert',
+        content: '시작 시간이 종료시간보다 늦습니다.',
+        btnName: ['확인'],
+      });
+      return;
+    }
+    const sameDays = postData.schedules.filter((currunt) => currunt.date === schedule.date);
+    const startTimeCheck = sameDays.filter((current) => timeToNum(current.endTime) >= timeToNum(schedule.startTime));
+    const endTimeCheck = startTimeCheck.filter((current) => timeToNum(schedule.endTime) >= timeToNum(current.startTime));
+    if (endTimeCheck.length >= 1) {
+      openModal({
+        modalType: 'alert',
+        content: '겹치는 예약 시간이 있습니다.',
+        btnName: ['확인'],
+      });
+      return;
+    }
     setPostData((prev) => ({ ...prev, schedules: [...prev.schedules, schedule] }));
     setSchedule((prev) => ({
       ...prev,
@@ -171,14 +190,14 @@ export default function PostActivitiy() {
   return (
     <MyLayout>
       <main className='bg-[#fafafa] mb-[27rem] max-lg:mb-[40rem] max-md:mb-[13.6rem] text-[1.6rem]'>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={() => false}>
           <div className='flex justify-between mb-[2.4rem] '>
             <h2 className='text-[3.2rem] text-[#000] leading-[3.8rem] font-bold'>내 체험 등록</h2>
-            <Button type='submit' color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='등록하기' />
+            <Button type='button' onClick={handleSubmit} color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='등록하기' />
           </div>
           <div className='flex flex-col gap-y-[2.4rem]'>
             {/* ------제목------ */}
-            <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} cssName={INPUT_STYLE} onKeyDown={noEnter} onKeyUp={noEnter} />
+            <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} cssName={INPUT_STYLE} />
             {/* ------카테고리------ */}
             <Dropdown
               lists={categories}
@@ -212,7 +231,7 @@ export default function PostActivitiy() {
               <span className={`${LABEL_STYLE} max-md:hidden`}>예약 가능한 시간대</span>
               <div className='flex flex-col gap-y-[2.1rem] max-lg:gap-y-[1.6rem]'>
                 <div className='flex pb-[2.1rem] border-b border-[#DDD] max-lg:pb-[1.6rem]'>
-                  <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] flex-grow`}>
+                  <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] flex-grow max-lg:mr-[0.5rem] max-md:mr-[0.4rem]`}>
                     <label htmlFor='date' className={DATE_LABEL_STYLE}>
                       날짜
                     </label>
@@ -226,28 +245,28 @@ export default function PostActivitiy() {
                       }}
                     />
                   </div>
-                  <div className={`${DATE_INPUT_LABEL_STYLE}`}>
+                  <div className={`${DATE_INPUT_LABEL_STYLE} max-lg:mr-[0.5rem] max-md:mr-[0.4rem]`}>
                     <label htmlFor='startTime' className={DATE_LABEL_STYLE}>
                       시작 시간
                     </label>
                     <TimeInput
                       id='startTime'
                       value={schedule.startTime}
-                      cssName='h-[5.6rem] max-md:h-[4.4rem] max-md:text-[1.4rem]'
+                      cssName={TIME_INPUT_STYLE}
                       onChange={(e) => {
                         setSchedule((prev) => ({ ...prev, startTime: e.target.value }));
                       }}
                     />
                   </div>
                   <span className='flex flex-col-reverse text-[2rem] leading-[2.6rem] text-[#1b1b1b] font-bold max-lg:hidden mx-[1.2rem] py-[1.5rem]'>~</span>
-                  <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem]`}>
+                  <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] max-lg:mr-[0.5rem] max-md:mr-[0.4rem]`}>
                     <label htmlFor='endTime' className={DATE_LABEL_STYLE}>
                       종료 시간
                     </label>
                     <TimeInput
                       id='endTime'
                       value={schedule.endTime}
-                      cssName='h-[5.6rem] max-md:h-[4.4rem] max-md:text-[1.4rem]'
+                      cssName={TIME_INPUT_STYLE}
                       onChange={(e) => {
                         setSchedule((prev) => ({ ...prev, endTime: e.target.value }));
                       }}

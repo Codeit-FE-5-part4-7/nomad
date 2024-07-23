@@ -6,6 +6,7 @@ import ImageCard from '@/components/Card/ImageCard';
 import Dropdown from '@/components/Dropdown';
 import { DateInput, Input, Textarea } from '@/components/Input';
 import ImageInput from '@/components/Input/ImageInput';
+import TimeInput from '@/components/Input/TimeInput';
 import MyLayout from '@/components/MyLayout';
 import ScheduleListItem from '@/components/ScheduleListItem';
 import useModal from '@/hooks/useModal';
@@ -13,7 +14,7 @@ import { GetActivityDetail } from '@/utils/types';
 import { PATCHActivityReq } from '@/utils/types/myActivities';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { FocusEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FocusEvent, KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 // 문화 예술 | 식음료 | 스포츠 | 투어 | 관광 | 웰빙
@@ -93,7 +94,7 @@ export default function PostActivitiy() {
     setIsLoaded(true);
   }, [id]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const res = await patchActivity(id, patchData);
     if (!res) return;
@@ -120,12 +121,6 @@ export default function PostActivitiy() {
     setPatchData((prev) => ({ ...prev, [dataName]: value }));
   };
 
-  const noEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
-
   const numberOnly = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key.match(/[^0-9]/g)) {
       e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
@@ -140,7 +135,31 @@ export default function PostActivitiy() {
     });
   };
 
+  const timeToNum = (time: string) => {
+    const nextTime = time.replace(':', '');
+    return Number(nextTime);
+  };
+
   const AddSchedule = () => {
+    if (timeToNum(schedule.startTime) >= timeToNum(schedule.endTime)) {
+      openModal({
+        modalType: 'alert',
+        content: '시작 시간이 종료시간보다 늦습니다.',
+        btnName: ['확인'],
+      });
+      return;
+    }
+    const sameDays = initData.schedules.filter((currunt) => currunt.date === schedule.date);
+    const startTimeCheck = sameDays.filter((current) => timeToNum(current.endTime) >= timeToNum(schedule.startTime));
+    const endTimeCheck = startTimeCheck.filter((current) => timeToNum(schedule.endTime) >= timeToNum(current.startTime));
+    if (endTimeCheck.length >= 1) {
+      openModal({
+        modalType: 'alert',
+        content: '겹치는 예약 시간이 있습니다.',
+        btnName: ['확인'],
+      });
+      return;
+    }
     const scheduleForInit = { ...schedule, id: -1 };
     setInitData((prev) => ({ ...prev, schedules: [...prev.schedules, scheduleForInit] }));
     setPatchData((prev) => ({ ...prev, schedulesToAdd: [...prev.schedulesToAdd, schedule] }));
@@ -209,14 +228,14 @@ export default function PostActivitiy() {
     <MyLayout>
       <main className='bg-[#fafafa] mb-[27rem] max-lg:mb-[40rem] max-md:mb-[13.6rem]'>
         {isLoaded ? (
-          <form onSubmit={handleSubmit} className='text-[1.6rem] max-md:text-[1.4rem]'>
+          <form onSubmit={() => false} className='text-[1.6rem] max-md:text-[1.4rem]'>
             <div className='flex justify-between mb-[2.4rem] '>
               <h2 className='text-[3.2rem] text-[#000] leading-[3.8rem] font-bold'>내 체험 등록</h2>
-              <Button type='submit' color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='수정하기' />
+              <Button type='button' onClick={handleSubmit} color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='수정하기' />
             </div>
             <div className='flex flex-col gap-y-[2.4rem]'>
               {/* ------제목------ */}
-              <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} defaultValue={initData.title} cssName={INPUT_STYLE} onKeyUp={noEnter} onKeyDown={noEnter} />
+              <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} defaultValue={initData.title} cssName={INPUT_STYLE} />
               {/* ------카테고리------ */}
               <Dropdown
                 lists={categories}
@@ -287,11 +306,10 @@ export default function PostActivitiy() {
                       <label htmlFor='startTime' className={DATE_LABEL_STYLE}>
                         시작 시간
                       </label>
-                      <Input
-                        type='time'
+                      <TimeInput
                         id='startTime'
                         value={schedule.startTime}
-                        cssName='h-[5.6rem] px-[1.6rem] max-md:h-[4.4rem]'
+                        cssName='h-[5.6rem] max-md:h-[4.4rem] max-md:text-[1.4rem]'
                         onChange={(e) => {
                           setSchedule((prev) => ({ ...prev, startTime: e.target.value }));
                         }}
@@ -302,11 +320,10 @@ export default function PostActivitiy() {
                       <label htmlFor='endTime' className={DATE_LABEL_STYLE}>
                         종료 시간
                       </label>
-                      <Input
-                        type='time'
+                      <TimeInput
                         id='endTime'
                         value={schedule.endTime}
-                        cssName='h-[5.6rem] px-[1.6rem] max-md:h-[4.4rem]'
+                        cssName='h-[5.6rem] max-md:h-[4.4rem] max-md:text-[1.4rem]'
                         onChange={(e) => {
                           setSchedule((prev) => ({ ...prev, endTime: e.target.value }));
                         }}
