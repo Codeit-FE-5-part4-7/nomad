@@ -1,3 +1,5 @@
+import { StatusFilter } from './StatusFilter';
+
 export interface IReservationCardInfo {
   id: number;
   activity: {
@@ -6,7 +8,7 @@ export interface IReservationCardInfo {
     id: number;
   };
   scheduleId: number;
-  status: 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
+  status: StatusFilter;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;

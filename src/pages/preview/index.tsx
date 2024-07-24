@@ -5,7 +5,6 @@ import SideNavigation from '@/components/SideNavigation';
 import Button from '@/components/Button';
 import { filterCategories } from '@/constant/filterCategoryOptions';
 import CategoryButton from '@/components/FilterButton/CategoryButton';
-import FilterDropButton from '@/components/FilterButton/FilterDropButton';
 import { Input } from '@/components/Input';
 import Dropdown from '@/components/Dropdown';
 import ReservationInfo from '@/components/Modal/ModalContents/reservation-info/ReservationInfo';
@@ -129,7 +128,7 @@ function Index() {
       {filterCategories.map((category) => (
         <CategoryButton key={category} text={category} isSelected={selectedCategory === category} onClick={() => setSelectedCategory(category)} />
       ))}
-      <FilterDropButton text='가격' />
+
       <br />
       <Input type='email' />
       <hr />
