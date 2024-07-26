@@ -12,10 +12,8 @@ interface CustomCalendarProps {
 const isReservedDate = (date: Date, reservedDates: (string | Date)[]): boolean => {
   const dateToCompare = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-  return reservedDates.some(reservedDate => {
-    const reservedDateObj = typeof reservedDate === 'string'
-      ? new Date(reservedDate)
-      : reservedDate;
+  return reservedDates.some((reservedDate) => {
+    const reservedDateObj = typeof reservedDate === 'string' ? new Date(reservedDate) : reservedDate;
 
     const reservedDateToCompare = new Date(reservedDateObj.getFullYear(), reservedDateObj.getMonth(), reservedDateObj.getDate());
 
@@ -32,20 +30,11 @@ function CustomCalendar({ selectedDate, onChange, reservedDates }: CustomCalenda
     }
   };
 
-  const tileClassName = ({ date }: { date: Date }) => {
-    return isReservedDate(date, reservedDates) ? 'reserved-date' : null;
-  };
+  const tileClassName = ({ date }: { date: Date }) => (isReservedDate(date, reservedDates) ? 'reserved-date' : null);
 
   return (
     <div className='calendar-container'>
-      <Calendar 
-        onChange={handleDateChange} 
-        value={selectedDate} 
-        minDate={addDays(new Date(), 1)} 
-        locale='en-US' 
-        className='custom-calendar' 
-        tileClassName={tileClassName} 
-      />
+      <Calendar onChange={handleDateChange} value={selectedDate} minDate={addDays(new Date(), 1)} locale='en-US' className='custom-calendar' tileClassName={tileClassName} />
     </div>
   );
 }
