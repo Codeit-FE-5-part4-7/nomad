@@ -7,7 +7,6 @@ import { filterCategories } from '@/constant/filterCategoryOptions';
 import CategoryButton from '@/components/FilterButton/CategoryButton';
 import { Input } from '@/components/Input';
 import Dropdown from '@/components/Dropdown';
-import ReservationInfo from '@/components/Modal/ModalContents/reservation-info/ReservationInfo';
 
 /* eslint-disable */
 export const getStaticProps = async () => ({
@@ -164,7 +163,6 @@ function Index() {
           <div className='modal'>
             <div className='modal-content'>
               <button onClick={handleModalClose}>Close</button>
-              <ReservationInfo date='2024-03-20' activityId={178} onClickCloseModal={handleModalClose} />
             </div>
           </div>
         )}

@@ -60,7 +60,7 @@ export default function Header(): JSX.Element | null {
    */
   const handleMyPageClick = () => {
     isDropdownOpenToggle();
-    router.push('/mypage');
+    router.push('/my/profile');
   };
 
   const MyMenuList = [

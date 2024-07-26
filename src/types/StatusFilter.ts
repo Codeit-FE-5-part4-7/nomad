@@ -1,1 +1,1 @@
-export type StatusFilter = 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
+export type StatusFilter = '' | 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';

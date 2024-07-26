@@ -1,6 +1,7 @@
 import patchCancelMyReservation from '@/apis/patch/patchCancelMyReservation';
 import Button from '@/components/Button';
 import Review from '@/components/Review';
+import useModal from '@/hooks/useModal';
 import { IReservationCardInfo } from '@/types/ReservationInfo';
 import setReservationStatueInfo from '@/utils/setReservationStatueInfo';
 import { useState } from 'react';
@@ -14,6 +15,7 @@ export default function MyReservationCardInfo({
   currentFilterOption: string | undefined;
   refreshReservationList: (filterOption: string | undefined) => Promise<void>;
 }) {
+  const { openModal, closeModal } = useModal();
   const { activity, status, totalPrice, date, startTime, endTime, headCount } = data;
   const statusInfo = setReservationStatueInfo(status);
   const btnCss = 'w-[12.1rem] h-[4rem] text-[1.4rem]';
@@ -32,6 +34,16 @@ export default function MyReservationCardInfo({
     if (result) {
       refreshReservationList(currentFilterOption);
     }
+    closeModal();
+  };
+
+  const handleOpenCancelConfirm = () => {
+    openModal({
+      modalType: 'confirm',
+      btnName: ['아니오', '네'],
+      content: '예약을 취소하시겠습니까?',
+      callBackFnc: handleCancelReservation,
+    });
   };
 
   return (
@@ -47,7 +59,7 @@ export default function MyReservationCardInfo({
             {'\uFFE6'}
             {totalPrice.toLocaleString('ko-KR')}
           </span>
-          {statusInfo.name === '예약 신청' && <Button text='예약 취소' color='white' cssName={btnCss} onClick={handleCancelReservation} />}
+          {statusInfo.name === '예약 신청' && <Button text='예약 취소' color='white' cssName={btnCss} onClick={handleOpenCancelConfirm} />}
           {statusInfo.name === '체험 완료' && <Button text='후기 작성' color='black' cssName={btnCss} onClick={handleOpenReview} />}
         </div>
       </div>

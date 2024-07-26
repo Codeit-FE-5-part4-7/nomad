@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-shadow */
-/* 캘린더 제작중, PR을 위해 임시로 린트 에러 막아놓았음 */
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import 'dayjs/locale/ko';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/16/solid';
 import BookedBox from '@/components/BookedBox';
 import getReservationDashBoard from '@/apis/get/getReservationDashBoard';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import ReservationInfo from '@/components/Modal/ModalContents/reservation-info/ReservationInfo';
 
 dayjs.extend(isoWeek);
 dayjs.locale('ko');
@@ -31,19 +31,21 @@ type ReservationData = {
 interface ActivityType {
   id: number;
   title: string;
-  category: string;
+  category?: string;
 }
 interface ActivityDropDownProps {
   items: ActivityType[];
-  selectedActivityId: number | null;
+  selectedActivityId: number;
+  onStatusChange: () => void;
 }
 
 function calendar2({ selectedActivityId }: ActivityDropDownProps) {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const year = currentMonth.format('YYYY');
   const month = currentMonth.format('MM');
-  // const [isCalendarClick, setIsCalendarClick] = useState(false);
-  // const [selectedDate, setSeletedDate] = useState<string | null>();
+  const [isCalendarClick, setIsCalendarClick] = useState(false);
+  const [selectedDate, setSeletedDate] = useState<string | null>();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery({
     queryKey: ['reservations', selectedActivityId, year, month],
@@ -56,6 +58,12 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
     },
     enabled: !!selectedActivityId, // selectedActivityId가 존재할 때만 쿼리 실행
   });
+
+  useEffect(() => {
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: ['reservations', selectedActivityId] });
+    }
+  }, [data, queryClient, selectedActivityId]);
 
   // startOf('month') 메서드는 currentMonth를 해당 월의 첫째 날로 설정,
   // startOf('week') 메서드는 그 날이 속한 주의 첫째 날로 설정.
@@ -94,13 +102,26 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
     return reservations;
   };
 
-  // const handleCalendarClick = (day: string) => {
-  //   setIsCalendarClick(!isCalendarClick);
-  //   setSeletedDate(day);
-  // };
+  const handleCalendarClick = (day: string) => {
+    setIsCalendarClick(!isCalendarClick);
+    setSeletedDate(day);
+  };
+
+  const handleClose = () => {
+    setIsCalendarClick(false);
+  };
 
   return (
-    <div className='text-[#000] my-[1.6rem]'>
+    <div className='text-[#000] my-[1.6rem] relative'>
+      {isCalendarClick && selectedDate && (
+        <div
+          className={`fixed top-0 w-full h-full bg-white z-20 transition-transform transform ${
+            isCalendarClick ? 'translate-x-0  z-40' : '-translate-x-full'
+          } md:absolute md:w-[42.9rem] md:h-[69.7rem] md:bg-white right-0 md:transform-none border border-[#DDDDDD] shadow-[0_0.4rem_1.6rem_0_rgba(17,34,17,0.05)] rounded-[1.2rem] `}
+        >
+          <ReservationInfo date={selectedDate} activityId={selectedActivityId} onClose={handleClose} />
+        </div>
+      )}
       <div className='flex flex-row items-center mb-[2.3rem] justify-between'>
         <button className='flex flex-row w-[2.4rem] h-[2.4rem]' type='button' onClick={prevMonth}>
           <ChevronDoubleLeftIcon />
@@ -122,8 +143,8 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
             <button
               type='button'
               key={day.format('YYYY-MM-DD')}
-              className={`flex w-1/7 h-[8.4rem] p-[0.3rem] border-[#e8e8e8] border flex-col ${day.isSame(currentMonth, 'month') ? '' : 'bg-gray-50'} ${day.isSame(dayjs(), 'day') ? 'border-blue border-[0.2rem]' : ''}  hover:border-blue hover:border-[0.3rem]`}
-              // onClick={() => handleCalendarClick(day.format('YYYY-MM-DD'))}
+              className={`flex w-1/7 h-[8.4rem] p-[0.3rem]   border-[#e8e8e8] border flex-col ${day.isSame(currentMonth, 'month') ? '' : 'bg-gray-50'} ${day.isSame(dayjs(), 'day') ? 'border-blue border-[0.2rem]' : ''}  hover:border-blue hover:border-[0.3rem]`}
+              onClick={() => handleCalendarClick(day.format('YYYY-MM-DD'))}
             >
               <div className='text-left w-[100%]'>
                 <span className=''>{day.date()}</span>
@@ -133,7 +154,6 @@ function calendar2({ selectedActivityId }: ActivityDropDownProps) {
           );
         })}
       </div>
-      {/* {isCalendarClick && selectedDate && <ReservationInfo data={selectedDate} activityId={selectedActivityId} />} */}
     </div>
   );
 }

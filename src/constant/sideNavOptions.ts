@@ -29,7 +29,7 @@ const SIDE_NAV_OPTIONS = [
     },
     iconAlt: ICON.setting.default.alt,
     menuTitle: '내 체험 관리',
-    linkUrl: '/preview2',
+    linkUrl: '/my/activities',
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const SIDE_NAV_OPTIONS = [
     },
     iconAlt: ICON.calendar.default.alt,
     menuTitle: '예약 현황',
-    linkUrl: '/preview3',
+    linkUrl: '/my/reservation-dashboard',
   },
 ];
 

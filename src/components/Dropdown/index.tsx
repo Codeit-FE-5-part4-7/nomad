@@ -72,7 +72,7 @@ export default forwardRef<HTMLInputElement, DropdownProps>(({ name, labelText, l
         ref={dropdownRef}
         style={{ height: inputHeight }} // input 높이 적용
       >
-        <input {...props} className='w-full bg-white border-none cursor-pointer outline-none' name={name} readOnly value={isLabelText || ''} ref={ref} />
+        <input {...props} className='w-full bg-white border-none cursor-pointer outline-none' tabIndex={-1} name={name} readOnly value={isLabelText || ''} ref={ref} />
         {labelText && <span className='absolute top-[-0.8rem] left-[1.2rem] bg-white px-1 z-10 text-[1.6rem] font-normal'>{labelText}</span>}
         <Image
           className={`absolute top-1/2 right-0 transform -translate-y-1/2 transition-transform ${isToggle ? 'rotate-180' : ''}`}

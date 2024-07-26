@@ -9,9 +9,14 @@ interface IMyReservation {
 
 const getMyReservationList = async ({ filterOption, cursorId, size = 6 }: IMyReservation) => {
   try {
-    console.log('filterOption ::', filterOption);
+    const params: Partial<{ cursorId: number; size: number; status?: string }> = { size, cursorId };
+
+    if (filterOption) {
+      params.status = filterOption;
+    }
+
     const { data } = await instance.get(`/my-reservations`, {
-      params: { size, cursorId, status: filterOption },
+      params,
     });
     return data;
   } catch (err) {

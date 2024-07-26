@@ -30,17 +30,17 @@ export default function MeatBall({ editHref, handleDelete, buttonCss = '' }: { e
         <Image src='/icons/Icon_meatball.svg' fill alt='' />
       </button>
       {isDropShow && (
-        <div className='absolute z-10 top-[4.8rem] bg-white right-0 flex flex-col rounded-[0.6rem] border-[#DDD] border'>
+        <div className='absolute z-10 top-[4.8rem] bg-white dark:bg-black right-0 flex flex-col rounded-[0.6rem] border-gray-500 dark:border-gray-50 border'>
           <Link
             href={editHref}
-            className='flex justify-center w-[16rem] max-md:w-[12rem] items-center text-[1.8rem] text-[#4B4B4B] hover:bg-gray-400 hover:text-white leading-[2.2rem] font-medium border-[#DDD] border-b py-[1.8rem]  max-md:text-[1.4rem] max-md:py-[1rem]'
+            className='flex justify-center w-[16rem] max-md:w-[12rem] items-center text-[1.8rem] text-gray-500 dark:text-gray-50 hover:bg-gray-400 hover:text-white leading-[2.2rem] font-medium border-gray-50 dark:border-gray-500 border-b py-[1.8rem]  max-md:text-[1.4rem] max-md:py-[1rem]'
           >
             수정하기
           </Link>
           <button
             type='button'
             onClick={handleDelete}
-            className='flex justify-center w-[16rem] max-md:w-[12rem] items-center text-[1.8rem] text-[#4B4B4B] hover:bg-gray-400 hover:text-white font-medium leading-[2.2rem] py-[1.8rem] max-md:text-[1.4rem] max-md:py-[1rem]'
+            className='flex justify-center w-[16rem] max-md:w-[12rem] items-center text-[1.8rem] text-gray-500 dark:text-gray-50 hover:bg-gray-400 hover:text-white font-medium leading-[2.2rem] py-[1.8rem] max-md:text-[1.4rem] max-md:py-[1rem]'
           >
             삭제하기
           </button>

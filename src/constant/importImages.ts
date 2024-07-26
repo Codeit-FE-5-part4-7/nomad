@@ -36,6 +36,8 @@ import IconMinusInput from '../../public/icons/Icon_minus_input.svg';
 import IconPlus from '../../public/icons/Icon_plus.svg';
 import IconLeftArrowVariant1 from '../../public/icons/Icon_left-arrow_variant1.svg';
 import IconRightArrowVariant1 from '../../public/icons/Icon_right-arrow_variant1.svg';
+import IconRightArrowWhite from '../../public/icons/Icon_right_arrow-white.svg';
+import IconLeftArrowWhite from '../../public/icons/Icon_left_arrow-white.svg';
 import IconPen from '../../public/icons/Icon_pen.svg';
 import IconEllipse from '../../public/icons/Icon_Ellipse.svg';
 import IconFilter from '../../public/icons/Icon_filter.svg';
@@ -213,6 +215,10 @@ export const ICON = {
       src: IconLeftArrowVariant1,
       alt: '이전',
     },
+    whiteColor: {
+      src: IconLeftArrowWhite,
+      alt: '네비게이션 닫기',
+    },
   },
   rightArrow: {
     default: {
@@ -226,6 +232,10 @@ export const ICON = {
     variant1: {
       src: IconRightArrowVariant1,
       alt: '다음',
+    },
+    whiteColor: {
+      src: IconRightArrowWhite,
+      alt: '네비게이션 닫기',
     },
   },
   downArrow: {

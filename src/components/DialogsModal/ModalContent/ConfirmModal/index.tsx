@@ -2,8 +2,11 @@ import Button from '@/components/Button';
 import Image from 'next/image';
 import { IModalContentProps } from '@/types/DialogsModal';
 import { ICON } from '@/constant/importImages';
+import useModalScrollBlock from '@/hooks/useModalScrollBlock';
 
 function ConfirmModal({ modalData, closeFunction }: IModalContentProps) {
+  useModalScrollBlock();
+
   return (
     <div className='w-[29.8rem] p-[2.4rem] rounded-[0.8rem] text-center flex flex-col gap-[3.2rem] items-center fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF] z-[999]'>
       <div className='flex flex-col items-center gap-[1.6rem]'>

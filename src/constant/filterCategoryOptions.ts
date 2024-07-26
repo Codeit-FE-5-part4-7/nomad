@@ -4,6 +4,10 @@ export const filterCategories = ['문화·예술', '식음료', '스포츠', '�
 
 export const dropFilterCategories = (handleFilterOptionClick: (status: StatusFilter) => void) => [
   {
+    text: '전체',
+    handleClick: () => handleFilterOptionClick(''),
+  },
+  {
     text: '예약 신청',
     handleClick: () => handleFilterOptionClick('pending'),
   },

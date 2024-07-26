@@ -12,7 +12,7 @@ import useModal from '@/hooks/useModal';
 import { POSTActivitiesReq } from '@/utils/types/myActivities';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { FocusEvent, KeyboardEvent, MouseEvent, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 // 문화 예술 | 식음료 | 스포츠 | 투어 | 관광 | 웰빙
@@ -56,9 +56,9 @@ export default function PostActivitiy() {
     { id: -60000, category: '웰빙', title: '웰빙' },
   ];
 
-  const DATE_LABEL_STYLE = 'text-[2rem] leading-[2.6rem] text-[#4b4b4b] max-md:text-[1.6rem]';
+  const DATE_LABEL_STYLE = 'text-[2rem] leading-[2.6rem] text-gray-500 dark:text-gray-50 max-md:text-[1.6rem]';
   const DATE_INPUT_LABEL_STYLE = 'flex flex-col gap-y-[1rem] max-md:gap-y-[0.8rem]';
-  const LABEL_STYLE = 'text-[#1b1b1b] text-[2.4rem] font-bold leading-[2.6rem] max-md:text-[2rem]';
+  const LABEL_STYLE = 'text-black dark:text-white text-[2.4rem] font-bold leading-[2.6rem] max-md:text-[2rem]';
   const INPUT_STYLE = 'h-[5.6rem] leading-[2.6rem] py-[0.8rem] px-[1.6rem]';
   const TIME_INPUT_STYLE = 'h-[5.6rem] w-[14rem] max-lg:w-[10.4rem] max-md:w-[7.9rem] max-md:h-[4.4rem] max-md:text-[1.4rem]';
 
@@ -94,8 +94,9 @@ export default function PostActivitiy() {
     }
   };
 
-  const onBlurSetData = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>, dataName: DataName) => {
-    const value = dataName === 'price' ? Number(e.target.value) : e.target.value;
+  const onChangeSetData = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, dataName: DataName, maxLength: number) => {
+    const slicedValue = e.target.value.slice(0, maxLength);
+    const value = dataName === 'price' ? Number(slicedValue) : slicedValue;
     setPostData((prev) => ({ ...prev, [dataName]: value }));
   };
 
@@ -189,15 +190,26 @@ export default function PostActivitiy() {
 
   return (
     <MyLayout>
-      <main className='bg-[#fafafa] mb-[27rem] max-lg:mb-[40rem] max-md:mb-[13.6rem] text-[1.6rem]'>
-        <form onSubmit={() => false}>
+      <main className='bg-gray-10 dark:bg-nomad-black dark:text-gray-10 mb-[27rem] max-lg:mb-[40rem] max-md:mb-[13.6rem] text-[1.6rem]'>
+        <form onSubmit={() => false} className='relative text-[1.6rem] max-md:text-[1.4rem]'>
           <div className='flex justify-between mb-[2.4rem] '>
-            <h2 className='text-[3.2rem] text-[#000] leading-[3.8rem] font-bold'>내 체험 등록</h2>
-            <Button type='button' onClick={handleSubmit} color='black' cssName='w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none' text='등록하기' />
+            <h2 className='text-[3.2rem] text-[#000] dark:text-[#fff] leading-[3.8rem] font-bold'>내 체험 등록</h2>
           </div>
           <div className='flex flex-col gap-y-[2.4rem]'>
             {/* ------제목------ */}
-            <Input placeholder='제목' type='text' id='title' onBlur={(e) => onBlurSetData(e, 'title')} cssName={INPUT_STYLE} />
+            <div className='flex flex-col'>
+              <Input
+                placeholder='제목'
+                type='text'
+                id='title'
+                onChange={(e) => {
+                  onChangeSetData(e, 'title', 25);
+                }}
+                value={postData.title}
+                cssName={INPUT_STYLE}
+              />
+              <span className='self-end text-[1.2rem]'>{postData.title.length}/25</span>
+            </div>
             {/* ------카테고리------ */}
             <Dropdown
               lists={categories}
@@ -211,26 +223,41 @@ export default function PostActivitiy() {
               }}
             />
             {/* ------설명------ */}
-            <Textarea placeholder='설명' onBlur={(e) => onBlurSetData(e, 'description')} />
+            <div className='flex flex-col'>
+              <Textarea placeholder='설명' value={postData.description} onChange={(e) => onChangeSetData(e, 'description', 800)} />
+              <span className='self-end text-[1.2rem]'>{postData.description.length}/800</span>
+            </div>
             {/* ------가격------ */}
             <div className='flex flex-col gap-y-[1.6rem]'>
               <label htmlFor='price' className={LABEL_STYLE}>
                 가격
               </label>
-              <Input placeholder='가격' type='text' id='price' onBlur={(e) => onBlurSetData(e, 'price')} cssName={INPUT_STYLE} onKeyDown={numberOnly} onKeyUp={numberOnly} />
+              <Input
+                placeholder='가격'
+                type='number'
+                id='price'
+                onChange={(e) => onChangeSetData(e, 'price', 20)}
+                autoComplete='off'
+                value={postData.price}
+                cssName={`${INPUT_STYLE} [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                onKeyDown={numberOnly}
+                onKeyUp={numberOnly}
+              />
             </div>
             {/* -----주소----- */}
             <div className='flex flex-col gap-y-[1.6rem]'>
               <label htmlFor='address' className={LABEL_STYLE}>
                 주소
               </label>
-              <Input type='text' placeholder='주소를 입력해주세요' id='address' value={postData.address} ref={addressRef} readOnly onClick={openAddress} cssName={INPUT_STYLE} />
+              <button type='button' onClick={openAddress}>
+                <Input type='text' placeholder='주소를 입력해주세요' id='address' tabIndex={-1} value={postData.address} ref={addressRef} readOnly cssName={INPUT_STYLE} />
+              </button>
             </div>
             {/* ------예약 가능한 시간대------ */}
             <div className='flex flex-col gap-y-[2.4rem]'>
               <span className={`${LABEL_STYLE} max-md:hidden`}>예약 가능한 시간대</span>
               <div className='flex flex-col gap-y-[2.1rem] max-lg:gap-y-[1.6rem]'>
-                <div className='flex pb-[2.1rem] border-b border-[#DDD] max-lg:pb-[1.6rem]'>
+                <div className='flex pb-[2.1rem] border-b border-gray-50 max-lg:pb-[1.6rem]'>
                   <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] flex-grow max-lg:mr-[0.5rem] max-md:mr-[0.4rem]`}>
                     <label htmlFor='date' className={DATE_LABEL_STYLE}>
                       날짜
@@ -258,7 +285,7 @@ export default function PostActivitiy() {
                       }}
                     />
                   </div>
-                  <span className='flex flex-col-reverse text-[2rem] leading-[2.6rem] text-[#1b1b1b] font-bold max-lg:hidden mx-[1.2rem] py-[1.5rem]'>~</span>
+                  <span className='flex flex-col-reverse text-[2rem] leading-[2.6rem] text-black font-bold max-lg:hidden mx-[1.2rem] py-[1.5rem]'>~</span>
                   <div className={`${DATE_INPUT_LABEL_STYLE} mr-[2rem] max-lg:mr-[0.5rem] max-md:mr-[0.4rem]`}>
                     <label htmlFor='endTime' className={DATE_LABEL_STYLE}>
                       종료 시간
@@ -310,6 +337,13 @@ export default function PostActivitiy() {
             </div>
             <span className='pl-[0.8rem] text-gray-500 text-[1.8rem] leading-[1.6rem]'>*이미지는 최대 4개까지 등록 가능합니다.</span>
           </div>
+          <Button
+            type='button'
+            onClick={handleSubmit}
+            color='black'
+            cssName='absolute top-0 right-0 w-[12rem] h-[4.8rem] text-[1.6rem] leading-[2.6rem] rounded-[0.4rem] border-none focus:bg-gray-200 '
+            text='등록하기'
+          />
         </form>
       </main>
     </MyLayout>
