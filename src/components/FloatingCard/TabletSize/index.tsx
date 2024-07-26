@@ -35,7 +35,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
   };
 
   return (
-    <div ref={cardRef} className='relative z-10'>
+    <div ref={cardRef} className='sticky top-[8rem] z-10'>
       <div className={`w-full max-w-[25.1rem] h-auto bg-white border-[0.2rem] border-gray-50 rounded-[0.8rem] shadow-lg p-[1rem] mx-auto ${isPopupOpen ? 'opacity-50' : ''}`}>
         <div className='px-[2.4rem]'>
           <div className='flex items-center gap-[0.8rem] mb-[1.6rem]'>

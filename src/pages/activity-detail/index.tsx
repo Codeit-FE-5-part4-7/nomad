@@ -99,6 +99,7 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
       }),
   });
 
+  // 스피너로 대체
   if (isLoadingActivity || isLoadingReviews) {
     return <div>Loading...</div>;
   }
@@ -126,11 +127,7 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
         <div className='flex items-center justify-between'>
           <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{activityData?.title}</h1>
           <div className='flex items-center'>
-            <div className='flex items-center'>
-              {isUserActivity && (
-                <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => handleDeleteModal(id)} />
-              )}
-            </div>
+            <div className='flex items-center'>{isUserActivity && <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => handleDeleteModal(id)} />}</div>
           </div>
         </div>
 
@@ -168,15 +165,9 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
           </div>
 
           <div className='w-full md:w-[30%] mt-[1.6rem] md:mt-0'>
-            {!isUserActivity && isMobile && (
-              <MobileCard schedules={activityData?.schedules} price={activityData?.price} />
-            )}
-            {!isUserActivity && isTablet && (
-              <TabletCard schedules={activityData?.schedules} price={activityData?.price} />
-            )}
-            {!isUserActivity && !isTablet && !isMobile && (
-              <FloatingCard schedules={activityData?.schedules} price={activityData?.price} />
-            )}
+            {!isUserActivity && isMobile && <MobileCard schedules={activityData?.schedules} price={activityData?.price} />}
+            {!isUserActivity && isTablet && <TabletCard schedules={activityData?.schedules} price={activityData?.price} />}
+            {!isUserActivity && !isTablet && !isMobile && <FloatingCard schedules={activityData?.schedules} price={activityData?.price} />}
           </div>
         </div>
       </div>
