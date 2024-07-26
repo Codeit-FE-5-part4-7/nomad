@@ -105,3 +105,15 @@
 .custom-calendar .react-calendar__navigation__arrow .react-calendar__navigation__prev-button {
   display: none;
 }
+
+.custom-calendar .react-calendar__month-view__days .reserved-date {
+  background-color: #ced8d5; 
+  border-radius: 50%; 
+  color: #ffffff;
+  position: relative; 
+}
+
+ /* 텍스트 스타일은 reserved-date 클래스에서 설정됨 */
+.custom-calendar .react-calendar__month-view__days .reserved-date::after {
+  background: #0b3b2d;
+}

@@ -15,14 +15,15 @@ interface ReservationContentProps {
 function ReservationContent({ schedules, selectedDate, selectedTime, onDateChange, onTimeChange }: ReservationContentProps) {
   const formattedSelectedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : null;
 
-  // 선택된 날짜의 시간대 목록을 추출하고 시간순으로 정렬
   const filteredTimes: Schedule[] = schedules.filter((schedule) => schedule.date === formattedSelectedDate).sort((a, b) => a.startTime.localeCompare(b.startTime));
+
+  const reservedDates = schedules.map((schedule) => schedule.date);
 
   return (
     <div>
       <p className='my-[1.6rem] font-bold text-nomad-black text-[2rem]'>날짜</p>
       <div className='flex justify-center'>
-        <CustomCalendar selectedDate={selectedDate} onChange={onDateChange} />
+        <CustomCalendar selectedDate={selectedDate} onChange={onDateChange} reservedDates={reservedDates} />
       </div>
       <p className='my-[1.6rem] font-bold text-nomad-black text-[1.8rem]'>예약 가능한 시간</p>
       <div className='flex flex-wrap gap-[1.2rem]'>
