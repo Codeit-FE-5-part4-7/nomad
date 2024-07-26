@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { KAKAO_MAP_APP_KEY } from '@/constant/constant';
 
 declare global {
   interface Window {
@@ -10,14 +11,12 @@ interface MapProps {
   address: string;
 }
 
-// const appKey = 'f7adb5c4574cc3a1412885d9f0aff326';
-
 function Map({ address }: MapProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=f7adb5c4574cc3a1412885d9f0aff326&autoload=false&libraries=services`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&autoload=false&libraries=services`;
     script.async = true;
 
     script.onload = () => {
@@ -49,6 +48,11 @@ function Map({ address }: MapProps) {
             });
             marker.setMap(map);
 
+            const infowindow = new window.kakao.maps.InfoWindow({
+              content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].road_address.building_name}</div>`,
+            });
+            infowindow.open(map, marker);
+
             map.setCenter(coords);
             setLoading(false);
           }
@@ -64,7 +68,7 @@ function Map({ address }: MapProps) {
   }, [address]);
 
   return (
-    <div className=' className="w-[79rem] h-[45rem] rounded-[1.6rem] md:w-full md:h-[27.6rem] sm:w-full sm:h-[45rem]'>
+    <div className='relative w-[79rem] h-[45rem] rounded-[1.6rem] md:w-full md:h-[27.6rem] sm:w-full sm:h-[45rem]'>
       <div id='map' className='w-full h-full' />
       {loading && <p className='absolute text-nomad-black text-[2rem]'>카카오 지도 API 연결 중...</p>}
     </div>
