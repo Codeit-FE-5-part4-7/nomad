@@ -16,9 +16,9 @@ function ExpandableText({ text, maxLength = 200 }: ExpandableTextProps) {
 
   return (
     <div>
-      <p className='text-nomad-black text-[1.6rem]'>{displayText}</p>
+      <p className='text-nomad-black text-[1.6rem] dark:text-gray-10'>{displayText}</p>
       {shouldShowButton && (
-        <button className='text-green-dark text-[1.6rem] font-bold cursor-pointer' onClick={toggleDescription}>
+        <button className='text-green-dark text-[1.6rem] font-bold cursor-pointer dark:text-white' onClick={toggleDescription}>
           {isExpanded ? '간략히 보기' : '더보기'}
         </button>
       )}

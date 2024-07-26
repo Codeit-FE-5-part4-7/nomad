@@ -121,11 +121,11 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
   const isUserActivity = activityData.userId === userData.id;
 
   return (
-    <div className='mt-[7rem] px-[1.6rem] sm:px-[2.4rem] md:px-[3.2rem] lg:px-[18rem]'>
+    <div className='mt-[7rem] px-[1.6rem] sm:px-[2.4rem] md:px-[3.2rem] lg:px-[18rem] dark:bg-nomad-black'>
       <div className='flex flex-col gap-[0.25rem]'>
-        <p className='text-[1.4rem] text-nomad-black'>{activityData?.category}</p>
+        <p className='text-[1.4rem] text-nomad-black dark:text-gray-10'>{activityData?.category}</p>
         <div className='flex items-center justify-between'>
-          <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{activityData?.title}</h1>
+          <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis dark:text-gray-10'>{activityData?.title}</h1>
           <div className='flex items-center'>
             <div className='flex items-center'>{isUserActivity && <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => handleDeleteModal(id)} />}</div>
           </div>
@@ -134,13 +134,13 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
         <div className='flex gap-[1.2rem]'>
           <div className='flex gap-[0.6rem]'>
             <Image src={ICON.star.active.src} alt={ICON.star.active.alt} width={16} height={16} />
-            <p className='text-[1.4rem] text-black'>{activityData?.rating}</p>
-            <p className='text-[1.4rem] text-black'>({activityData?.reviewCount})</p>
+            <p className='text-[1.4rem] text-black dark:text-gray-10'>{activityData?.rating}</p>
+            <p className='text-[1.4rem] text-black dark:text-gray-10'>({activityData?.reviewCount})</p>
           </div>
 
           <div className='flex gap-[0.2rem]'>
             <Image src={ICON.mapMarker.default.src} alt={ICON.mapMarker.default.alt} width={18} height={18} />
-            <p className='text-[1.4rem] text-nomad-black overflow-hidden whitespace-nowrap text-ellipsis'>{activityData?.address}</p>
+            <p className='text-[1.4rem] text-nomad-black overflow-hidden whitespace-nowrap text-ellipsis dark:text-gray-10'>{activityData?.address}</p>
           </div>
         </div>
 
@@ -150,10 +150,10 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
           <div className='w-full md:w-[70%]'>
             <div className='border-t-[0.2rem] border-gray-50 border-solid' />
             <div className='flex flex-col gap-[1.6rem]'>
-              <p className='text-nomad-black font-bold text-[2rem] pt-[4rem]'>체험 설명</p>
+              <p className='text-nomad-black font-bold text-[2rem] pt-[4rem] dark:text-gray-10'>체험 설명</p>
               <ExpandableText text={activityData?.description || ''} />
             </div>
-            <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem] sm:my-[2.4rem]' />
+            <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem] sm:my-[2.4rem] dark:text-gray-10' />
             <Map address={activityData?.address} />
 
             <div className='flex gap-[0.4rem] mt-[0.8rem]'>
