@@ -6,7 +6,7 @@ interface ThemeState {
 }
 
 const DarkModeStore = create<ThemeState>((set) => ({
-  isDarkMode: typeof window !== 'undefined' && localStorage.getItem('darkMode') === 'true', 
+  isDarkMode: typeof window !== 'undefined' && localStorage.getItem('darkMode') === 'true' ? true : false, 
   toggleDarkMode: () => set((state) => {
     const newMode = !state.isDarkMode;
     
