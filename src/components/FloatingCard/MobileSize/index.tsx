@@ -42,7 +42,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
 
   const handleOpenPopup = () => {
     openPopup();
-    setPopupPosition(null); // 모바일에서는 위치 설정이 필요 없음
+    setPopupPosition(null);
   };
 
   const handlePopupClose = (newTimeText: string | null) => {
@@ -58,11 +58,11 @@ function MobileCard({ price, schedules }: MobileCardProps) {
         <div className='flex flex-col gap-[0.8rem]'>
           <div className='flex flex-row items-center'>
             <p className='text-[2rem] font-bold text-nomad-black'>₩ {formattedPrice.toLocaleString()} /</p>
-            <p className='text-[1.8rem] text-dark-green cursor-pointer underline ml-1' onClick={() => setIsParticipantsPopupOpen(true)}>
+            <p className='text-[1.8rem] text-green-dark cursor-pointer underline ml-1' onClick={() => setIsParticipantsPopupOpen(true)}>
               {participantsText}
             </p>
           </div>
-          <p className='text-[1.4rem] text-dark-green cursor-pointer underline' onClick={handleOpenPopup}>
+          <p className='text-[1.4rem] text-semibold text-green-dark cursor-pointer underline' onClick={handleOpenPopup}>
             {selectedTimeText}
           </p>
         </div>
@@ -71,7 +71,6 @@ function MobileCard({ price, schedules }: MobileCardProps) {
         </div>
       </div>
 
-      {/* 날짜/시간 선택 팝업 */}
       {isPopupOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-[1000]'>
           <div className='fixed inset-0 bg-black bg-opacity-50 z-[-1]' />
@@ -92,7 +91,6 @@ function MobileCard({ price, schedules }: MobileCardProps) {
         </div>
       )}
 
-      {/* 인원 수 조절 팝업 */}
       {isParticipantsPopupOpen && (
         <div className='fixed inset-0 flex items-center justify-center z-[1000]'>
           <div className='fixed inset-0 bg-black bg-opacity-50 z-[-1]' />
@@ -101,11 +99,11 @@ function MobileCard({ price, schedules }: MobileCardProps) {
               <Image src={ICON.close.default.src} alt={ICON.close.default.alt} width={20} height={20} />
             </button>
 
-            <p className='my-[1.6rem] font-bold text-green-dark text-[2.8rem]'>인원</p>
+            <p className='my-[1.6rem] font-bold text-[2.8rem]'>인원</p>
             <div className='flex flex-col gap-[2.4rem]'>
-              <p className='text-[2rem] text-green-dark mt-[3.2rem]'>예약할 인원을 선택해주세요</p>
+              <p className='text-[2rem] text-[#4b4b4b] mt-[3.2rem]'>예약할 인원을 선택해주세요</p>
               <div className='flex items-center gap-[0.4rem]'>
-                <div className='w-[12rem] h-[4rem] flex items-center rounded border border-gray-100 border-solid'>
+                <div className='w-[12rem] h-[4rem] flex items-center rounded-lg shadow-lg border border-gray-100 border-solid'>
                   <button type='button' onClick={() => handleParticipantsChange(-1)} className='px-[1.6rem] py-[0.8rem]' aria-label='Decrement participants'>
                     <Image src={ICON.minusInput.default.src} alt={ICON.minusInput.default.alt} width={40} height={40} />
                   </button>

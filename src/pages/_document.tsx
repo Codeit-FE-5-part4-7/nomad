@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { KAKAO_MAP_APP_KEY } from '@/constant/constant';
+import KAKAO_MAP_APP_KEY from '@/constant/constant';
 
 export default class MyDocument extends Document {
   render() {

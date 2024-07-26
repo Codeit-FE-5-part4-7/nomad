@@ -13,6 +13,7 @@ import MobileCard from '@/components/FloatingCard/MobileSize';
 import MeatBall from '@/components/Button/MeatBall';
 import deleteActivity from '@/apis/delete/deleteActivity';
 import useModal from '@/hooks/useModal';
+import ExpandableText from '@/components/ExpandableText';
 
 /* eslint-disable */
 // const useAuth = () => {
@@ -26,7 +27,7 @@ export interface ActivityDetailsProps {
 
 function ActivityDetail({ id }: ActivityDetailsProps) {
   const router = useRouter();
-    // const { userId } = useAuth();
+  // const { userId } = useAuth();
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [activityIdToDelete, setActivityIdToDelete] = useState<number | null>(null); 
@@ -114,7 +115,6 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
   if (!activityData || !reviewsData) {
     return <div>데이터가 없습니다</div>;
   }
-   // const isUserActivity = activityData.creatorId === userId;
 
   return (
     <div className='mt-[7rem] px-[1.6rem] sm:px-[2.4rem] md:px-[3.2rem] lg:px-[18rem]'>
@@ -149,7 +149,7 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
             <div className='border-t-[0.2rem] border-gray-50 border-solid' />
             <div className='flex flex-col gap-[1.6rem]'>
               <p className='text-nomad-black font-bold text-[2rem] pt-[4rem]'>체험 설명</p>
-              <p className='text-nomad-black text-[1.6rem]'>{activityData?.description}</p>
+              <ExpandableText text={activityData?.description || ''} />
             </div>
             <div className='border-t-[0.2rem] border-gray-50 border-solid my-[4rem] sm:my-[2.4rem]' />
             <Map address={activityData?.address} />

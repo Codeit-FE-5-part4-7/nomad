@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { KAKAO_MAP_APP_KEY } from '@/constant/constant';
+import KAKAO_MAP_APP_KEY from '@/constant/constant';
 
 declare global {
   interface Window {
