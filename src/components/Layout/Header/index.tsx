@@ -10,7 +10,7 @@ import useOutsideClick from '@/hooks/useOutsideClick';
 import { MyInfoProps } from '@/utils/types';
 import DropdownMenu from '@/components/DropdownMenu';
 import Avatar from '@/components/Avatar';
-import DarkModeButton from '@/components/DarkModeButton'; 
+import DarkModeButton from '@/components/DarkModeButton';
 // import Modal from '../Modals';
 
 /**
