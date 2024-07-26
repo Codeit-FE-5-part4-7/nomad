@@ -12,6 +12,7 @@ import TabletCard from '@/components/FloatingCard/TabletSize';
 import MobileCard from '@/components/FloatingCard/MobileSize';
 import MeatBall from '@/components/Button/MeatBall';
 import deleteActivity from '@/apis/delete/deleteActivity';
+import useModal from '@/hooks/useModal';
 
 /* eslint-disable */
 // const useAuth = () => {
@@ -25,25 +26,36 @@ export interface ActivityDetailsProps {
 
 function ActivityDetail({ id }: ActivityDetailsProps) {
   const router = useRouter();
-  // const { userId } = useAuth();
-
-  // console.log('User ID:', userId); // null로 뜸
+    // const { userId } = useAuth();
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [activityIdToDelete, setActivityIdToDelete] = useState<number | null>(null); 
 
-  // 삭제하기 눌렀을때 진짜 삭제하시겠습니까? 모달 뜨게 하기
-  const delActivity = async (activityId: number) => {
-    try {
-      const response = await deleteActivity(activityId);
-      if (response) {
-        router.push('/');
-      } else {
-        alert(response);
-      }
-    } catch (error) {
-      console.error('활동 삭제 실패:', error);
-      alert('활동 삭제 실패. 나중에 다시 시도해주세요.');
-    }
+  const { openModal, closeModal } = useModal();
+
+  const handleOpenConfirmModal = (activityId: number) => {
+    setActivityIdToDelete(activityId);
+    openModal({
+      modalType: 'confirm',
+      content: '이 체험을 삭제하시겠습니까?',
+      btnName: ['취소', '삭제하기'],
+      callBackFnc: async () => {
+        if (activityIdToDelete !== null) {
+          try {
+            const response = await deleteActivity(activityIdToDelete);
+            if (response) {
+              router.push('/');
+            } else {
+              alert('활동 삭제 실패');
+            }
+          } catch (error) {
+            console.error('활동 삭제 실패:', error);
+            alert('활동 삭제 실패. 나중에 다시 시도해주세요.');
+          }
+        }
+        closeModal();
+      },
+    });
   };
 
   useEffect(() => {
@@ -102,9 +114,7 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
   if (!activityData || !reviewsData) {
     return <div>데이터가 없습니다</div>;
   }
-
-  // 사용자가 만든 체험인지 확인하는 기능 수정중
-  // const isUserActivity = activityData.creatorId === userId;
+   // const isUserActivity = activityData.creatorId === userId;
 
   return (
     <div className='mt-[7rem] px-[1.6rem] sm:px-[2.4rem] md:px-[3.2rem] lg:px-[18rem]'>
@@ -113,11 +123,9 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
         <div className='flex items-center justify-between'>
           <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{activityData?.title}</h1>
           <div className='flex items-center'>
-            {/* {isUserActivity && ( */}
             <div className='flex items-center'>
-              <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => delActivity(id)} />
+              <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => handleOpenConfirmModal(id)} />
             </div>
-            {/* )} */}
           </div>
         </div>
 
