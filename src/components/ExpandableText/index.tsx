@@ -10,14 +10,18 @@ function ExpandableText({ text, maxLength = 200 }: ExpandableTextProps) {
 
   const toggleDescription = () => setIsExpanded(!isExpanded);
 
+  const shouldShowButton = text.length > maxLength;
+
   const displayText = isExpanded ? text : text.slice(0, maxLength) + (text.length > maxLength ? '...' : '');
 
   return (
     <div>
       <p className='text-nomad-black text-[1.6rem]'>{displayText}</p>
-      <button className='text-green-dark text-[1.6rem] font-bold cursor-pointer' onClick={toggleDescription}>
-        {isExpanded ? '간략히 보기' : '더보기'}
-      </button>
+      {shouldShowButton && (
+        <button className='text-green-dark text-[1.6rem] font-bold cursor-pointer' onClick={toggleDescription}>
+          {isExpanded ? '간략히 보기' : '더보기'}
+        </button>
+      )}
     </div>
   );
 }
