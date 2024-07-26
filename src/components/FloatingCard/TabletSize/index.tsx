@@ -6,6 +6,7 @@ import Button from '@/components/Button';
 import CustomPopup from '@/components/CustomPopup';
 import useReservation from '@/hooks/useReservation';
 import usePopup from '@/hooks/usePopup';
+import useFormatPrice from '@/hooks/useFormatPrice';
 
 /* eslint-disable */
 interface TabletCardProps {
@@ -14,6 +15,7 @@ interface TabletCardProps {
 }
 
 function TabletCard({ schedules, price }: TabletCardProps) {
+  const formattedPrice = useFormatPrice(price);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
@@ -37,7 +39,7 @@ function TabletCard({ schedules, price }: TabletCardProps) {
       <div className={`w-full max-w-[25.1rem] h-auto bg-white border-[0.2rem] border-gray-50 rounded-[0.8rem] shadow-lg p-[1rem] mx-auto ${isPopupOpen ? 'opacity-50' : ''}`}>
         <div className='px-[2.4rem]'>
           <div className='flex items-center gap-[0.8rem] mb-[1.6rem]'>
-            <p className='text-nomad-black text-[2.8rem] font-bold'>₩ {price}</p>
+            <p className='text-nomad-black text-[2.8rem] font-bold'>₩ {formattedPrice}</p>
             <p className='text-[2rem]'> / 인</p>
           </div>
           <div className='border border-solid border-gray-50 mt-[1.6rem]' />

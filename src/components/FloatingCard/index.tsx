@@ -2,8 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import { Schedule } from '@/utils/types/schedule';
-// import useModal from '@/hooks/useModal';
 import useReservation from '@/hooks/useReservation';
+import useFormatPrice from '@/hooks/useFormatPrice';
 import ReservationContent from '../ReservationContent';
 import Button from '../Button';
 
@@ -14,13 +14,14 @@ interface FloatingCardProps {
 }
 
 function FloatingCard({ schedules, price }: FloatingCardProps) {
+  const formattedPrice = useFormatPrice(price);
   const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
   return (
     <div className='w-full max-w-[38.4rem] h-auto bg-white border-[0.2rem] border-gray-50 shadow-lg rounded-[0.8rem] p-[1rem] mx-auto'>
       <div className='px-[2.4rem]'>
         <div className='flex items-center gap-[0.8rem] mb-[1.6rem]'>
-          <p className='text-nomad-black text-[2.8rem] font-bold'>₩ {price}</p>
+          <p className='text-nomad-black text-[2.8rem] font-bold'>₩ {formattedPrice}</p>
           <p className='text-[2rem]'> / 인</p>
         </div>
         <div className='border border-solid border-gray-50 mt-[1.6rem]' />
@@ -47,7 +48,7 @@ function FloatingCard({ schedules, price }: FloatingCardProps) {
         <div className='border border-solid border-gray-100 mt-[1.6rem]' />
         <div className='flex justify-between my-[1.8rem]'>
           <p className='text-nomad-black text-[2rem] font-bold'>총 합계</p>
-          <p className='text-nomad-black text-[2rem] font-bold'>₩ {totalCost}</p>
+          <p className='text-nomad-black text-[2rem] font-bold'>₩ {useFormatPrice(totalCost)}</p>
         </div>
       </div>
     </div>

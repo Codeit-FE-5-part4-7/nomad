@@ -55,7 +55,7 @@ function Slider({ images, defaultImage }: SliderProps) {
       <div className={styles.slider}>
         {filteredImages.map((imageUrl, index) => (
           <div key={imageUrl} className={`${styles.slide} ${currentSlide === index ? styles.active : ''}`}>
-            <Image src={imageUrl} alt={`slide ${index}`} layout='fill' objectFit='cover' />
+            <Image src={imageUrl} alt={`slide ${index}`} layout='fill' objectFit='cover' className='object-cover' />
           </div>
         ))}
         <div className={styles.dots}>

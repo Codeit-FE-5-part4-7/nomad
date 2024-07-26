@@ -20,7 +20,7 @@ function ImageContainer({ mainImageUrl, gridImages }: ImageContainerProps) {
   const images: string[] = [mainImageUrl, ...fillGridImages.map((image) => image.imageUrl)];
 
   return (
-    <div className='flex max-w-[119rem] h-[53.4rem] md:w-full md:h-[31rem] sm:w-full sm:h-[30rem] gap-[0.8rem] mt-[4rem] mb-[8rem]'>
+    <div className='flex max-w-[119rem] h-[53.4rem] gap-[0.8rem] my-[4rem] md:w-full md:h-[31rem] sm:w-full sm:h-[30rem] sm:my-[2.4rem] sm:justify-center'>
       {size === 4 ? (
         <div className='w-full flex justify-center'>
           <div className='w-full max-w-[37.5rem] h-full max-h-[31rem]'>
@@ -30,7 +30,7 @@ function ImageContainer({ mainImageUrl, gridImages }: ImageContainerProps) {
       ) : (
         <>
           <div className='relative w-1/2 h-full'>
-            <Image src={mainImageUrl} alt='mainImage' layout='fill' objectFit='cover' className='rounded-l-[0.8rem]' />
+            <Image src={mainImageUrl} alt='mainImage' layout='fill' objectFit='cover' className='object-cover rounded-l-[0.8rem]' />
           </div>
           <div className='relative w-1/2 grid grid-cols-2 grid-rows-2 gap-[0.8rem] rounded-r-[0.8rem] overflow-hidden'>
             {fillGridImages.map((image) => (

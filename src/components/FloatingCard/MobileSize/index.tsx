@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/Button';
-// import useModal from '@/hooks/useModal';
 import Image from 'next/image';
 import { ICON } from '@/constant';
 import CustomPopup from '@/components/CustomPopup';
 import { Schedule } from '@/utils/types/schedule';
 import useReservation from '@/hooks/useReservation';
 import usePopup from '@/hooks/usePopup';
+import useFormatPrice from '@/hooks/useFormatPrice';
 
 /* eslint-disable */
 interface MobileCardProps {
@@ -15,7 +15,7 @@ interface MobileCardProps {
 }
 
 function MobileCard({ price, schedules }: MobileCardProps) {
-  // const { openModal } = useModal();
+  const formattedPrice = useFormatPrice(price);
   const { selectedDate, selectedTime, participants, handleDateChange, handleParticipantsChange, handleTimeChange, handleReservation, isButtonDisabled, totalCost } = useReservation(schedules, price);
 
   const [isParticipantsPopupOpen, setIsParticipantsPopupOpen] = useState(false);
@@ -57,7 +57,7 @@ function MobileCard({ price, schedules }: MobileCardProps) {
       <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full bg-white border border-gray-200 rounded-lg shadow-md flex flex-row items-center justify-between p-4 z-50'>
         <div className='flex flex-col gap-[0.8rem]'>
           <div className='flex flex-row items-center'>
-            <p className='text-[2rem] font-bold text-nomad-black'>₩ {price.toLocaleString()} /</p>
+            <p className='text-[2rem] font-bold text-nomad-black'>₩ {formattedPrice.toLocaleString()} /</p>
             <p className='text-[1.8rem] text-dark-green cursor-pointer underline ml-1' onClick={() => setIsParticipantsPopupOpen(true)}>
               {participantsText}
             </p>
