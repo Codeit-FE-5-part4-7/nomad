@@ -1,15 +1,16 @@
+import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
 import instance from '@/apis/axios';
 import { ICON, IMAGE } from '@/constant/importImages';
 import useToggleButton from '@/hooks/useToggleButton';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import { MyInfoProps } from '@/utils/types';
-import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
 import DropdownMenu from '@/components/DropdownMenu';
-import Avatar from '../../Avatar';
+import Avatar from '@/components/Avatar';
+import DarkModeButton from '@/components/DarkModeButton'; 
 // import Modal from '../Modals';
 
 /**
@@ -91,7 +92,8 @@ export default function Header(): JSX.Element | null {
         <Link href='/'>
           <Image src={IMAGE.logo.nav.src} alt={IMAGE.logo.nav.alt} height={28} width={166} />
         </Link>
-        <div>
+        <div className='flex items-center gap-10'>
+          <DarkModeButton />
           {!Auth ? (
             <div className='flex gap-10'>
               <Link href='/signin' className='flex items-center text-lg font-medium text-black'>
