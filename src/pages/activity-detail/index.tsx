@@ -14,12 +14,9 @@ import MeatBall from '@/components/Button/MeatBall';
 import deleteActivity from '@/apis/delete/deleteActivity';
 import useModal from '@/hooks/useModal';
 import ExpandableText from '@/components/ExpandableText';
+import { auth } from '@/utils/auth/api';
 
 /* eslint-disable */
-// const useAuth = () => {
-//   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
-//   return { userId: userId ? parseInt(userId, 10) : null };
-// };
 
 export interface ActivityDetailsProps {
   id: number;
@@ -27,14 +24,13 @@ export interface ActivityDetailsProps {
 
 function ActivityDetail({ id }: ActivityDetailsProps) {
   const router = useRouter();
-  // const { userId } = useAuth();
   const [isTablet, setIsTablet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [activityIdToDelete, setActivityIdToDelete] = useState<number | null>(null); 
+  const [activityIdToDelete, setActivityIdToDelete] = useState<number | null>(null);
 
   const { openModal, closeModal } = useModal();
 
-  const handleOpenConfirmModal = (activityId: number) => {
+  const handleDeleteModal = (activityId: number) => {
     setActivityIdToDelete(activityId);
     openModal({
       modalType: 'confirm',
@@ -75,6 +71,11 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
     };
   }, []);
 
+  const { data: userData } = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => auth.getUser(),
+  });
+
   const {
     data: activityData,
     error: activityError,
@@ -112,9 +113,11 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
     return <div>리뷰 데이터 로딩 실패</div>;
   }
 
-  if (!activityData || !reviewsData) {
+  if (!activityData || !reviewsData || !userData) {
     return <div>데이터가 없습니다</div>;
   }
+
+  const isUserActivity = activityData.userId === userData.id;
 
   return (
     <div className='mt-[7rem] px-[1.6rem] sm:px-[2.4rem] md:px-[3.2rem] lg:px-[18rem]'>
@@ -124,7 +127,9 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
           <h1 className='text-[3.2rem] text-nomad-black font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{activityData?.title}</h1>
           <div className='flex items-center'>
             <div className='flex items-center'>
-              <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => handleOpenConfirmModal(id)} />
+              {isUserActivity && (
+                <MeatBall editHref={`/my/activities/editactivity/${id}`} handleDelete={() => handleDeleteModal(id)} />
+              )}
             </div>
           </div>
         </div>
@@ -163,11 +168,13 @@ function ActivityDetail({ id }: ActivityDetailsProps) {
           </div>
 
           <div className='w-full md:w-[30%] mt-[1.6rem] md:mt-0'>
-            {isMobile ? (
+            {!isUserActivity && isMobile && (
               <MobileCard schedules={activityData?.schedules} price={activityData?.price} />
-            ) : isTablet ? (
+            )}
+            {!isUserActivity && isTablet && (
               <TabletCard schedules={activityData?.schedules} price={activityData?.price} />
-            ) : (
+            )}
+            {!isUserActivity && !isTablet && !isMobile && (
               <FloatingCard schedules={activityData?.schedules} price={activityData?.price} />
             )}
           </div>
