@@ -37,7 +37,6 @@ export default function Banner() {
 
   useEffect(() => {
     if (bannerRef.current !== null) {
-      bannerRef.current.style.transition = 'all 0.5s ease-in-out';
       bannerRef.current.style.transform = `translateX(-${currentIndex}00%)`;
     }
   }, [currentIndex]);
@@ -45,55 +44,57 @@ export default function Banner() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (!isHover) {
-        setCurrentIndex((prevCurrentIndex) => {
-          const newIndex = prevCurrentIndex + 1;
-          if (newIndex === 4) {
-            setTimeout(() => {
-              if (bannerRef.current !== null) {
-                bannerRef.current.style.transition = 'none';
-                bannerRef.current.style.transform = 'translateX(-100%)';
-              }
-              setCurrentIndex(1);
-            }, 500);
-            return newIndex;
+        const newIndex = currentIndex + 1;
+
+        if (newIndex === bannerList.length) {
+          setCurrentIndex(1);
+          if (bannerRef.current !== null) {
+            bannerRef.current.style.transition = 'none';
+            bannerRef.current.style.transform = 'translateX(0%)';
           }
-          return newIndex;
-        });
+        } else {
+          setCurrentIndex(newIndex);
+          if (bannerRef.current !== null) {
+            bannerRef.current.style.transition = 'all 0.5s ease-in-out';
+          }
+        }
       }
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, [isHover]);
+  }, [currentIndex, isHover, bannerList.length]);
+
+  const moveToNthBanner = (index: number) => {
+    setTimeout(() => {
+      setCurrentIndex(index);
+      if (bannerRef.current !== null) {
+        bannerRef.current.style.transition = '';
+      }
+    }, 500);
+  };
 
   const handleSwipeClick = (direction: number) => {
-    setCurrentIndex((prevCurrentIndex) => {
-      const newIndex = prevCurrentIndex + direction;
-      if (newIndex === 4) {
-        setTimeout(() => {
-          if (bannerRef.current !== null) {
-            bannerRef.current.style.transition = 'none';
-            bannerRef.current.style.transform = 'translateX(-100%)';
-          }
-          setCurrentIndex(1);
-        }, 500);
-        return newIndex;
-      }
-      if (newIndex === 0) {
-        setTimeout(() => {
-          if (bannerRef.current !== null) {
-            bannerRef.current.style.transition = 'none';
-            bannerRef.current.style.transform = 'translateX(-300%)';
-          }
-          setCurrentIndex(3);
-        }, 500);
-        return newIndex;
-      }
-      return newIndex;
-    });
+    const newIndex = currentIndex + direction;
+
+    if (newIndex >= bannerList.length) {
+      moveToNthBanner(1);
+    } else if (newIndex < 1) {
+      moveToNthBanner(bannerList.length - 2);
+    } else {
+      setCurrentIndex(newIndex);
+    }
 
     if (bannerRef.current !== null) {
       bannerRef.current.style.transition = 'all 0.5s ease-in-out';
     }
+  };
+
+  const handleMouseEnter = () => {
+    setIsHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHover(false);
   };
 
   return (
